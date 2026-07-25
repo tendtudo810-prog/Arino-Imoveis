@@ -1,0 +1,36 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    overflow-x: hidden;
+    background-color: #00030c;
+}
+
+.ctn-img {
+    width: 95%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    -webkit-mask-image: linear-gradient(to top, transparent, #101828 60%, #101828 40%, transparent);
+    mask-image: linear-gradient(to top, transparent, #101828 70%, #101828 30%, transparent);
+    opacity: 50%;
+}
+
+.header {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    gap: 40px;
+}
+
+.header a {
+    color: #fff;
+    text-decoration: none;
+}
