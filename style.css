@@ -23,14 +23,25 @@ body {
 
 .header {
     position: absolute;
-    top: 50%;
+    top: 15%;
     left: 50%;
     transform: translate(-50%, -50%);
     display: flex;
-    gap: 40px;
+    gap: 50px;
 }
 
 .header a {
     color: #fff;
     text-decoration: none;
+    font-family: "Inter", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+}
+
+.picture {
+    width: 35%;
+    position: absolute;
+    top: 15%;
+    left: 16%;
+    transform: translate(-50%, -50%);
 }
