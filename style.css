@@ -10,14 +10,14 @@ body {
 }
 
 .ctn-img {
-    width: 95%;
+    width: 100%;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
 
-    -webkit-mask-image: linear-gradient(to top, transparent, #101828 60%, #101828 40%, transparent);
-    mask-image: linear-gradient(to top, transparent, #101828 70%, #101828 30%, transparent);
+    -webkit-mask-image: linear-gradient(to top, transparent, #101828 70%, #101828 30%, transparent);
+    mask-image: linear-gradient(to top, transparent, #101828 30%, #101828 70%, transparent);
     opacity: 50%;
 }
 
@@ -28,6 +28,7 @@ body {
     transform: translate(-50%, -50%);
     display: flex;
     gap: 50px;
+    z-index: 10;
 }
 
 .header a {
@@ -39,9 +40,40 @@ body {
 }
 
 .picture {
-    width: 35%;
+    width: 30%;
     position: absolute;
     top: 15%;
     left: 16%;
     transform: translate(-50%, -50%);
+    cursor: pointer;
+    z-index: 10;
+}
+
+.telefone {
+    color: #00030c;
+    text-decoration: none;
+    position: absolute;
+    top: 15%;
+    left: 87%;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+    z-index: 10;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    font-family: "Inter", sans-serif;
+    font-weight: bold;
+}
+
+.title {
+    font-size: 70px;
+    width: 70%;
+    position: absolute;
+    top: 60%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    font-family: "Satoshi Bold", sans-serif;
+    font-weight: 700;
+    color: #fff;
 }
