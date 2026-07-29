@@ -125,7 +125,7 @@ body {
 }
 
 .status h1 {
-    font-weight: lighter;
+    font-weight: bold;
     font-size: 40px;
 }
 
@@ -134,6 +134,7 @@ body {
     font-family: "Inter", sans-serif;
     font-weight: lighter;
     font-size: 12px;
+    color: #bbbaba;
 }
 
 .info {
@@ -143,18 +144,17 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
 
-    margin-top: 120vh;
+    margin-top: 110vh;
     color: #fff;
     display: flex;
     gap: 80px;
-    margin-bottom: 30vh;
 }
 
 .txt {
     font-size: 15px;
     position: absolute;
     top: 80%;
-    left: 6%;
+    left: 5.5%;
     transform: translate(-50%, -50%);
 }
 
@@ -178,15 +178,152 @@ body {
     font-size: 15px;
     position: absolute;
     top: 80%;
-    left: 134%;
+    left: 133.5%;
     transform: translate(-50%, -50%);
     width: 100%;
 }
 
 .df {
-    margin-top: 300vh;
+    margin-top: 200vh;
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translate(-50%, -50%);   
+    text-align: center;
+    color: #fff;
+}
+
+.df label {
+    position: absolute;
+    top: -30%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    
+    font-size: 12px;
+    color: #FFC300;
+}
+
+.df h1 {
+    font-weight: bold;
+    font-size: 40px;
+}
+
+.df p {
+    margin-top: 2vh;
+    font-family: "Inter", sans-serif;
+    font-weight: lighter;
+    font-size: 12px;
+    color: #bbbaba;
+}
+
+.br {
+    margin-top: 400vh;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.imoveis {
+    cursor: pointer;
+}
+
+.imovel {
+    background-color: #fff;
+    border: 2px solid #fff;
+    padding: 30px;
+    width: 29.6%;
     position: absolute;
     top: 80%;
-    left: 130%;
-    transform: translate(-50%, -50%);   
+    left: 82.6%;
+    transform: translate(-50%, -50%);
+    margin-top: 300vh;
+}
+
+.imovel label {
+    font-weight: bold;
+    margin-top: 2vh;
+    color: #a57e00;
+}
+
+.imovel h2 {
+    margin-top: 2vh;
+}
+
+.imovel p {
+    margin-top: 2vh;
+    font-size: 12px;
+}
+
+.imovel1 {
+    background-color: #fff;
+    border: 2px solid #fff;
+    padding: 30px;
+    width: 100%;
+    width: 29.65%;
+    position: absolute;
+    top: 80%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin-top: 300vh;
+}
+
+.imovel1 label {
+    font-weight: bold;
+    margin-top: 2vh;
+    color: #a57e00;
+}
+
+.imovel1 h2 {
+    margin-top: 2vh;
+}
+
+.imovel1 p {
+    margin-top: 2vh;
+    font-size: 12px;
+}
+
+.imovel2 {
+    background-color: #fff;
+    border: 2px solid #fff;
+    padding: 30px;
+    width: 100%;
+    width: 29.6%;
+    position: absolute;
+    top: 80%;
+    left: 17.5%;
+    transform: translate(-50%, -50%);
+    margin-top: 300vh;
+}
+
+.imovel2 label {
+    font-weight: bold;
+    margin-top: 2vh;
+    color: #a57e00;
+}
+
+.imovel2 h2 {
+    margin-top: 2vh;
+}
+
+.imovel2 p {
+    margin-top: 2vh;
+    font-size: 12px;
+}
+
+.house {
+    width: 400px;
+    border-radius: 20px;
+    cursor: pointer;
+    opacity: 80%;
+}
+
+.casa {
+    display: flex;
+    gap: 40px;
+    margin-top: 300vh;
+    position: absolute;
+    top: 45%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
