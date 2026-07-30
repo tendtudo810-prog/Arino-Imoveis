@@ -50,19 +50,28 @@ body {
 }
 
 .telefone {
-    color: #fff;
+    color: #a57e00;
     text-decoration: none;
     position: absolute;
     top: 15%;
+    background-color: #00030c;
     left: 87%;
     transform: translate(-50%, -50%);
     cursor: pointer;
     z-index: 10;
     padding: 20px;
     border-radius: 8px;
-    border: 1.5px solid #fff;
+    border: 1.5px solid #FFC300;
     font-family: "Inter", sans-serif;
     font-weight: bold;
+    transition: 0.6s;
+}
+
+.telefone:hover {
+    background-color: #FFC300;
+    color: #101828;
+    padding: 25px;
+    transition: 0.6s;
 }
 
 .title {
@@ -98,9 +107,19 @@ body {
     transform: translate(-50%, -50%);
     text-decoration: none;
     color: #101828;
-    background-color: #fff;
+    background-color: #be9201;
     padding: 20px;
-    border-radius: 10px;
+    border-radius: 7px;
+    transition: 0.7s;
+}
+
+.btn-hero:hover {
+    background-color: #000000;
+    border: 2px solid #a57e00;
+    color: #FFC300;
+    font-size: 18px;
+    padding: 25px;
+    transition: 0.7s;
 }
 
 .status {
@@ -216,21 +235,13 @@ body {
     color: #bbbaba;
 }
 
-.br {
-    margin-top: 400vh;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
 .imoveis {
     cursor: pointer;
 }
 
 .imovel {
-    background-color: #fff;
-    border: 2px solid #fff;
+    background-color: #e0e0e0;
+    border: 2px solid #e0e0e0;
     padding: 30px;
     width: 29.6%;
     position: absolute;
@@ -256,10 +267,9 @@ body {
 }
 
 .imovel1 {
-    background-color: #fff;
-    border: 2px solid #fff;
+    background-color: #e0e0e0;
+    border: 2px solid #e0e0e0;
     padding: 30px;
-    width: 100%;
     width: 29.65%;
     position: absolute;
     top: 80%;
@@ -284,10 +294,9 @@ body {
 }
 
 .imovel2 {
-    background-color: #fff;
-    border: 2px solid #fff;
+    background-color: #e0e0e0;
+    border: 2px solid #e0e0e0;
     padding: 30px;
-    width: 100%;
     width: 29.6%;
     position: absolute;
     top: 80%;
@@ -311,11 +320,101 @@ body {
     font-size: 12px;
 }
 
+.imovel3 {
+    background-color: #e0e0e0;
+    border: 2px solid #e0e0e0;
+    padding: 30px;
+    width: 29.6%;
+    position: absolute;
+    top: 180%;
+    left: 82.6%;
+    transform: translate(-50%, -50%);
+    margin-top: 300vh;
+}
+
+.imovel3 label {
+    font-weight: bold;
+    margin-top: 2vh;
+    color: #a57e00;
+}
+
+.imovel3 h2 {
+    margin-top: 2vh;
+}
+
+.imovel3 p {
+    margin-top: 3vh;
+    font-size: 12px;
+}
+
+.imovel4 {
+    background-color: #e0e0e0;
+    border: 2px solid #e0e0e0;
+    padding: 30px;
+    width: 100%;
+    width: 29.65%;
+    position: absolute;
+    top: 180%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin-top: 300vh;
+}
+
+.imovel4 label {
+    font-weight: bold;
+    margin-top: 2vh;
+    color: #a57e00;
+}
+
+.imovel4 h2 {
+    margin-top: 2vh;
+}
+
+.imovel4 p {
+    margin-top: 3vh;
+    font-size: 12px;
+}
+
+.imovel5 {
+    background-color: #e0e0e0;
+    border: 2px solid #e0e0e0;
+    padding: 30px;
+    width: 29.6%;
+    position: absolute;
+    top: 180%;
+    left: 17.5%;
+    transform: translate(-50%, -50%);
+    margin-top: 300vh;
+}
+
+.imovel5 label {
+    font-weight: bold;
+    margin-top: 2vh;
+    color: #a57e00;
+}
+
+.imovel5 h2 {
+    margin-top: 2vh;
+}
+
+.imovel5 p {
+    margin-top: 3vh;
+    font-size: 12px;
+}
+
 .house {
     width: 400px;
     border-radius: 20px;
     cursor: pointer;
     opacity: 80%;
+}
+
+.house1 {
+    width: 400px;
+    border-radius: 20px;
+    cursor: pointer;
+    opacity: 80%;
+    margin-top: 200vh;
 }
 
 .casa {
@@ -326,4 +425,75 @@ body {
     top: 45%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
+
+.cta {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin-top: 570vh;
+}
+
+.vid {
+    width: 1400px;
+    height: 1024px;
+    -webkit-mask-image: linear-gradient(to top, transparent, #101828 50%, #101828 50%, transparent);
+    mask-image: linear-gradient(to top, transparent, #101828 50%, #101828 50%, transparent);
+    opacity: 70%;
+}
+
+.cta label {
+    position: absolute;
+    top: 38%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #FFC300;
+    font-size: 12px;
+}
+
+.ct {
+    position: absolute;
+    top: 42%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    font-size: 30px;
+}
+
+.cta p {
+    position: absolute;
+    top: 47%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #b4b4b4;
+    font-size: 12px;
+    width: 30%;
+    text-align: center;
+}
+
+.cta a {
+    background-color: transparent;
+    position: absolute;
+    top: 54%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    text-decoration: none;
+    color: #a57e00;
+    padding: 25px;
+    border: 2px solid #a57e00;
+    border-radius: 7px;
+    width: 15%;
+    text-align: center;
+    transition: 0.7s;
+}
+
+.cta a:hover {
+    font-size: 18px;
+    padding: 25px;
+    transition: 0.7s;
+    border-radius: 5px;
+    background-color: #a57e00;
+    color: #00030c;
 }
