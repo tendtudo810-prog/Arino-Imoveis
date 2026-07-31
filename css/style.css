@@ -321,25 +321,13 @@ body {
     }
 }
 
-.house {
-    width: 400px;
-    border-radius: 20px;
-    cursor: pointer;
-    opacity: 80%;
-}
-
-.house1 {
-    width: 400px;
-    border-radius: 20px;
-    cursor: pointer;
-    opacity: 80%;
-    margin-top: 200vh;
-}
-
-.casa {
-    display: flex;
-    gap: 40px;
-    margin-top: 300vh;
+.imoveis1 {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(240px, 1fr));
+    gap: 24px;
+    width: min(1200px, 90%);
+    margin: 320vh auto 0;
+    padding: 0 20px;
     position: absolute;
     top: 100%;
     left: 50%;
@@ -559,4 +547,75 @@ body {
     display: block;
     gap: 30px;
     width: min(90%, 700px);
+}
+
+.cards {
+    position: absolute;
+    top: 90%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    margin-top: 910vh;
+    color: #fff;
+    text-align: center;
+}
+
+.cards label {
+    font-size: 12px;
+    color: #FFC300;
+}
+
+.cards h2 {
+    margin-top: 2vh;
+    font-size: 40px;
+}
+
+.card-description {
+    font-size: 12px;
+    width: 60%;
+    position: absolute;
+    top: 11%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.texto {
+    display: block;
+    gap: 15px;
+    padding: 20px;
+    background-color: #494949;
+    width: 50%;
+    margin-top: 20vh;
+}
+
+.texto1 {
+    display: block;
+    gap: 15px;
+    padding: 20px;
+    background-color: #494949;
+    width: 50%;
+}
+
+.texto2 {
+    display: block;
+    gap: 15px;
+    padding: 20px;
+    background-color: #494949;
+    width: 50%;
+}
+
+.texto3 {
+    display: block;
+    gap: 15px;
+    padding: 20px;
+    background-color: #494949;
+    width: 50%;
+}
+
+.texto p {
+    margin-top: 2vh;
+}
+
+.tt {
+    display: flex;
+    gap: 15px;
 }

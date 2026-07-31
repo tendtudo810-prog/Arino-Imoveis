@@ -1,0 +1,46 @@
+/* Styles específicos para a página de detalhes do imóvel */
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    background-color: #00030c;
+    color: #fff;
+    font-family: "Inter", sans-serif;
+}
+
+.container {
+    max-width: 900px;
+    margin: 60px auto;
+    padding: 24px;
+}
+
+.back-link {
+    color: #ffc300;
+    text-decoration: none;
+    margin-bottom: 20px;
+    display: inline-block;
+}
+
+.page-title {
+    margin-bottom: 12px;
+    font-size: 2.4rem;
+}
+
+.page-location {
+    color: #cbd5e1;
+    font-size: 1.125rem;
+    margin-bottom: 20px;
+}
+
+.property-image {
+    width: 100%;
+    border-radius: 16px;
+    margin-bottom: 20px;
+    display: block;
+}
+
+.property-description {
+    line-height: 1.7;
+    color: #e5e7eb;
+    font-size: 1rem;
+}
