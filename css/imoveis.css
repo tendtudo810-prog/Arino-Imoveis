@@ -1,0 +1,19 @@
+* {
+    background-color: #ffffff;
+}
+
+.error-image {
+    width: 50%;
+    overflow-x: hidden;
+
+    position: absolute;
+    top: 52%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.fa-solid {
+    font-size: 20px;
+    margin-top: 3vh;
+    margin-left: 2vw;
+}
