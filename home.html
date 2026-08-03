@@ -18,12 +18,15 @@
             
                 <dl class="header">
                     <dl><a href="#">Home</a></dl>
-                    <dl><a href="#">Sobre nós</a></dl>
+                    <dl><a href="sobre-nos.html">Sobre nós</a></dl>
                     <dl><a href="#">Imóveis</a></dl>
                     <dl><a href="#">Avaliações</a></dl>
                 </dl>
 
                 <a href="#" class="telefone">(61) 99697-3773</a>
+                <a href="#" class="publish-link" id="btn-publicar" title="Publicar anúncio" aria-label="Publicar anúncio">
+                    <i class="fa-solid fa-plus"></i>
+                </a>
         </nav>
 
         <div class="container">
@@ -64,7 +67,7 @@
         
     </div>
 
-    <div class="imoveis">
+    <div class="imoveis" id="imoveis-grid">
         <a href="imovel.html" class="imovel-card">
             <img src="pic1/house-isolated-field.jpg" alt="Casa em destaque">
             <div class="imovel-info">
@@ -215,38 +218,136 @@
         <label for="#">VALORES</label>
         <h2>Nossos Valores</h2>
         <p class="card-description">Mais do que intermediar negociações, buscamos oferecer uma experiência baseada em ética, dedicação e respeito por cada cliente.</p>
-        <div class="texto">
-            <div class="tt">
-                <i class="fa-regular fa-user" style="color: rgb(165, 126, 0);"></i>
-                <h3>Compromisso</h3>
+
+        <div class="cards-grid">
+            <div class="texto">
+                <div class="tt">
+                    <i class="fa-regular fa-user" style="color: rgb(165, 126, 0);"></i>
+                    <h3>Compromisso</h3>
+                </div>
+                <p>Cada cliente é único, e cada negociação merece atenção especial. Trabalhamos com comprometimento para entender suas necessidades, encontrar as melhores oportunidades e oferecer um atendimento baseado em confiança, ética e respeito.</p>
             </div>
-            <p>Cada cliente é único, e cada negociação merece atenção especial. Trabalhamos com comprometimento para entender suas necessidades, encontrar as melhores oportunidades e oferecer um atendimento baseado em confiança, ética e respeito.</p>
-        </div>
+        
+            <div class="texto1">
+                <div class="tt">
+                    <i class="fa-solid fa-shield-halved" style="color: rgb(165, 126, 0);"></i>
+                    <h3>Segurança</h3>
+                </div>
+                <p>Priorizamos a transparência em cada etapa, oferecendo orientações claras e confiáveis para que você se sinta seguro ao tomar decisões importantes.</p>
+            </div>
+        
+            <div class="texto2">
+                <div class="tt">
+                    <i class="fa-solid fa-handshake" style="color: rgb(165, 126, 0);"></i>
+                    <h3>Respeito</h3>
+                </div>
+                <p>Atendemos cada cliente com empatia e dedicação, criando relações de confiança e valorizando o tempo, o orçamento e os objetivos de cada um.</p>
+            </div>
     
-        <div class="texto1">
-            <div class="tt">
-                <i class="fa-regular fa-user" style="color: rgb(165, 126, 0);"></i>
-                <h3>Compromisso</h3>
+            <div class="texto3">
+                <div class="tt">
+                    <i class="fa-solid fa-lightbulb" style="color: rgb(165, 126, 0);"></i>
+                    <h3>Inovação</h3>
+                </div>
+                <p>Buscamos soluções modernas e estratégicas para apresentar imóveis com destaque, conectando oportunidades e facilitando a escolha do local ideal.</p>
             </div>
-            <p>Cada cliente é único, e cada negociação merece atenção especial. Trabalhamos com comprometimento para entender suas necessidades, encontrar as melhores oportunidades e oferecer um atendimento baseado em confiança, ética e respeito.</p>
-        </div>
-    
-        <div class="texto2">
-            <div class="tt">
-                <i class="fa-regular fa-user" style="color: rgb(165, 126, 0);"></i>
-                <h3>Compromisso</h3>
+
+            <div class="texto4">
+                <div class="tt">
+                    <i class="fa-solid fa-chart-line" style="color: rgb(165, 126, 0);"></i>
+                    <h3>Resultados</h3>
+                </div>
+                <p>Nosso trabalho é orientado por metas claras, oferecendo suporte contínuo para que cada negociação seja conduzida com eficiência e excelência.</p>
             </div>
-            <p>Cada cliente é único, e cada negociação merece atenção especial. Trabalhamos com comprometimento para entender suas necessidades, encontrar as melhores oportunidades e oferecer um atendimento baseado em confiança, ética e respeito.</p>
-        </div>
-    
-        <div class="texto3">
-            <div class="tt">
-                <i class="fa-regular fa-user" style="color: rgb(165, 126, 0);"></i>
-                <h3>Compromisso</h3>
+
+            <div class="texto5">
+                <div class="tt">
+                    <i class="fa-solid fa-heart" style="color: rgb(165, 126, 0);"></i>
+                    <h3>Dedicação</h3>
+                </div>
+                <p>Estamos comprometidos em transformar cada oportunidade em uma experiência memorável, com atenção personalizada e foco no seu bem-estar.</p>
             </div>
-            <p>Cada cliente é único, e cada negociação merece atenção especial. Trabalhamos com comprometimento para entender suas necessidades, encontrar as melhores oportunidades e oferecer um atendimento baseado em confiança, ética e respeito.</p>
         </div>
     </div>
+
+    <div class="modal-overlay" id="modal-publicar" aria-hidden="true">
+        <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+            <button type="button" class="modal-close" id="close-modal" aria-label="Fechar">×</button>
+            <h3 id="modal-title">Publicar anúncio</h3>
+            <p class="modal-text">Esta área é restrita ao proprietário da Arino Imóveis.</p>
+            <form id="form-publicar">
+                <div class="form-grid">
+                    <label>
+                        Título do imóvel
+                        <input type="text" name="titulo" required placeholder="Ex.: Casa moderna no Lago Sul">
+                    </label>
+                    <label>
+                        Tipo
+                        <select name="tipo">
+                            <option value="Venda">Venda</option>
+                            <option value="Aluguel">Aluguel</option>
+                            <option value="Terreno">Terreno</option>
+                        </select>
+                    </label>
+                    <label>
+                        Categoria do anúncio
+                        <div class="type-options">
+                            <label class="type-option">
+                                <input type="radio" name="categoria" value="normal" checked>
+                                <span>Anúncio normal</span>
+                            </label>
+                            <label class="type-option">
+                                <input type="radio" name="categoria" value="destaque">
+                                <span>Anúncio em destaque</span>
+                            </label>
+                        </div>
+                    </label>
+                    <label>
+                        Preço
+                        <input type="text" name="preco" required placeholder="Ex.: R$ 850.000,00">
+                    </label>
+                    <label>
+                        Localização
+                        <input type="text" name="local" required placeholder="Ex.: Águas Claras - DF">
+                    </label>
+                    <label>
+                        Descrição
+                        <textarea name="descricao" rows="3" required placeholder="Descreva as principais características do imóvel"></textarea>
+                    </label>
+                    <label>
+                        URL da imagem
+                        <input type="url" name="imagem" placeholder="Opcional - use uma imagem externa">
+                    </label>
+                </div>
+                <div class="form-actions">
+                    <button type="submit" class="submit-btn">Salvar anúncio</button>
+                </div>
+                <p class="form-message" id="form-message"></p>
+            </form>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div>
+                <h3>ARINO IMÓVEIS</h3>
+                <p>Transformando sonhos em novos endereços.</p>
+            </div>
+            <div>
+                <h4>Contato</h4>
+                <p>(61) 99697-3773</p>
+                <p>contato@arinoimoveis.com</p>
+            </div>
+            <div>
+                <h4>Redes</h4>
+                <p><i class="fa-brands fa-whatsapp"></i> WhatsApp</p>
+                <p><i class="fa-brands fa-instagram"></i> antonioarino</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2026 Arino Imóveis. Todos os direitos reservados.</p>
+        </div>
+    </footer>
 
     <script src="javascript.js"></script>
 </body>
