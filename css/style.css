@@ -731,3 +731,96 @@ body {
         grid-template-columns: 1fr;
     }
 }
+
+/* --------------------------
+   Responsive overrides
+   ONLY inside media queries <= 1024px
+   Do NOT change desktop rules above
+   -------------------------- */
+
+@media (max-width: 1024px) {
+    /* header adjustments for tablet */
+    .header,
+    .picture,
+    .telefone,
+    .title,
+    .subtitle,
+    .btn-hero {
+        position: static !important;
+        transform: none !important;
+        left: auto !important;
+        top: auto !important;
+        margin: 0 auto;
+    }
+
+    .header { display:flex; justify-content:space-between; align-items:center; padding: 1rem 1.25rem; }
+    .picture { width: 110px; }
+    .telefone { order: 3; }
+    .title { width: 100%; font-size: clamp(2rem, 4.5vw, 3.8rem); text-align: center; }
+    .subtitle { width: 90%; text-align: center; margin: .5rem auto 1rem; }
+    .btn-hero { display:inline-block; margin: .5rem auto; }
+
+    /* ensure main hero keeps visual but fits */
+    .hero { min-height: 60vh; padding: 1.5rem; }
+
+    /* grids become fluid but desktop templates remain untouched above 1024px */
+    .imoveis,
+    .imoveis1,
+    .cards-grid {
+        width: 100%;
+        margin: 2rem auto;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+
+    /* footer layout stacks for tablet */
+    .footer { padding: 2rem 1rem; }
+    .footer-content { flex-direction: column; align-items: flex-start; gap: 1rem; }
+
+    /* prevent any horizontal overflow introduced by absolute elements */
+    html, body { overflow-x: hidden; }
+}
+
+@media (max-width: 768px) {
+    /* cards and property grid to two columns */
+    .imoveis, .imoveis1, .cards-grid { grid-template-columns: repeat(2, minmax(180px, 1fr)); gap: 12px; }
+
+    .title { font-size: clamp(1.8rem, 6vw, 2.8rem); }
+
+    .txt, .txt1, .txt2, .txt3, .df { position: static !important; transform: none !important; margin: 0.5rem 0; }
+
+    .cta a { width: auto; padding: 12px 18px; }
+}
+
+@media (max-width: 480px) {
+    /* mobile single-column layouts */
+    .imoveis, .imoveis1, .cards-grid, .cards-grid .texto { grid-template-columns: 1fr; }
+
+    .header { padding: .75rem 1rem; gap: .6rem; }
+    .brand img { max-width: 100px; }
+
+    .title { font-size: clamp(1.6rem, 8vw, 2.4rem); }
+    .subtitle { font-size: 0.9rem; }
+
+    .btn-hero, .phone-button, .hero-button, .button-primary { width: 100%; box-sizing: border-box; }
+
+    .cta-media { min-height: 140px; }
+
+    /* fix any image overflow */
+    img { max-width: 100%; height: auto; }
+}
+
+@media (max-width: 375px) {
+    .title { font-size: 1.8rem; }
+    .subtitle { width: 100%; }
+    .cards-grid { gap: 10px; }
+}
+
+@media (max-width: 360px) {
+    .brand img { max-width: 90px; }
+    .telefon { padding: 8px; }
+}
+
+@media (max-width: 320px) {
+    .section { padding: 1rem; }
+    .title { font-size: 1.6rem; }
+}
