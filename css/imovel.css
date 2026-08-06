@@ -44,3 +44,106 @@ body {
     color: #e5e7eb;
     font-size: 1rem;
 }
+
+/* ==========================================================
+   RESPONSIVE — apenas telas <= 1024px
+   ========================================================== */
+
+@media (max-width: 1024px) {
+    body {
+        overflow-x: hidden;
+    }
+
+    .container {
+        margin: 40px auto;
+        padding: 20px;
+    }
+
+    .page-title {
+        font-size: clamp(1.75rem, 5vw, 2.2rem);
+        line-height: 1.15;
+        word-wrap: break-word;
+    }
+
+    .back-link {
+        min-height: 44px;
+        display: inline-flex;
+        align-items: center;
+    }
+
+    .property-image {
+        max-width: 100%;
+        height: auto;
+        aspect-ratio: 16 / 10;
+        object-fit: cover;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        margin: 32px auto;
+        padding: 18px;
+    }
+
+    .page-title {
+        font-size: clamp(1.5rem, 5.5vw, 2rem);
+    }
+
+    .page-location {
+        font-size: 1rem;
+    }
+
+    .property-description {
+        font-size: 0.95rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        margin: 24px auto;
+        padding: 16px;
+    }
+
+    .page-title {
+        font-size: clamp(1.35rem, 6.5vw, 1.75rem);
+    }
+
+    .back-link {
+        font-size: 0.9rem;
+        margin-bottom: 16px;
+    }
+
+    .property-image {
+        border-radius: 12px;
+        margin-bottom: 16px;
+    }
+}
+
+@media (max-width: 375px) {
+    .container {
+        padding: 14px;
+    }
+
+    .page-title {
+        font-size: 1.4rem;
+    }
+
+    .page-location {
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 320px) {
+    .container {
+        margin: 16px auto;
+        padding: 12px;
+    }
+
+    .page-title {
+        font-size: 1.25rem;
+    }
+
+    .property-description {
+        font-size: 0.875rem;
+    }
+}
