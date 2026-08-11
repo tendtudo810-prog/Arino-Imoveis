@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARINO IMÓVEIS</title>
+    <link rel="stylesheet" href="css/imovel.css">
+    <link rel="shortcut icon" href="pic1/Logo.png" type="image/x-icon">
+</head>
+<body>
+    <div class="container">
+        <a class="back-link" href="index.html">← Voltar para os anúncios</a>
+        <h1 class="page-title">Chácara à Venda | Luziânia – GO</h1>
+        <p class="page-location">Luziânia – GO</p>
+
+        <div class="carousel">
+            <div class="carousel-container">
+                <div class="carousel-slide active">
+                    <img src="imovel2/Anuncio2 (1).jpeg" alt="Apartamento - Foto 1">
+                </div>
+                <div class="carousel-slide">
+                    <img src="imovel2/Anuncio2 (3).jpeg" alt="Apartamento - Foto 2">
+                </div>
+                <div class="carousel-slide">
+                    <img src="imovel2/Anuncio2 (10).jpeg" alt="Apartamento - Foto 3">
+                </div>
+                <div class="carousel-slide">
+                    <img src="imovel2/Anuncio2 (2).jpeg" alt="Apartamento - Foto 4">
+                </div>
+                <div class="carousel-slide">
+                    <img src="imovel2/Anuncio2 (4).jpeg" alt="Apartamento - Foto 5">
+                </div>
+                <div class="carousel-slide">
+                    <img src="imovel2/Anuncio2 (6).jpeg" alt="Apartamento - Foto 6">
+                </div>
+                <div class="carousel-slide">
+                    <img src="imovel2/Anuncio2 (5).jpeg" alt="Apartamento - Foto 7">
+                </div>
+                <div class="carousel-slide">
+                    <img src="imovel2/Anuncio2 (7).jpeg" alt="Apartamento - Foto 8">
+                </div>
+                <div class="carousel-slide">
+                    <img src="imovel2/Anuncio2 (8).jpeg" alt="Apartamento - Foto 9">
+                </div>
+                <div class="carousel-slide">
+                    <img src="imovel2/Anuncio2 (9).jpeg" alt="Apartamento - Foto 10">
+                </div>
+                <div class="carousel-slide">
+                    <img src="imovel2/Anuncio2 (11).jpeg" alt="Apartamento - Foto 11">
+                </div>
+                <div class="carousel-slide">
+                    <img src="imovel2/Anuncio2 (12).jpeg" alt="Apartamento - Foto 12">
+                </div>
+                <button class="carousel-nav prev" aria-label="Foto anterior">‹</button>
+                <button class="carousel-nav next" aria-label="Próxima foto">›</button>
+                <div class="carousel-dots">
+                    <button class="carousel-dot active" aria-label="Foto 1"></button>
+                    <button class="carousel-dot" aria-label="Foto 2"></button>
+                    <button class="carousel-dot" aria-label="Foto 3"></button>
+                    <button class="carousel-dot" aria-label="Foto 4"></button>
+                    <button class="carousel-dot" aria-label="Foto 5"></button>
+                    <button class="carousel-dot" aria-label="Foto 6"></button>
+                    <button class="carousel-dot" aria-label="Foto 7"></button>
+                    <button class="carousel-dot" aria-label="Foto 8"></button>
+                    <button class="carousel-dot" aria-label="Foto 9"></button>
+                    <button class="carousel-dot" aria-label="Foto 10"></button>
+                    <button class="carousel-dot" aria-label="Foto 11"></button>
+                    <button class="carousel-dot" aria-label="Foto 12"></button>
+                </div>
+            </div>
+        </div>
+
+        <label for="#" class="price">R$ 700.000,00</label>
+
+        <p class="property-description">Uma propriedade para quem procura espaço, natureza, lazer e múltiplas possibilidades de utilização, sem abrir mão da facilidade de acesso.
+
+         Localizada a poucos metros do asfalto, esta chácara possui 26.000 m², duas edificações, estrutura completa de lazer, área produtiva e contato direto com a natureza.
+
+         Uma propriedade que pode servir tanto como moradia e refúgio familiar quanto para lazer, locação ou desenvolvimento de uma atividade rural. A segunda edificação amplia as possibilidades da propriedade e pode ser utilizada para receber familiares e convidados ou até mesmo para exploração com locação, conforme a destinação pretendida. <br> <br> Aceita financiamento.</p>
+        <a href="https://wa.me/5561996973773?text=Olá,%20tenho%20interesse%20na%20Chácara%20em%20Luziânia!" target="_blank" class="contact-button">
+            <span>Tenho Interesse</span>
+        </a>
+    </div>
+    <script>
+        // Carrossel Manual - Imóvel 2
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.carousel-slide');
+        const dots = document.querySelectorAll('.carousel-dot');
+        const prevBtn = document.querySelector('.carousel-nav.prev');
+        const nextBtn = document.querySelector('.carousel-nav.next');
+
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.classList.toggle('active', i === index);
+            });
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === index);
+            });
+            currentSlide = index;
+        }
+
+        function nextSlide() {
+            const nextIndex = (currentSlide + 1) % slides.length;
+            showSlide(nextIndex);
+        }
+
+        function prevSlide() {
+            const prevIndex = (currentSlide - 1 + slides.length) % slides.length;
+            showSlide(prevIndex);
+        }
+
+        if (prevBtn) {
+            prevBtn.addEventListener('click', prevSlide);
+        }
+
+        if (nextBtn) {
+            nextBtn.addEventListener('click', nextSlide);
+        }
+
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                showSlide(index);
+            });
+        });
+
+        // Navegação por teclado
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') {
+                prevSlide();
+            } else if (e.key === 'ArrowRight') {
+                nextSlide();
+            }
+        });
+    </script>
+</body>
+</html>

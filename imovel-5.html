@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARINO IMÓVEIS</title>
+    <link rel="stylesheet" href="css/imovel.css">
+    <link rel="shortcut icon" href="pic1/Logo.png" type="image/x-icon">
+</head>
+<body>
+    <div class="container">
+        <a class="back-link" href="index.html">← Voltar para os anúncios</a>
+        <h1 class="page-title">Ágio à Venda | Condomínio Belle Horizonte</h1>
+        <p class="page-location">Valparaíso de Goiás - DF</p>
+
+        <div class="carousel">
+            <div class="carousel-container">
+                <div class="carousel-slide active">
+                    <img src="imovel5/Anuncio 5 (4).jpeg" alt="Casa térrea - Foto 1">
+                </div>
+                <div class="carousel-slide">
+                    <img src="imovel5/Anuncio 5 (7).jpeg" alt="Casa térrea - Foto 2">
+                </div>
+                <div class="carousel-slide">
+                    <img src="imovel5/Anuncio 5 (6).jpeg" alt="Casa térrea - Foto 3">
+                </div>
+                <div class="carousel-slide">
+                    <img src="imovel5/Anuncio 5 (9).jpeg" alt="Casa térrea - Foto 4">
+                </div>
+                <div class="carousel-slide">
+                    <img src="imovel5/Anuncio 5 (10).jpeg" alt="Casa térrea - Foto 5">
+                </div>
+                <div class="carousel-slide">
+                    <img src="imovel5/Anuncio 5 (3).jpeg" alt="Casa térrea - Foto 6">
+                </div>
+                <div class="carousel-slide">
+                    <img src="imovel5/Anuncio 5 (5).jpeg" alt="Casa térrea - Foto 7">
+                </div>
+                <div class="carousel-slide">
+                    <img src="imovel5/Anuncio 5 (2).jpeg" alt="Casa térrea - Foto 8">
+                </div>
+                <div class="carousel-slide">
+                    <img src="imovel5/Anuncio 5 (1).jpeg" alt="Casa térrea - Foto 9">
+                </div>
+                <div class="carousel-slide">
+                    <img src="imovel5/Anuncio 5 (14).jpeg" alt="Casa térrea - Foto 10">
+                </div>
+                <button class="carousel-nav prev" aria-label="Foto anterior">‹</button>
+                <button class="carousel-nav next" aria-label="Próxima foto">›</button>
+                <div class="carousel-dots">
+                    <button class="carousel-dot active" aria-label="Foto 1"></button>
+                    <button class="carousel-dot" aria-label="Foto 2"></button>
+                    <button class="carousel-dot" aria-label="Foto 3"></button>
+                    <button class="carousel-dot" aria-label="Foto 4"></button>
+                    <button class="carousel-dot" aria-label="Foto 5"></button>
+                    <button class="carousel-dot" aria-label="Foto 6"></button>
+                    <button class="carousel-dot" aria-label="Foto 7"></button>
+                    <button class="carousel-dot" aria-label="Foto 8"></button>
+                    <button class="carousel-dot" aria-label="Foto 9"></button>
+                    <button class="carousel-dot" aria-label="Foto 10"></button>
+                </div>
+            </div>
+        </div>
+
+        <label for="#" class="price">R$ 60.000,00</label>
+
+        <p class="property-description">Uma excelente oportunidade para quem procura apartamento térreo, condomínio completo e localização estratégica, com acesso rápido à BR-040 e a toda a estrutura comercial da região. Localizado no Parque Esplanada I, nas proximidades você encontra supermercados, farmácias, academias, postos de combustível e diversos serviços essenciais para o dia a dia. <br> <br>
+        - Área privativa: 42,85 m²
+        <br> - Área total: 68,96 m²</p>
+        <a href="https://wa.me/5561996973773?text=Olá,%20tenho%20interesse%20na%20Casa%20térrea%20com%20piscina%20em%20Valparaíso" target="_blank" class="contact-button">
+            <span>Tenho Interesse</span>
+        </a>
+    </div>
+    <script>
+        // Carrossel Manual - Imóvel 5
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.carousel-slide');
+        const dots = document.querySelectorAll('.carousel-dot');
+        const prevBtn = document.querySelector('.carousel-nav.prev');
+        const nextBtn = document.querySelector('.carousel-nav.next');
+
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.classList.toggle('active', i === index);
+            });
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === index);
+            });
+            currentSlide = index;
+        }
+
+        function nextSlide() {
+            const nextIndex = (currentSlide + 1) % slides.length;
+            showSlide(nextIndex);
+        }
+
+        function prevSlide() {
+            const prevIndex = (currentSlide - 1 + slides.length) % slides.length;
+            showSlide(prevIndex);
+        }
+
+        if (prevBtn) {
+            prevBtn.addEventListener('click', prevSlide);
+        }
+
+        if (nextBtn) {
+            nextBtn.addEventListener('click', nextSlide);
+        }
+
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                showSlide(index);
+            });
+        });
+
+        // Navegação por teclado
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') {
+                prevSlide();
+            } else if (e.key === 'ArrowRight') {
+                nextSlide();
+            }
+        });
+    </script>
+</body>
+</html>

@@ -3,12 +3,8 @@
 const BASE_IMOVEL_URL = 'imovel-detalhado.html';
 
     document.addEventListener('DOMContentLoaded', () => {
-    const cards = document.querySelectorAll('.imovel-card');
-    cards.forEach((card) => {
-        const id = card.dataset.id;
-        const url = id ? `${BASE_IMOVEL_URL}?id=${encodeURIComponent(id)}` : BASE_IMOVEL_URL;
-        card.setAttribute('href', url);
-    });
+    // Sistema de cards foi movido para inline no index.html
+    // Este arquivo agora gerencia apenas FAQ e menu mobile
 
     const perguntas = document.querySelectorAll('.pergunta');
 
