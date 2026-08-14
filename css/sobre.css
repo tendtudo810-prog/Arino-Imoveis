@@ -7,7 +7,7 @@
 }
 
 body {
-    overflow-x: hidden;
+    max-width: 100%;
 }
 
 .texto {
@@ -240,12 +240,13 @@ html {
 .info h2 {
     position: absolute;
     top: 100%;
-    left: 114%;
-    transform: translate(-50%, -50%);
+    left: 64%;
+    transform: translateY(-50%);
     color: #fff;
     font-size: 40px;
     margin-top: 147vh;
-    width: 100%
+    width: max-content;
+    max-width: 36%;
 }
 
 .info p {
@@ -265,10 +266,15 @@ html {
     transform: translate(-50%, -50%);
 
     margin-top: 400vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    overflow: hidden;
 }
 
 .video {
     width: 1920px;
+    flex-shrink: 0;
     -webkit-mask-image: linear-gradient(to top, transparent, #101828 80%, #101828 20%, transparent);
     mask-image: linear-gradient(to top, transparent, #101828 65%, #101828 35%, transparent);
     opacity: 50%;
@@ -562,8 +568,10 @@ html {
         transform: none;
         top: auto;
         left: auto;
+        right: auto;
         margin: 0;
         width: 100%;
+        max-width: 100%;
     }
 
     #mission h2,
