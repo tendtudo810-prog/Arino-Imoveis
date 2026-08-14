@@ -568,8 +568,10 @@ html {
         transform: none;
         top: auto;
         left: auto;
+        right: auto;
         margin: 0;
         width: 100%;
+        max-width: 100%;
     }
 
     #mission h2,
