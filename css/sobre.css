@@ -383,3 +383,434 @@ html {
 .footer p {
     background-color: transparent;
 }
+.menu-toggle {
+    display: none;
+}
+
+/* ==========================================================
+   RESPONSIVE — apenas telas <= 1024px
+   Desktop (>1024px) permanece intocado acima
+   ========================================================== */
+
+@media (max-width: 1024px) {
+
+    /* --- Header & navegação --- */
+    header {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        min-height: auto;
+        padding-bottom: 2rem;
+    }
+
+    nav.sections {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.75rem;
+        padding: 1rem 1.25rem;
+        position: relative;
+        z-index: 100;
+        width: 100%;
+    }
+
+    .menu-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        order: 2;
+        margin-left: auto;
+        width: 44px;
+        height: 44px;
+        padding: 0;
+        background: rgba(255, 195, 0, 0.12);
+        border: 1.5px solid #ffc300;
+        border-radius: 8px;
+        color: #ffc300;
+        font-size: 1.15rem;
+        cursor: pointer;
+        flex-shrink: 0;
+    }
+
+    .menu-toggle i {
+        background-color: transparent;
+        color: #ffc300;
+    }
+
+    .picture {
+        position: static;
+        transform: none;
+        width: clamp(90px, 22vw, 130px);
+        order: 1;
+    }
+
+    .header {
+        position: static;
+        transform: none;
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        gap: 0;
+        order: 4;
+        width: 100%;
+        padding: 0.75rem 0;
+        background: rgba(5, 7, 13, 0.97);
+        border: 1px solid rgba(255, 195, 0, 0.2);
+        border-radius: 12px;
+    }
+
+    .header.is-open {
+        display: flex;
+    }
+
+    .header dl {
+        width: 100%;
+        text-align: center;
+    }
+
+    .header a {
+        display: block;
+        padding: 0.85rem 1rem;
+        font-size: 1rem;
+        min-height: 44px;
+    }
+
+    .telefone {
+        position: static;
+        transform: none;
+        order: 3;
+        width: auto;
+        padding: 0.75rem 1rem;
+        font-size: clamp(0.7rem, 2.5vw, 0.875rem);
+        white-space: nowrap;
+        min-height: 44px;
+        display: inline-flex;
+        align-items: center;
+    }
+
+    .telefone:hover {
+        padding: 0.75rem 1rem;
+        width: auto;
+    }
+
+    /* --- Hero --- */
+    .back {
+        width: 100%;
+        order: 2;
+    }
+
+    .pic {
+        position: static;
+        transform: none;
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+
+    .texto {
+        position: static;
+        transform: none;
+        order: 3;
+        padding: 0 1.25rem;
+        margin-top: 1.5rem;
+    }
+
+    .texto h1 {
+        font-size: clamp(1.75rem, 7vw, 2.5rem);
+    }
+
+    .texto p {
+        width: 100%;
+        font-size: 0.9rem;
+        line-height: 1.6;
+    }
+
+    .btn {
+        position: static;
+        transform: none;
+        order: 4;
+        align-self: flex-start;
+        width: auto;
+        margin: 1.5rem 1.25rem 0;
+        padding: 0.85rem 1.5rem;
+        font-size: 0.875rem;
+        min-height: 44px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* --- Seções de conteúdo --- */
+    #mission,
+    .info {
+        position: static;
+        display: flex;
+        flex-direction: column;
+        gap: 0.75rem;
+        padding: 2.5rem 1.25rem;
+        width: 100%;
+    }
+
+    #mission label,
+    #mission h2,
+    #mission p,
+    .info label,
+    .info h2,
+    .info p {
+        position: static;
+        transform: none;
+        top: auto;
+        left: auto;
+        margin: 0;
+        width: 100%;
+    }
+
+    .txt {
+        position: absolute;
+        top: 40%;
+        left: 50%;
+        transform: translate(-50%, -50%)
+    }
+
+    #mission h2,
+    .info h2 {
+        font-size: clamp(1.6rem, 6vw, 2.25rem);
+    }
+
+    #mission p,
+    .info p {
+        font-size: 0.9rem;
+        line-height: 1.6;
+    }
+
+    .mission-pic,
+    .foto {
+        position: static;
+        transform: none;
+        width: 100%;
+        height: auto;
+        margin: 1rem 0 0;
+    }
+
+    /* --- Vídeo + CTA --- */
+    .vid {
+        position: static;
+        transform: none;
+        margin: 0;
+        width: 100%;
+        overflow: hidden;
+    }
+
+    .video {
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+
+    .txt {
+        position: static;
+        transform: none;
+        margin: 0;
+        padding: 2.5rem 1.25rem 3rem;
+        width: 100%;
+    }
+
+    .txt h2 {
+        font-size: clamp(1.75rem, 7vw, 2.5rem);
+    }
+
+    .txt p {
+        font-size: 0.9rem;
+        line-height: 1.6;
+    }
+
+    .txt a {
+        position: static;
+        transform: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: auto;
+        margin-top: 1.5rem;
+        padding: 0.9rem 1.75rem;
+        font-size: 0.9rem;
+        min-height: 44px;
+    }
+
+    .txt a:hover {
+        padding: 0.9rem 1.75rem;
+        font-size: 0.9rem;
+    }
+
+    /* --- Rodapé --- */
+    .footer {
+        margin-top: 0;
+        padding: 40px 1.25rem 24px;
+    }
+}
+
+@media (max-width: 768px) {
+
+    nav.sections {
+        padding: 0.875rem 1rem;
+    }
+
+    .menu-toggle {
+        order: 2;
+        margin-left: auto;
+    }
+
+    .telefone {
+        order: 5;
+        width: 100%;
+        justify-content: center;
+        text-align: center;
+        white-space: normal;
+        font-size: clamp(0.65rem, 2.2vw, 0.8rem);
+        padding: 0.65rem 0.75rem;
+    }
+
+    .footer-content {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 24px;
+    }
+
+    #mission,
+    .info,
+    .txt {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    .txt {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        margin-top: 150vh;
+    }
+
+    .texto {
+        padding: 0 1rem;
+    }
+
+    .btn {
+        margin: 1.25rem 1rem 0;
+    }
+
+    .texto {
+        position: absolute;
+        top: 40%;
+        left: 2%;
+        width: 100%;
+        transform: translate(-50%, -50%);
+        transform: scale(0.7);
+    }
+
+    .footer {
+        margin-top: 30vh;
+    }
+}
+
+@media (max-width: 480px) {
+
+    nav.sections {
+        padding: 0.75rem 1rem;
+        gap: 0.5rem;
+    }
+
+    .picture {
+        width: clamp(80px, 26vw, 110px);
+    }
+
+    .menu-toggle {
+        order: 2;
+    }
+
+    .telefone {
+        order: 5;
+        width: 100%;
+        justify-content: center;
+        text-align: center;
+        margin-top: 0.25rem;
+    }
+
+    .texto h1,
+    .txt h2 {
+        font-size: 1.6rem;
+    }
+
+    #mission h2,
+    .info h2 {
+        font-size: 1.5rem;
+    }
+
+    .texto p,
+    #mission p,
+    .info p,
+    .txt p {
+        font-size: 0.85rem;
+    }
+}
+
+@media (max-width: 430px) {
+
+    nav.sections {
+        padding: 0.75rem 0.875rem;
+    }
+
+    .picture {
+        width: clamp(80px, 24vw, 100px);
+    }
+}
+
+@media (max-width: 390px) {
+
+    .header a {
+        font-size: 0.95rem;
+        padding: 0.75rem;
+    }
+
+    .telefone {
+        font-size: 0.75rem;
+        padding: 0.6rem 0.65rem;
+    }
+}
+
+@media (max-width: 360px) {
+
+    .picture {
+        width: 78px;
+    }
+
+    .menu-toggle {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 320px) {
+
+    nav.sections {
+        padding: 0.65rem 0.75rem;
+    }
+
+    #mission,
+    .info,
+    .txt {
+        padding-left: 0.85rem;
+        padding-right: 0.85rem;
+    }
+
+    .texto {
+        padding: 0 0.85rem;
+    }
+
+    .btn {
+        margin: 1rem 0.85rem 0;
+        width: calc(100% - 1.7rem);
+    }
+}
