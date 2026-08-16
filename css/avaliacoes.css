@@ -1,0 +1,106 @@
+* {
+    background-color: #ffffff;
+}
+
+.error-image {
+    width: 50%;
+    overflow-x: hidden;
+
+    position: absolute;
+    top: 52%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.fa-solid {
+    font-size: 20px;
+    margin-top: 3vh;
+    margin-left: 2vw;
+}
+
+/* ==========================================================
+   RESPONSIVE — apenas telas <= 1024px
+   ========================================================== */
+
+@media (max-width: 1024px) {
+    body {
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+        overflow-x: hidden;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .error-image {
+        position: static;
+        transform: none;
+        width: min(70%, 480px);
+        max-width: 100%;
+        height: auto;
+        padding: 1rem;
+    }
+
+    .fa-solid {
+        position: fixed;
+        top: 1.25rem;
+        left: 1.25rem;
+        margin: 0;
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 44px;
+        height: 44px;
+        background: rgba(255, 195, 0, 0.15);
+        border-radius: 50%;
+    }
+
+    body > a {
+        text-decoration: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .error-image {
+        width: min(85%, 400px);
+    }
+
+    .fa-solid {
+        top: 1rem;
+        left: 1rem;
+        font-size: 18px;
+    }
+}
+
+@media (max-width: 480px) {
+    .error-image {
+        width: min(92%, 340px);
+    }
+}
+
+@media (max-width: 375px) {
+    .error-image {
+        width: 95%;
+    }
+
+    .fa-solid {
+        width: 40px;
+        height: 40px;
+        font-size: 16px;
+    }
+}
+
+@media (max-width: 320px) {
+    .error-image {
+        width: 100%;
+        padding: 0.75rem;
+    }
+
+    .fa-solid {
+        top: 0.75rem;
+        left: 0.75rem;
+    }
+}

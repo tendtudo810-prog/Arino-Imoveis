@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARINO IMÓVEIS</title>
+    <link rel="stylesheet" href="css/imovel.css">
+    <link rel="stylesheet" href="css/lightbox.css">
+    <link rel="shortcut icon" href="pic1/Logo.png" type="image/x-icon">
+</head>
+<body>
+    <div class="container">
+        <a class="back-link" href="imoveis.html">← Voltar para Imóveis</a>
+        <h1 class="page-title">Duas Casas No Mesmo Lote à Venda | ETAPA C</h1>
+        <p class="page-location">Valparaíso de Goiás - DF</p>
+
+        <div class="carousel">
+            <div class="carousel-container">
+                <div class="carousel-slide active">
+                    <img src="v11/V11 (3).jpeg" alt="Casa moderna - Foto 1">
+                </div>
+                <div class="carousel-slide">
+                    <img src="v11/V11 (2).jpeg" alt="Casa moderna - Foto 2">
+                </div>
+                <div class="carousel-slide">
+                    <img src="v11/V11 (1).jpeg" alt="Casa moderna - Foto 3">
+                </div>
+
+                <div class="carousel-slide">
+                    <img src="v11/V11 (5).jpeg" alt="Casa moderna - Foto 4">
+                </div>
+                <div class="carousel-slide">
+                    <img src="v11/V11 (4).jpeg" alt="Casa moderna - Foto 5">
+                </div>
+                <div class="carousel-slide">
+                    <img src="v11/V11 (6).jpeg" alt="Casa moderna - Foto 6">
+                </div>
+
+                <div class="carousel-slide">
+                    <img src="v11/V11 (7).jpeg" alt="Casa moderna - Foto 7">
+                </div>
+
+                <div class="carousel-slide">
+                    <img src="v11/V11 (8).jpeg" alt="Casa moderna - Foto 8">
+                </div>
+                
+                <div class="carousel-slide">
+                    <img src="v11/V11 (9).jpeg" alt="Casa moderna - Foto 9">
+                </div>
+
+                <div class="carousel-slide">
+                    <img src="v11/V11 (11).jpeg" alt="Casa moderna - Foto 10">
+                </div>
+
+                <div class="carousel-slide">
+                    <img src="v11/V11 (12).jpeg" alt="Casa moderna - Foto 11">
+                </div>
+
+                <div class="carousel-slide">
+                    <img src="v11/V11 (14).jpeg" alt="Casa moderna - Foto 12">
+                </div>
+
+                <div class="carousel-slide">
+                    <img src="v11/V11 (13).jpeg" alt="Casa moderna - Foto 13">
+                </div>
+
+                <div class="carousel-slide">
+                    <img src="v11/V11 (10).jpeg" alt="Casa moderna - Foto 14">
+                </div>
+
+                <button class="carousel-nav prev" aria-label="Foto anterior">‹</button>
+                <button class="carousel-nav next" aria-label="Próxima foto">›</button>
+                <div class="carousel-dots">
+                    <button class="carousel-dot active" aria-label="Foto 1"></button>
+                    <button class="carousel-dot" aria-label="Foto 2"></button>
+                    <button class="carousel-dot" aria-label="Foto 3"></button>
+                    <button class="carousel-dot" aria-label="Foto 4"></button>
+                    <button class="carousel-dot" aria-label="Foto 5"></button>
+                    <button class="carousel-dot" aria-label="Foto 6"></button>
+                    <button class="carousel-dot" aria-label="Foto 7"></button>
+                    <button class="carousel-dot" aria-label="Foto 8"></button>
+                    <button class="carousel-dot" aria-label="Foto 9"></button>
+                    <button class="carousel-dot" aria-label="Foto 10"></button>
+                    <button class="carousel-dot" aria-label="Foto 11"></button>
+                    <button class="carousel-dot" aria-label="Foto 12"></button>
+                    <button class="carousel-dot" aria-label="Foto 13"></button>
+                    <button class="carousel-dot" aria-label="Foto 14"></button>
+                </div>
+            </div>
+        </div>
+
+        <label for="#" class="price">R$ 1.400.000,00</label>
+
+        <p class="property-description">Localização estratégica em Vicente Pires, próxima ao Taguaparque e com fácil acesso à Via Estrutural.
+
+        A região conta com ampla estrutura de comércio e serviços, incluindo supermercados, farmácias, academias, postos de combustível e tudo o que você precisa para o dia a dia. Além dos ambientes internos, a propriedade oferece uma estrutura especial para os momentos de descanso e confraternização:
+
+        Piscina • Churrasqueira • Amplo espaço externo
+
+        Um imóvel com dimensões que permitem aproveitar a casa de verdade, reunindo família e amigos com conforto e privacidade. Entre em contato para mais informações e agende uma visita para conhecer pessoalmente esta propriedade. <br> <br>
+        - Área total informada: 68,96 m²
+        </p>
+        <a href="https://wa.me/5561996973773?text=Olá,%20tenho%20interesse%20na%20Casa%20moderna%20em%20condomínio%20em%20Brasília!" target="_blank" class="contact-button">
+            <span>Tenho Interesse</span>
+        </a>
+    </div>
+    <script src="js/lightbox.js"></script>
+    <script>
+        // Carrossel Manual - Imóvel v11
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.carousel-slide');
+        const dots = document.querySelectorAll('.carousel-dot');
+        const prevBtn = document.querySelector('.carousel-nav.prev');
+        const nextBtn = document.querySelector('.carousel-nav.next');
+
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.classList.toggle('active', i === index);
+            });
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === index);
+            });
+            currentSlide = index;
+        }
+
+        function nextSlide() {
+            const nextIndex = (currentSlide + 1) % slides.length;
+            showSlide(nextIndex);
+        }
+
+        function prevSlide() {
+            const prevIndex = (currentSlide - 1 + slides.length) % slides.length;
+            showSlide(prevIndex);
+        }
+
+        if (prevBtn) {
+            prevBtn.addEventListener('click', prevSlide);
+        }
+
+        if (nextBtn) {
+            nextBtn.addEventListener('click', nextSlide);
+        }
+
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                showSlide(index);
+            });
+        });
+
+        // Navegação por teclado
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') {
+                prevSlide();
+            } else if (e.key === 'ArrowRight') {
+                nextSlide();
+            }
+        });
+    </script>
+</body>
+</html>

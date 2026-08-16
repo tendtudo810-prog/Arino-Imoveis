@@ -1,0 +1,334 @@
+/* Styles específicos para a página de detalhes do imóvel */
+body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    background: radial-gradient(circle at top, rgba(255, 195, 0, 0.03), transparent 40%),
+        linear-gradient(180deg, #00030c 0%, #05070d 100%);
+    color: #fff;
+    font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+    -webkit-font-smoothing: antialiased;
+}
+
+.container {
+    max-width: 960px;
+    margin: 80px auto;
+    padding: 40px;
+}
+
+.back-link {
+    color: #ffc300;
+    text-decoration: none;
+    margin-bottom: 24px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    letter-spacing: 0.02em;
+    padding: 12px 20px;
+    border-radius: 12px;
+    background: rgba(255, 195, 0, 0.08);
+    border: 1px solid rgba(255, 195, 0, 0.2);
+}
+
+.back-link:hover {
+    color: #e0b71f;
+    transform: translateX(-4px);
+    background: rgba(255, 195, 0, 0.15);
+    border-color: rgba(255, 195, 0, 0.35);
+}
+
+.page-title {
+    margin-bottom: 8px;
+    font-size: 2.8rem;
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.page-location {
+    color: #ffc300;
+    font-size: 1.05rem;
+    margin-bottom: 32px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.page-location::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    background: #ffc300;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.property-image {
+    width: 100%;
+    border-radius: 20px;
+    margin-bottom: 32px;
+    display: block;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5),
+        0 0 0 1px rgba(255, 255, 255, 0.05);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.property-image:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 35px 60px -15px rgba(0, 0, 0, 0.6),
+        0 0 0 1px rgba(255, 195, 0, 0.15);
+}
+
+.property-description {
+    line-height: 1.85;
+    color: #cbd5e1;
+    font-size: 1.05rem;
+    max-width: 100%;
+    font-weight: 400;
+}
+
+.price {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #ffc300;
+    margin-bottom: 24px;
+}
+
+.contact-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    background: linear-gradient(135deg, #ffc300 0%, #e0b71f 100%);
+    color: #00030c;
+    text-decoration: none;
+    padding: 16px 32px;
+    border-radius: 50px;
+    font-weight: 700;
+    font-size: 1rem;
+    margin-top: 32px;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 24px rgba(255, 195, 0, 0.3);
+    border: none;
+    cursor: pointer;
+}
+
+.contact-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 32px rgba(255, 195, 0, 0.4);
+}
+
+.contact-button:active {
+    transform: translateY(0);
+}
+
+/* Carrossel de Imagens */
+.carousel {
+    position: relative;
+    width: 100%;
+    border-radius: 20px;
+    overflow: hidden;
+    margin-bottom: 32px;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5),
+        0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+.carousel-container {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+}
+
+.carousel-slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.carousel-slide.active {
+    opacity: 1;
+}
+
+.carousel-slide img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.carousel-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    background: rgba(0, 3, 12, 0.7);
+    border: 1px solid rgba(255, 195, 0, 0.3);
+    border-radius: 50%;
+    color: #ffc300;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    z-index: 10;
+}
+
+.carousel-nav:hover {
+    background: rgba(255, 195, 0, 0.2);
+    border-color: #ffc300;
+}
+
+.carousel-nav.prev {
+    left: 16px;
+}
+
+.carousel-nav.next {
+    right: 16px;
+}
+
+.carousel-dots {
+    position: absolute;
+    bottom: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    z-index: 10;
+}
+
+.carousel-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.carousel-dot.active {
+    background: #ffc300;
+    width: 30px;
+    border-radius: 5px;
+}
+
+/* ==========================================================
+   RESPONSIVE — apenas telas <= 1024px
+   ========================================================== */
+
+@media (max-width: 1024px) {
+    body {
+        overflow-x: hidden;
+    }
+
+    .container {
+        margin: 50px auto;
+        padding: 32px;
+    }
+
+    .page-title {
+        font-size: clamp(2rem, 5vw, 2.4rem);
+        line-height: 1.15;
+        word-wrap: break-word;
+    }
+
+    .back-link {
+        min-height: 44px;
+    }
+
+    .property-image {
+        border-radius: 18px;
+    }
+}
+
+@media (max-width: 768px) {
+    .container {
+        margin: 40px auto;
+        padding: 24px;
+    }
+
+    .page-title {
+        font-size: clamp(1.8rem, 5.5vw, 2.2rem);
+    }
+
+    .page-location {
+        font-size: 1rem;
+    }
+
+    .property-description {
+        font-size: 1rem;
+    }
+
+    .property-image {
+        border-radius: 16px;
+        margin-bottom: 24px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        margin: 32px auto;
+        padding: 20px;
+    }
+
+    .page-title {
+        font-size: clamp(1.6rem, 6.5vw, 1.9rem);
+    }
+
+    .back-link {
+        font-size: 0.9rem;
+        margin-bottom: 20px;
+    }
+
+    .property-image {
+        border-radius: 14px;
+        margin-bottom: 24px;
+    }
+
+    .property-description {
+        font-size: 0.95rem;
+    }
+}
+
+@media (max-width: 375px) {
+    .container {
+        padding: 18px;
+        margin: 28px auto;
+    }
+
+    .page-title {
+        font-size: 1.7rem;
+    }
+
+    .page-location {
+        font-size: 0.95rem;
+    }
+}
+
+@media (max-width: 320px) {
+    .container {
+        margin: 24px auto;
+        padding: 16px;
+    }
+
+    .page-title {
+        font-size: 1.5rem;
+    }
+
+    .property-description {
+        font-size: 0.9rem;
+    }
+}

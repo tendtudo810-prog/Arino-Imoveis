@@ -1,106 +1,340 @@
 * {
-    background-color: #ffffff;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Inter", sans-serif;
+    background-color: #00030c;
 }
 
-.error-image {
-    width: 50%;
+body {
     overflow-x: hidden;
+}
 
+.header {
     position: absolute;
-    top: 52%;
+    top: 15%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    gap: 50px;
+    z-index: 10;
+    background-color: transparent;
+}
+
+.header dl {
+    background-color: transparent;
+}
+
+.header a {
+    color: #fff;
+    text-decoration: none;
+    font-family: "Inter", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    position: relative;
+    display: inline-block;
+    animation: headerLinkAppear 0.8s ease-out both;
+    background-color: transparent;
+}
+
+.header a::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    width: 100%;
+    height: 2px;
+    background: #ffc300;
+    color: #ffc300;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+}
+
+.header a:hover::after {
+    transform: scaleX(1);
+}
+
+@keyframes headerLinkAppear {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.picture {
+    width: 30%;
+    position: absolute;
+    top: 15%;
+    left: 16%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    background-color: transparent;
+}
+
+.telefone {
+    color: #05070d;
+    text-decoration: none;
+    position: absolute;
+    top: 15%;
+    background-color: #ffc300;
+    left: 87%;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+    z-index: 10;
+    padding: 15px;
+    border-radius: 30px;
+    border: 1.5px solid #FFC300;
+    font-family: "Inter", sans-serif;
+    font-size: 15px;
+    transition: 0.6s;
+    width: 14%;
+    text-align: center;
+}
+
+.telefone:hover {
+    background-color: #05070d;
+    color: #a57e00;
+    padding: 20px;
+    border: 1.5px solid #FFC300;
+    transition: 0.6s;
+    width: 15%;
+}
+
+.imoveis {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(240px, 1fr));
+    gap: 24px;
+    width: min(1200px, 90%);
+    margin: 160vh auto 0;
+    padding: 0 20px;
+}
+
+.imovel-card {
+    display: block;
+    background: linear-gradient(145deg, #111827, #0b1020);
+    border: 1px solid #2d3748;
+    border-radius: 18px;
+    overflow: hidden;
+    text-decoration: none;
+    color: #fff;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.imovel-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 16px 35px rgba(0, 0, 0, 0.35);
+}
+
+.imovel-card img {
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    display: block;
+}
+
+.imovel-info {
+    padding: 18px;
+}
+
+.tag {
+    display: inline-block;
+    background: #a57e00;
+    color: #101828;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 6px 10px;
+    border-radius: 999px;
+    margin-bottom: 10px;
+}
+
+.tag-vendido {
+    display: inline-block;
+    background: rgb(145, 26, 26);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 700;
+    padding: 6px 10px;
+    border-radius: 999px;
+    margin-bottom: 10px;
+}
+
+.preco-vendido {
+    font-size: 20px;
+    font-weight: bold;
+    color: rgb(155, 29, 29);
+    margin-bottom: 6px;
+}
+
+.imovel-info h3 {
+    font-size: 18px;
+    margin-bottom: 8px;
+    color: #ffffff;
+}
+
+.preco {
+    font-size: 20px;
+    font-weight: bold;
+    color: #ffc300;
+    margin-bottom: 6px;
+}
+
+.local {
+    font-size: 13px;
+    color: #cbd5e1;
+    margin-bottom: 8px;
+}
+
+.desc {
+    font-size: 13px;
+    color: #e5e7eb;
+    line-height: 1.5;
+}
+
+.menu-toggle {
+    display: none;
+}
+
+.imoveis1 {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(240px, 1fr));
+    gap: 24px;
+    width: min(1200px, 90%);
+    margin: 320vh auto 0;
+    padding: 0 20px;
+    position: absolute;
+    top: 100%;
     left: 50%;
     transform: translate(-50%, -50%);
 }
 
-.fa-solid {
-    font-size: 20px;
-    margin-top: 3vh;
-    margin-left: 2vw;
+.video {
+    width: 100%;
+
+    position: absolute;
+    top: 90%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -webkit-mask-image: linear-gradient(to top, transparent, #101828 80%, #101828 20%, transparent);
+    mask-image: linear-gradient(to top, transparent, #101828 65%, #101828 35%, transparent);
 }
 
-/* ==========================================================
-   RESPONSIVE — apenas telas <= 1024px
-   ========================================================== */
+.message h1 {
+    position: absolute;
+    top: 70%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 
-@media (max-width: 1024px) {
-    body {
-        margin: 0;
-        padding: 0;
-        min-height: 100vh;
-        overflow-x: hidden;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-    }
-
-    .error-image {
-        position: static;
-        transform: none;
-        width: min(70%, 480px);
-        max-width: 100%;
-        height: auto;
-        padding: 1rem;
-    }
-
-    .fa-solid {
-        position: fixed;
-        top: 1.25rem;
-        left: 1.25rem;
-        margin: 0;
-        z-index: 10;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 44px;
-        height: 44px;
-        background: rgba(255, 195, 0, 0.15);
-        border-radius: 50%;
-    }
-
-    body > a {
-        text-decoration: none;
-    }
+    color: #fff;
+    z-index: 20;
+    text-align: center;
+    background-color: transparent;
+    font-size: 40px;
 }
 
-@media (max-width: 768px) {
-    .error-image {
-        width: min(85%, 400px);
-    }
+.message p {
+    position: absolute;
+    top: 80%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 
-    .fa-solid {
-        top: 1rem;
-        left: 1rem;
-        font-size: 18px;
-    }
+    color: #fff;
+    z-index: 20;
+    text-align: center;
+    background-color: transparent;
+    font-size: 15px;
 }
 
-@media (max-width: 480px) {
-    .error-image {
-        width: min(92%, 340px);
-    }
+.button {
+    color: #05070d;
+    text-decoration: none;
+    position: absolute;
+    top: 95%;
+    background-color: #ffc300;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+    z-index: 10;
+    padding: 15px;
+    border-radius: 10px;
+    border: 1.5px solid #FFC300;
+    font-family: "Inter", sans-serif;
+    font-size: 15px;
+    transition: 0.6s;
+    width: 14%;
+    text-align: center;
 }
 
-@media (max-width: 375px) {
-    .error-image {
-        width: 95%;
-    }
-
-    .fa-solid {
-        width: 40px;
-        height: 40px;
-        font-size: 16px;
-    }
+.button:hover {
+    background-color: #05070d;
+    color: #a57e00;
+    padding: 20px;
+    border: 1.5px solid #FFC300;
+    transition: 0.6s;
+    width: 15%;
 }
 
-@media (max-width: 320px) {
-    .error-image {
-        width: 100%;
-        padding: 0.75rem;
-    }
+.footer {
+    background: linear-gradient(135deg, #05070d, #101828);
+    color: #f5f5f5;
+    padding: 50px 24px 24px;
+    margin-top: 90vh;
+    border-top: 1px solid rgba(255, 195, 0, 0.25);
 
-    .fa-solid {
-        top: 0.75rem;
-        left: 0.75rem;
-    }
+    position: relative;
+    width: 100%;
+    left: 0;
+    transform: none;
+    background-color: transparent;
+}
+
+.footer div {
+    background-color: transparent;
+}
+
+.footer a {
+    font-weight: bold;
+    color: #ffc300;
+    text-decoration: none;
+    font-size: 15px;
+    background-color: transparent;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 30px;
+    flex-wrap: wrap;
+    max-width: 1100px;
+    margin: 0 auto;
+    background-color: transparent;
+}
+
+.footer h3,
+.footer h4 {
+    color: #ffc300;
+    margin-bottom: 10px;
+    background-color: transparent;
+}
+
+.footer p {
+    color: #cbd5e1;
+    margin-bottom: 6px;
+    font-size: 14px;
+    background-color: transparent;
+}
+
+.footer-bottom {
+    text-align: center;
+    margin-top: 24px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(255, 255, 255, 0.08);
+    color: #8b95a6;
+    font-size: 13px;
 }
