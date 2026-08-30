@@ -8,6 +8,35 @@
 
 body {
     overflow-x: hidden;
+    width: 100%;
+}
+
+/* ==========================================================
+   DESKTOP (padrão - > 1024px)
+   ========================================================== */
+
+header {
+    position: relative;
+    min-height: 200px;
+    width: 100%;
+}
+
+nav.sections {
+    position: relative;
+    width: 100%;
+    height: 200px;
+    margin-top: 10vh;
+}
+
+.picture {
+    position: absolute;
+    top: 15%;
+    left: 16%;
+    transform: translate(-50%, -50%);
+    width: 12%;
+    max-width: 200px;
+    z-index: 10;
+    background-color: transparent;
 }
 
 .header {
@@ -66,16 +95,6 @@ body {
     }
 }
 
-.picture {
-    width: 30%;
-    position: absolute;
-    top: 15%;
-    left: 16%;
-    transform: translate(-50%, -50%);
-    z-index: 10;
-    background-color: transparent;
-}
-
 .telefone {
     color: #05070d;
     text-decoration: none;
@@ -86,32 +105,113 @@ body {
     transform: translate(-50%, -50%);
     cursor: pointer;
     z-index: 10;
-    padding: 15px;
+    padding: 15px 20px;
     border-radius: 30px;
     border: 1.5px solid #FFC300;
     font-family: "Inter", sans-serif;
     font-size: 15px;
     transition: 0.6s;
-    width: 14%;
-    text-align: center;
+    white-space: nowrap;
 }
 
 .telefone:hover {
     background-color: #05070d;
     color: #a57e00;
-    padding: 20px;
+    padding: 15px 25px;
     border: 1.5px solid #FFC300;
     transition: 0.6s;
-    width: 15%;
 }
 
+.menu-toggle {
+    display: none;
+}
+
+/* Message section - positioned absolutely for desktop */
+.message {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    margin-top: -100vh;
+    overflow: hidden;
+}
+
+.video {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    -webkit-mask-image: linear-gradient(to top, transparent, #101828 80%, #101828 20%, transparent);
+    mask-image: linear-gradient(to top, transparent, #101828 65%, #101828 35%, transparent);
+}
+
+.message h1 {
+    position: absolute;
+    top: 15%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    z-index: 20;
+    text-align: center;
+    background-color: transparent;
+    font-size: 40px;
+    max-width: 800px;
+    padding: 0 20px;
+}
+
+.message p {
+    position: absolute;
+    top: 22%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    z-index: 20;
+    text-align: center;
+    background-color: transparent;
+    font-size: 15px;
+    max-width: 600px;
+    padding: 0 20px;
+}
+
+.button {
+    color: #05070d;
+    text-decoration: none;
+    position: absolute;
+    top: 30%;
+    background-color: #ffc300;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+    z-index: 10;
+    padding: 15px 30px;
+    border-radius: 10px;
+    border: 1.5px solid #FFC300;
+    font-family: "Inter", sans-serif;
+    font-size: 15px;
+    transition: 0.6s;
+    white-space: nowrap;
+}
+
+.button:hover {
+    background-color: #05070d;
+    color: #a57e00;
+    padding: 15px 35px;
+    border: 1.5px solid #FFC300;
+    transition: 0.6s;
+}
+
+/* Imóveis grid */
 .imoveis {
     display: grid;
-    grid-template-columns: repeat(3, minmax(240px, 1fr));
+    grid-template-columns: repeat(3, minmax(280px, 1fr));
     gap: 24px;
     width: min(1200px, 90%);
-    margin: 160vh auto 0;
-    padding: 0 20px;
+    margin: 60px auto 40px;
+    padding: 40px 20px;
+    position: relative;
+    z-index: 5;
 }
 
 .imovel-card {
@@ -175,6 +275,7 @@ body {
     font-size: 18px;
     margin-bottom: 8px;
     color: #ffffff;
+    line-height: 1.3;
 }
 
 .preco {
@@ -196,100 +297,14 @@ body {
     line-height: 1.5;
 }
 
-.menu-toggle {
-    display: none;
-}
-
-.imoveis1 {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(240px, 1fr));
-    gap: 24px;
-    width: min(1200px, 90%);
-    margin: 320vh auto 0;
-    padding: 0 20px;
-    position: absolute;
-    top: 100%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-.video {
-    width: 100%;
-
-    position: absolute;
-    top: 90%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    -webkit-mask-image: linear-gradient(to top, transparent, #101828 80%, #101828 20%, transparent);
-    mask-image: linear-gradient(to top, transparent, #101828 65%, #101828 35%, transparent);
-}
-
-.message h1 {
-    position: absolute;
-    top: 70%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-
-    color: #fff;
-    z-index: 20;
-    text-align: center;
-    background-color: transparent;
-    font-size: 40px;
-}
-
-.message p {
-    position: absolute;
-    top: 80%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-
-    color: #fff;
-    z-index: 20;
-    text-align: center;
-    background-color: transparent;
-    font-size: 15px;
-}
-
-.button {
-    color: #05070d;
-    text-decoration: none;
-    position: absolute;
-    top: 95%;
-    background-color: #ffc300;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    cursor: pointer;
-    z-index: 10;
-    padding: 15px;
-    border-radius: 10px;
-    border: 1.5px solid #FFC300;
-    font-family: "Inter", sans-serif;
-    font-size: 15px;
-    transition: 0.6s;
-    width: 14%;
-    text-align: center;
-}
-
-.button:hover {
-    background-color: #05070d;
-    color: #a57e00;
-    padding: 20px;
-    border: 1.5px solid #FFC300;
-    transition: 0.6s;
-    width: 15%;
-}
-
+/* Footer */
 .footer {
     background: linear-gradient(135deg, #05070d, #101828);
     color: #f5f5f5;
     padding: 50px 24px 24px;
-    margin-top: 90vh;
     border-top: 1px solid rgba(255, 195, 0, 0.25);
-
     position: relative;
     width: 100%;
-    left: 0;
-    transform: none;
     background-color: transparent;
 }
 
@@ -337,4 +352,271 @@ body {
     border-top: 1px solid rgba(255, 255, 255, 0.08);
     color: #8b95a6;
     font-size: 13px;
+}
+
+/* ==========================================================
+   RESPONSIVE — TABLET E MOBILE (<= 1024px)
+   ========================================================== */
+
+@media (max-width: 1024px) {
+
+    /* Header & Navegação */
+    header {
+        position: relative;
+        min-height: auto;
+        padding: 0;
+    }
+
+    nav.sections {
+        position: relative;
+        height: auto;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.75rem;
+        padding: 1rem 1.25rem;
+        background: rgba(5, 7, 13, 0.95);
+        border-bottom: 1px solid rgba(255, 195, 0, 0.15);
+    }
+
+    .picture {
+        position: static;
+        transform: none;
+        width: clamp(80px, 20vw, 120px);
+        order: 1;
+    }
+
+    .menu-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        order: 2;
+        width: 44px;
+        height: 44px;
+        padding: 0;
+        background: rgba(255, 195, 0, 0.12);
+        border: 1.5px solid #ffc300;
+        border-radius: 8px;
+        color: #ffc300;
+        font-size: 1.15rem;
+        cursor: pointer;
+        flex-shrink: 0;
+    }
+
+    .header {
+        position: static;
+        transform: none;
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        gap: 0;
+        order: 4;
+        width: 100%;
+        padding: 0.75rem 0;
+        background: rgba(5, 7, 13, 0.97);
+        border: 1px solid rgba(255, 195, 0, 0.2);
+        border-radius: 12px;
+        margin-top: 0.5rem;
+    }
+
+    .header.is-open {
+        display: flex;
+    }
+
+    .header dl {
+        width: 100%;
+        text-align: center;
+    }
+
+    .header a {
+        display: block;
+        padding: 0.85rem 1rem;
+        font-size: 1rem;
+        min-height: 44px;
+    }
+
+    .telefone {
+        position: static;
+        transform: none;
+        order: 3;
+        padding: 0.75rem 1rem;
+        font-size: clamp(0.7rem, 2.5vw, 0.875rem);
+        white-space: nowrap;
+        min-height: 44px;
+        display: inline-flex;
+        align-items: center;
+        width: auto;
+        left: auto;
+        top: auto;
+    }
+
+    .telefone:hover {
+        padding: 0.75rem 1rem;
+        width: auto;
+    }
+
+    /* Message section - fluxo natural para mobile */
+    .message {
+        display: none;
+    }
+
+
+
+    /* Imóveis grid */
+    .imoveis {
+        position: relative;
+        margin: 3rem auto 40px;
+        padding: 0 1.25rem;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1rem;
+        width: 100%;
+        max-width: 1200px;
+    }
+
+    .imovel-card img {
+        height: auto;
+        aspect-ratio: 16 / 10;
+    }
+
+    /* Footer */
+    .footer {
+        padding: 2.5rem 1.25rem 1.5rem;
+    }
+
+    .footer-content {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1.5rem;
+    }
+
+    /* Global overflow control */
+    img,
+    video {
+        max-width: 100%;
+        height: auto;
+    }
+}
+
+@media (max-width: 768px) {
+
+    nav.sections {
+        padding: 0.875rem 1rem;
+    }
+
+    .telefone {
+        order: 5;
+        width: 100%;
+        justify-content: center;
+        text-align: center;
+        white-space: normal;
+        font-size: clamp(0.65rem, 2.2vw, 0.8rem);
+        padding: 0.65rem 0.75rem;
+    }
+
+    .menu-toggle {
+        order: 2;
+        margin-left: auto;
+    }
+
+    .imoveis {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.875rem;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .imoveis {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .telefone {
+        width: 100%;
+        justify-content: center;
+        text-align: center;
+        order: 5;
+        margin-top: 0.25rem;
+    }
+
+    .imovel-info h3 {
+        font-size: clamp(0.9rem, 3vw, 1rem);
+    }
+
+    .preco {
+        font-size: clamp(1rem, 3vw, 1.125rem);
+    }
+
+    .local {
+        font-size: clamp(0.7rem, 2.5vw, 0.8rem);
+    }
+}
+
+@media (max-width: 430px) {
+
+    nav.sections {
+        padding: 0.75rem 0.875rem;
+    }
+
+    .picture {
+        width: clamp(70px, 22vw, 90px);
+    }
+
+    .menu-toggle {
+        width: 40px;
+        height: 40px;
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 390px) {
+
+    .header a {
+        font-size: 0.9rem;
+        padding: 0.75rem;
+    }
+
+    .telefone {
+        font-size: clamp(0.65rem, 2.5vw, 0.75rem);
+        padding: 0.6rem 0.65rem;
+    }
+}
+
+@media (max-width: 375px) {
+}
+
+@media (max-width: 360px) {
+
+    .picture {
+        width: clamp(60px, 20vw, 75px);
+    }
+
+    .menu-toggle {
+        width: 38px;
+        height: 38px;
+        font-size: 0.95rem;
+    }
+
+    .imovel-info {
+        padding: 14px;
+    }
+}
+
+@media (max-width: 320px) {
+
+    nav.sections,
+    .imoveis {
+        padding-left: 0.75rem;
+        padding-right: 0.75rem;
+    }
+
+    .picture {
+        width: 55px;
+    }
+
+    .menu-toggle {
+        width: 36px;
+        height: 36px;
+    }
 }

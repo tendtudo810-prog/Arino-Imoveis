@@ -204,39 +204,6 @@ body {
     gap: 80px;
 }
 
-.txt {
-    font-size: 15px;
-    position: absolute;
-    top: 80%;
-    left: 5.5%;
-    transform: translate(-50%, -50%);
-}
-
-.txt1 {
-    font-size: 15px;
-    position: absolute;
-    top: 80%;
-    left: 33%;
-    transform: translate(-50%, -50%);
-}
-
-.txt2 {
-    font-size: 15px;
-    position: absolute;
-    top: 80%;
-    left: 59%;
-    transform: translate(-50%, -50%);
-}
-
-.txt3 {
-    font-size: 15px;
-    position: absolute;
-    top: 80%;
-    left: 133.5%;
-    transform: translate(-50%, -50%);
-    width: 100%;
-}
-
 .df {
     margin-top: 200vh;
     position: absolute;
@@ -629,58 +596,6 @@ body {
     width: 100%;
 }
 
-.texto,
-.texto1,
-.texto2,
-.texto3,
-.texto4,
-.texto5 {
-    display: block;
-    gap: 15px;
-    padding: 20px;
-    width: 100%;
-    min-height: 220px;
-    transition: .35s ease;
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
-    margin-top: 2vh;
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 20px;
-    box-shadow:
-        0 8px 32px rgba(0, 0, 0, .35),
-        inset 0 1px 0 rgba(255,255,255,.08);
-}
-
-.texto p,
-.texto1 p,
-.texto2 p,
-.texto3 p,
-.texto4 p,
-.texto5 p {
-    margin-top: 2vh;
-    text-align: left;
-    color: #e8e8e8;
-    line-height: 1.6;
-}
-
-.tt {
-    display: flex;
-    gap: 15px;
-}
-
-.texto:hover,
-.texto1:hover,
-.texto2:hover,
-.texto3:hover,
-.texto4:hover,
-.texto5:hover {
-    border-color: rgba(165,126,0,.45);
-    box-shadow:
-        0 18px 45px rgba(0,0,0,.45),
-        0 0 35px rgba(165,126,0,.18);
-}
-
 .footer {
     background: linear-gradient(135deg, #05070d, #101828);
     color: #f5f5f5;
@@ -954,7 +869,6 @@ body {
         display: none;
     }
 
-    .txt,
     .txt1,
     .txt2,
     .txt3 {
@@ -1172,15 +1086,6 @@ body {
     .cards-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
         gap: 1rem;
-    }
-
-    .texto,
-    .texto1,
-    .texto2,
-    .texto3,
-    .texto4,
-    .texto5 {
-        min-height: auto;
     }
 
     /* --- Footer --- */
