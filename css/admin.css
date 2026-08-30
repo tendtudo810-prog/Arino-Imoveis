@@ -1,0 +1,656 @@
+/* ==============================
+   RESET
+================================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+body {
+    font-family: Inter, Arial, sans-serif;
+
+    background: #f5f6f3;
+
+    color: #172018;
+}
+
+
+/* ==============================
+   LAYOUT
+================================= */
+
+.admin-layout {
+    min-height: 100vh;
+
+    display: flex;
+}
+
+
+/* ==============================
+   SIDEBAR
+================================= */
+
+.sidebar {
+    width: 260px;
+
+    min-height: 100vh;
+
+    padding: 35px 25px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    background: #142018;
+
+    color: white;
+}
+
+
+.admin-logo {
+    display: flex;
+    flex-direction: column;
+
+    margin-left: 10px;
+}
+
+
+.admin-logo span {
+    font-size: 24px;
+    font-weight: 700;
+
+    letter-spacing: 4px;
+}
+
+
+.admin-logo small {
+    margin-top: 3px;
+
+    color: rgba(255,255,255,.45);
+
+    font-size: 8px;
+
+    letter-spacing: 4px;
+}
+
+
+/* ==============================
+   NAVIGATION
+================================= */
+
+.navigation {
+    display: flex;
+    flex-direction: column;
+
+    gap: 7px;
+
+    margin-top: 80px;
+}
+
+
+.nav-item {
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    padding: 14px;
+
+    border-radius: 8px;
+
+    color: rgba(255,255,255,.5);
+
+    text-decoration: none;
+
+    font-size: 13px;
+
+    transition: .2s;
+}
+
+
+.nav-item span {
+    width: 25px;
+
+    color: rgba(255,255,255,.25);
+
+    font-size: 9px;
+}
+
+
+.nav-item:hover,
+.nav-item.active {
+    background: rgba(255,255,255,.07);
+
+    color: white;
+}
+
+
+.nav-item.active span {
+    color: #9caf9c;
+}
+
+
+/* ==============================
+   PROFILE
+================================= */
+
+.sidebar-bottom {
+    display: flex;
+    flex-direction: column;
+
+    gap: 20px;
+}
+
+
+.admin-profile {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 15px;
+
+    border-top: 1px solid rgba(255,255,255,.08);
+}
+
+
+.profile-avatar {
+    width: 36px;
+    height: 36px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #9caf9c;
+
+    color: #142018;
+
+    font-size: 12px;
+    font-weight: 700;
+}
+
+
+.admin-profile strong {
+    display: block;
+
+    font-size: 11px;
+}
+
+
+.admin-profile span {
+    display: block;
+
+    max-width: 145px;
+
+    margin-top: 3px;
+
+    overflow: hidden;
+
+    color: rgba(255,255,255,.4);
+
+    font-size: 9px;
+
+    text-overflow: ellipsis;
+}
+
+
+/* ==============================
+   LOGOUT
+================================= */
+
+.logout-button {
+    width: 100%;
+
+    padding: 12px;
+
+    border: 1px solid rgba(255,255,255,.1);
+    border-radius: 7px;
+
+    background: transparent;
+
+    color: rgba(255,255,255,.5);
+
+    cursor: pointer;
+
+    transition: .2s;
+}
+
+
+.logout-button:hover {
+    border-color: rgba(255,255,255,.25);
+
+    color: white;
+}
+
+
+/* ==============================
+   MAIN
+================================= */
+
+.main-content {
+    flex: 1;
+
+    padding: 45px;
+
+    overflow: hidden;
+}
+
+
+/* ==============================
+   TOPBAR
+================================= */
+
+.topbar {
+    display: flex;
+
+    align-items: flex-end;
+    justify-content: space-between;
+
+    margin-bottom: 40px;
+}
+
+
+.page-label {
+    display: block;
+
+    margin-bottom: 10px;
+
+    color: #718071;
+
+    font-size: 10px;
+    font-weight: 600;
+
+    letter-spacing: 2px;
+}
+
+
+.topbar h1 {
+    font-size: 34px;
+
+    letter-spacing: -1.5px;
+}
+
+
+.status {
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    color: #718071;
+
+    font-size: 11px;
+}
+
+
+.status i {
+    width: 7px;
+    height: 7px;
+
+    display: block;
+
+    border-radius: 50%;
+
+    background: #6d9b70;
+}
+
+
+/* ==============================
+   STATS
+================================= */
+
+.stats-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 15px;
+
+    margin-bottom: 20px;
+}
+
+
+.stat-card {
+    padding: 25px;
+
+    border: 1px solid #e3e5df;
+    border-radius: 12px;
+
+    background: white;
+}
+
+
+.stat-card > span {
+    display: block;
+
+    color: #879087;
+
+    font-size: 9px;
+    font-weight: 600;
+
+    letter-spacing: 1.5px;
+}
+
+
+.stat-card strong {
+    display: block;
+
+    margin-top: 15px;
+
+    font-size: 32px;
+
+    letter-spacing: -1px;
+}
+
+
+.stat-card small {
+    display: block;
+
+    margin-top: 7px;
+
+    color: #879087;
+
+    font-size: 10px;
+}
+
+
+.stat-card.highlight {
+    background: #1c2a1f;
+
+    color: white;
+
+    border-color: #1c2a1f;
+}
+
+
+.stat-card.highlight > span,
+.stat-card.highlight small {
+    color: rgba(255,255,255,.45);
+}
+
+
+/* ==============================
+   DASHBOARD GRID
+================================= */
+
+.dashboard-grid {
+    display: grid;
+
+    grid-template-columns:
+        1.6fr 1fr;
+
+    gap: 20px;
+}
+
+
+.dashboard-card {
+    padding: 25px;
+
+    border: 1px solid #e3e5df;
+    border-radius: 12px;
+
+    background: white;
+}
+
+
+.card-header {
+    display: flex;
+
+    align-items: flex-start;
+    justify-content: space-between;
+
+    margin-bottom: 25px;
+}
+
+
+.card-header span {
+    display: block;
+
+    margin-bottom: 6px;
+
+    color: #8a938a;
+
+    font-size: 9px;
+
+    letter-spacing: 1.5px;
+}
+
+
+.card-header h2 {
+    font-size: 18px;
+
+    letter-spacing: -.5px;
+}
+
+
+.card-header button {
+    border: none;
+
+    background: transparent;
+
+    color: #536c54;
+
+    font-size: 11px;
+
+    cursor: pointer;
+}
+
+
+/* ==============================
+   PROPERTIES
+================================= */
+
+.property-list {
+    display: flex;
+    flex-direction: column;
+
+    gap: 5px;
+}
+
+
+.property {
+    display: flex;
+
+    align-items: center;
+
+    gap: 15px;
+
+    padding: 12px 0;
+
+    border-top: 1px solid #eee;
+}
+
+
+.property-image {
+    width: 55px;
+    height: 48px;
+
+    flex-shrink: 0;
+
+    overflow: hidden;
+
+    border-radius: 7px;
+
+    background: #eee;
+}
+
+
+.property-image img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+}
+
+
+.property-info {
+    flex: 1;
+}
+
+
+.property-info strong {
+    display: block;
+
+    font-size: 12px;
+}
+
+
+.property-info span {
+    display: block;
+
+    margin-top: 4px;
+
+    color: #929992;
+
+    font-size: 10px;
+}
+
+
+.property-status {
+    padding: 5px 9px;
+
+    border-radius: 20px;
+
+    background: #edf3ed;
+
+    color: #5c795f;
+
+    font-size: 9px;
+}
+
+
+/* ==============================
+   QUICK ACTIONS
+================================= */
+
+.quick-actions {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 10px;
+}
+
+
+.quick-actions button {
+    min-height: 90px;
+
+    padding: 15px;
+
+    display: flex;
+    flex-direction: column;
+
+    align-items: flex-start;
+    justify-content: space-between;
+
+    border: 1px solid #e6e8e3;
+    border-radius: 9px;
+
+    background: #fafbf9;
+
+    color: #253026;
+
+    font-family: inherit;
+    font-size: 11px;
+
+    cursor: pointer;
+
+    transition: .2s;
+}
+
+
+.quick-actions button span {
+    color: #718071;
+
+    font-size: 18px;
+}
+
+
+.quick-actions button:hover {
+    border-color: #b7c2b7;
+
+    transform: translateY(-2px);
+}
+
+
+/* ==============================
+   RESPONSIVE
+================================= */
+
+@media (max-width: 1100px) {
+
+    .sidebar {
+        width: 220px;
+    }
+
+    .main-content {
+        padding: 30px;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+
+@media (max-width: 700px) {
+
+    .sidebar {
+        display: none;
+    }
+
+    .main-content {
+        padding: 25px 18px;
+    }
+
+    .topbar {
+        align-items: flex-start;
+    }
+
+    .topbar h1 {
+        font-size: 28px;
+    }
+
+    .status {
+        display: none;
+    }
+
+    .stats-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .stat-card {
+        padding: 18px;
+    }
+
+    .stat-card strong {
+        font-size: 25px;
+    }
+}
+
+
+@media (max-width: 450px) {
+
+    .stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .quick-actions {
+        grid-template-columns: 1fr;
+    }
+}
