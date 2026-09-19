@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Imóvel | ARINO IMÓVEIS</title>
+    <link rel="stylesheet" href="css/imovel.css">
+    <link rel="stylesheet" href="css/lightbox.css">
+    <link rel="shortcut icon" href="pic1/Logo.png" type="image/x-icon">
+</head>
+<body>
+    <main class="container" id="property-page" aria-live="polite">
+        <a class="back-link" href="index.html">← Voltar para Imóveis</a>
+        <p id="property-status">Carregando imóvel...</p>
+
+        <section id="property-content" hidden>
+            <span class="property-type" id="property-type"></span>
+            <span class="property-featured" id="property-featured" hidden>Imóvel em destaque</span>
+            <h1 class="page-title" id="property-title"></h1>
+            <p class="page-location" id="property-location"></p>
+
+            <div class="carousel" id="property-gallery">
+                <div class="carousel-container" id="carousel-container">
+                    <div class="carousel-slide active">
+                        <img id="property-main-image" src="" alt="">
+                    </div>
+                    <button class="carousel-nav prev" type="button" aria-label="Foto anterior">‹</button>
+                    <button class="carousel-nav next" type="button" aria-label="Próxima foto">›</button>
+                </div>
+                <div class="carousel-thumbnails" id="carousel-thumbnails" aria-label="Miniaturas das fotos"></div>
+            </div>
+
+            <p class="price" id="property-price"></p>
+            <dl class="property-features" id="property-features"></dl>
+            <p class="property-description" id="property-description"></p>
+            <dl class="property-extra" id="property-extra"></dl>
+
+            <a id="contact-button" href="#" target="_blank" rel="noopener" class="contact-button">
+                <span>Tenho Interesse</span>
+            </a>
+        </section>
+    </main>
+    <script src="js/lightbox.js"></script>
+    <script src="js/imovel.js"></script>
+</body>
+</html>

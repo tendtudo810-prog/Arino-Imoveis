@@ -1,0 +1,5 @@
+backend/.env
+backend/data/*.tmp
+backend/data/*.backup-*.json
+backend/node_modules/
+backend/uploads/

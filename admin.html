@@ -1,114 +1,41 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
-
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0"
-    >
+    <title>Painel Administrativo | Arino Imóveis</title>
 
-    <title>Painel | Arino Imóveis</title>
-
-    <link
-        rel="stylesheet"
-        href="css/admin.css"
-    >
-
+    <link rel="stylesheet" href="css/admin.css">
 </head>
-
 
 <body>
 
     <div class="admin-layout">
 
-
         <!-- SIDEBAR -->
-
         <aside class="sidebar">
 
-            <div>
-
-                <div class="admin-logo">
-
-                    <span>ARINO</span>
-
-                    <small>
-                        IMÓVEIS
-                    </small>
-
-                </div>
-
-
-                <nav class="navigation">
-
-                    <a
-                        href="#"
-                        class="nav-item active"
-                    >
-                        <span>01</span>
-                        Dashboard
-                    </a>
-
-                    <a
-                        href="#"
-                        class="nav-item"
-                    >
-                        <span>02</span>
-                        Imóveis
-                    </a>
-
-                    <a
-                        href="#"
-                        class="nav-item"
-                    >
-                        <span>03</span>
-                        Mensagens
-                    </a>
-
-                    <a
-                        href="#"
-                        class="nav-item"
-                    >
-                        <span>04</span>
-                        Usuários
-                    </a>
-
-                </nav>
-
+            <div class="brand">
+                <span>ARINO</span>
+                <small>IMÓVEIS</small>
             </div>
 
+            <nav class="sidebar-nav" aria-label="Navegação administrativa">
+                <a href="#imoveis" class="nav-item active"><span>▣</span> Imóveis</a>
+                <a href="#formulario" class="nav-item"><span>＋</span> Novo imóvel</a>
+            </nav>
 
             <div class="sidebar-bottom">
 
-                <div class="admin-profile">
+                <a href="index.html" class="nav-item">
+                    <span>↗</span>
+                    Ver site
+                </a>
 
-                    <div class="profile-avatar">
-                        A
-                    </div>
-
-                    <div>
-
-                        <strong>
-                            Administrador
-                        </strong>
-
-                        <span>
-                            admin@arinoimoveis.com
-                        </span>
-
-                    </div>
-
-                </div>
-
-
-                <button
-                    class="logout-button"
-                    id="logoutButton"
-                >
-                    Sair da conta
+                <button id="logoutButton" class="logout-button" type="button">
+                    <span>↪</span>
+                    Sair
                 </button>
 
             </div>
@@ -116,284 +43,198 @@
         </aside>
 
 
-        <!-- MAIN -->
-
+        <!-- CONTEÚDO PRINCIPAL -->
         <main class="main-content">
 
-
+            <!-- HEADER -->
             <header class="topbar">
 
                 <div>
-
-                    <span class="page-label">
-                        PAINEL ADMINISTRATIVO
-                    </span>
-
-                    <h1>
-                        Dashboard
-                    </h1>
-
+                    <p class="eyebrow">PAINEL ADMINISTRATIVO</p>
+                    <h1>Gerenciar imóveis</h1>
                 </div>
 
+                <div class="admin-user">
 
-                <div class="topbar-right">
+                    <div class="user-avatar">
+                        A
+                    </div>
 
-                    <span class="status">
-
-                        <i></i>
-
-                        Sistema online
-
-                    </span>
+                    <div class="user-info">
+                        <strong>Administrador</strong>
+                        <span id="adminEmail">Carregando...</span>
+                    </div>
 
                 </div>
 
             </header>
 
 
-            <!-- STATS -->
+            <!-- STATUS DA API -->
+            <section class="api-status">
 
-            <section class="stats-grid">
+                <div class="status-indicator"></div>
 
-                <div class="stat-card">
-
-                    <span>
-                        IMÓVEIS ATIVOS
+                <div>
+                        <strong>API</strong>
+                    <span id="apiStatus">
+                        Verificando autenticação...
                     </span>
-
-                    <strong>
-                        06
-                    </strong>
-
-                    <small>
-                        +2 este mês
-                    </small>
-
-                </div>
-
-
-                <div class="stat-card">
-
-                    <span>
-                        VISUALIZAÇÕES
-                    </span>
-
-                    <strong>
-                        1.248
-                    </strong>
-
-                    <small>
-                        +18% este mês
-                    </small>
-
-                </div>
-
-
-                <div class="stat-card">
-
-                    <span>
-                        MENSAGENS
-                    </span>
-
-                    <strong>
-                        24
-                    </strong>
-
-                    <small>
-                        8 não lidas
-                    </small>
-
-                </div>
-
-
-                <div class="stat-card highlight">
-
-                    <span>
-                        DESTAQUES
-                    </span>
-
-                    <strong>
-                        04
-                    </strong>
-
-                    <small>
-                        Imóveis em destaque
-                    </small>
-
                 </div>
 
             </section>
 
 
-            <!-- CONTENT GRID -->
+            <!-- CARDS -->
+            <section class="stats-grid">
 
+                <article class="stat-card">
+
+                    <div class="stat-icon">
+                        ⌂
+                    </div>
+
+                    <div>
+                        <span>Total de imóveis</span>
+                        <strong id="totalProperties">0</strong>
+                    </div>
+
+                </article>
+
+
+                <article class="stat-card">
+
+                    <div class="stat-icon">
+                        👁
+                    </div>
+
+                    <div>
+                        <span>Em destaque</span>
+                        <strong id="featuredProperties">0</strong>
+                    </div>
+
+                </article>
+
+
+                <article class="stat-card">
+
+                    <div class="stat-icon">
+                        ♡
+                    </div>
+
+                    <div>
+                        <span>Vendidos</span>
+                        <strong id="soldProperties">0</strong>
+                    </div>
+
+                </article>
+
+
+                <article class="stat-card">
+
+                    <div class="stat-icon">
+                        + 
+                    </div>
+
+                    <div>
+                        <span>Disponíveis</span>
+                        <strong id="availableProperties">0</strong>
+                    </div>
+
+                </article>
+
+            </section>
+
+
+            <!-- CONTEÚDO -->
             <section class="dashboard-grid">
 
+                <div class="panel" id="imoveis">
 
-                <!-- IMÓVEIS -->
-
-                <div class="dashboard-card properties-card">
-
-                    <div class="card-header">
+                    <div class="panel-header">
 
                         <div>
-
-                            <span>
-                                PORTFÓLIO
+                            <span class="panel-label">
+                                GERENCIAMENTO
                             </span>
 
-                            <h2>
-                                Imóveis recentes
-                            </h2>
-
+                            <h2>Imóveis recentes</h2>
                         </div>
 
-                        <button>
-                            Ver todos
+                        <button class="primary-button" id="newPropertyButton" type="button">
+                            + Novo imóvel
                         </button>
 
                     </div>
 
+                    <p id="listMessage" class="panel-message" role="status">Carregando imóveis...</p>
+                    <div id="propertyList" class="property-list"></div>
 
-                    <div class="property-list">
-
-
-                        <div class="property">
-
-                            <div class="property-image">
-                                <img
-                                    src="assets/imovel-1.jpg"
-                                    alt="Imóvel"
-                                >
-                            </div>
-
-                            <div class="property-info">
-
-                                <strong>
-                                    Residencial Aurora
-                                </strong>
-
-                                <span>
-                                    Águas Claras · Brasília
-                                </span>
-
-                            </div>
-
-                            <div class="property-status">
-                                Ativo
-                            </div>
-
-                        </div>
-
-
-                        <div class="property">
-
-                            <div class="property-image">
-                                <img
-                                    src="assets/imovel-2.jpg"
-                                    alt="Imóvel"
-                                >
-                            </div>
-
-                            <div class="property-info">
-
-                                <strong>
-                                    Casa Jardim
-                                </strong>
-
-                                <span>
-                                    Lago Sul · Brasília
-                                </span>
-
-                            </div>
-
-                            <div class="property-status">
-                                Ativo
-                            </div>
-
-                        </div>
-
-
-                        <div class="property">
-
-                            <div class="property-image">
-                                <img
-                                    src="assets/imovel-3.jpg"
-                                    alt="Imóvel"
-                                >
-                            </div>
-
-                            <div class="property-info">
-
-                                <strong>
-                                    Villa Toscana
-                                </strong>
-
-                                <span>
-                                    Park Way · Brasília
-                                </span>
-
-                            </div>
-
-                            <div class="property-status">
-                                Ativo
-                            </div>
-
-                        </div>
-
-
-                    </div>
-
+                                        <section class="panel feature-panel" id="destaques">
+                                            <div class="panel-header">
+                                                <div>
+                                                    <span class="panel-label">VITRINE</span>
+                                                    <h2>Imóveis em Destaque</h2>
+                                                </div>
+                                                <strong id="featuredCount">0 de 6</strong>
+                                            </div>
+                                            <p id="featuredMessage" class="panel-message" role="status"></p>
+                                            <div id="featuredList" class="feature-list"></div>
+                                            <div class="feature-controls">
+                                                <label>Adicionar imóvel
+                                                    <select id="highlightCandidate"><option value="">Selecione um imóvel</option></select>
+                                                </label>
+                                                <button class="primary-button" id="addHighlightButton" type="button">+ Adicionar imóvel ao destaque</button>
+                                                <label>Trocar destaque atual
+                                                    <select id="highlightCurrent"><option value="">Destaque atual</option></select>
+                                                </label>
+                                                <button class="secondary-button" id="swapHighlightButton" type="button">Trocar imóvel</button>
+                                            </div>
+                                        </section>
                 </div>
 
 
-                <!-- ATALHOS -->
+                <div class="panel" id="formulario">
 
-                <div class="dashboard-card quick-card">
-
-                    <div class="card-header">
+                    <div class="panel-header">
 
                         <div>
-
-                            <span>
-                                AÇÕES
+                            <span class="panel-label">
+                                CONTA
                             </span>
 
-                            <h2>
-                                Atalhos
-                            </h2>
-
+                            <h2 id="formTitle">Novo imóvel</h2>
                         </div>
 
                     </div>
 
-
-                    <div class="quick-actions">
-
-                        <button>
-                            <span>+</span>
-                            Novo imóvel
-                        </button>
-
-                        <button>
-                            <span>↗</span>
-                            Ver site
-                        </button>
-
-                        <button>
-                            <span>✉</span>
-                            Mensagens
-                        </button>
-
-                        <button>
-                            <span>⚙</span>
-                            Configurações
-                        </button>
-
-                    </div>
+                    <form id="propertyForm" class="property-form">
+                        <input type="hidden" id="propertyId">
+                        <label>Título<input id="titulo" name="titulo" required></label>
+                        <label>Tipo<select id="tipo" name="tipo" required><option value="">Selecione</option><option>Apartamento</option><option>Casa</option><option>Chácara</option><option>Comercial</option><option>Conjunto</option><option>Terreno</option></select></label>
+                        <label>Preço<input id="preco" name="preco" type="text" inputmode="numeric" autocomplete="off" required></label>
+                        <label>Cidade<input id="cidade" name="cidade" required></label>
+                        <label>Estado<input id="estado" name="estado" maxlength="2" required></label>
+                                                <label class="wide">Fotos (uma URL ou caminho por linha)<textarea id="fotos" name="fotos" rows="4"></textarea></label>
+                                                <div class="wide upload-area">
+                                                    <input id="fotosUpload" type="file" accept="image/jpeg,image/png,image/webp" multiple hidden>
+                                                    <button class="secondary-button" id="addPhotosButton" type="button">+ Adicionar fotos</button>
+                                                    <span>JPG, JPEG, PNG ou WEBP, até 8 MB por arquivo</span>
+                                                    <div id="photoPreview" class="photo-preview"></div>
+                                                </div>
+                        <label>Status<select id="status" name="status"><option value="Disponível">Disponível</option><option value="Vendido">Vendido</option><option value="Rascunho">Rascunho</option></select></label>
+                        <label>Localização<input id="localizacao" name="localizacao"></label>
+                        <label>Área (m²)<input id="area" name="area" type="number" min="0" step="0.01"></label>
+                        <label>Quartos<input id="quartos" name="quartos" type="number" min="0"></label>
+                        <label>Banheiros<input id="banheiros" name="banheiros" type="number" min="0"></label>
+                        <label>Vagas<input id="vagas" name="vagas" type="number" min="0"></label>
+                        <label class="wide">Descrição<textarea id="descricao" name="descricao" rows="5"></textarea></label>
+                        <label class="checkbox wide"><input id="destaque" name="destaque" type="checkbox"> Imóvel em destaque</label>
+                        <p id="formMessage" class="panel-message wide" role="alert"></p>
+                        <div class="form-actions wide"><button class="primary-button" type="submit">Salvar imóvel</button><button class="secondary-button" id="cancelButton" type="button">Limpar</button></div>
+                    </form>
 
                 </div>
-
 
             </section>
 
@@ -401,42 +242,7 @@
 
     </div>
 
-
-    <script>
-
-        // ============================
-        // PROTEÇÃO DA PÁGINA
-        // ============================
-
-        const token = localStorage.getItem("token");
-
-        if (!token) {
-            window.location.href = "login.html";
-        }
-
-
-        // ============================
-        // LOGOUT
-        // ============================
-
-        const logoutButton =
-            document.getElementById("logoutButton");
-
-        logoutButton.addEventListener(
-            "click",
-            () => {
-
-                localStorage.removeItem("token");
-                localStorage.removeItem("email");
-                localStorage.removeItem("admin");
-
-                window.location.href = "login.html";
-
-            }
-        );
-
-    </script>
+    <script src="js/admin.js"></script>
 
 </body>
-
 </html>
