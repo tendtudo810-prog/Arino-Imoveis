@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:5254";
+const API_URL = window.ARINO_API_URL;
 const token = sessionStorage.getItem("adminToken");
 const form = document.getElementById("propertyForm");
 const propertyList = document.getElementById("propertyList");

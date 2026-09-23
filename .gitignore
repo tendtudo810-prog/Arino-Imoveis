@@ -1,5 +1,9 @@
 backend/.env
+backend/.env.local
 backend/data/*.tmp
 backend/data/*.backup-*.json
+backend/data/*.pre-producao-*.json
+backend/data/imoveis.json.backup
 backend/node_modules/
 backend/uploads/
+backend/migrations/exports/

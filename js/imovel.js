@@ -1,4 +1,4 @@
-const API_URL = "http://localhost:5254";
+const API_URL = window.ARINO_API_URL;
 const WHATSAPP_NUMBER = "5561996973773";
 
 const page = document.getElementById("property-page");

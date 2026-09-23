@@ -23,6 +23,11 @@ $env:AUTH_SECRET = "defina-uma-chave-secreta-longa"
 $env:AUTH_ISSUER = "arino-imoveis-api"
 $env:AUTH_AUDIENCE = "arino-imoveis-admin"
 $env:FRONTEND_ORIGIN = "null"
+$env:FRONTEND_ORIGINS = "http://localhost:5500,http://127.0.0.1:5500"
+$env:NODE_ENV = "development"
+$env:DATABASE_PROVIDER = "json"
+$env:DATA_FILE = "backend/data/imoveis.json"
+$env:UPLOADS_DIR = "backend/uploads"
 ```
 
 Na raiz do projeto, execute:
@@ -31,7 +36,7 @@ Na raiz do projeto, execute:
 node backend/server.js
 ```
 
-A API ficará disponível em `http://localhost:5254`.
+A API ficará disponível em `http://localhost:5254` no desenvolvimento. Em produção, `PORT` deve ser fornecida pelo provedor.
 
 Se o login mostrar que não foi possível conectar à API, confirme que o processo
 `node backend/server.js` está em execução e que a porta `5254` está livre. A
@@ -60,3 +65,5 @@ eles não são armazenados no frontend.
 O login verifica o e-mail e o hash bcrypt definidos no ambiente e retorna um JWT assinado. O frontend mantém o token apenas na `sessionStorage` durante a sessão, e o backend valida assinatura, `Issuer`, `Audience`, `jti` e validade de oito horas em cada operação protegida. Sem a configuração completa, nenhuma credencial é aceita.
 
 As imagens são descobertas automaticamente nas pastas existentes do frontend. O arquivo `backend/data/imoveis.json` contém os dados dos anúncios que já estavam nas páginas atuais.
+
+Para a preparação PostgreSQL, consulte `backend/postgres/schema.sql`, `backend/postgres/README.md` e `backend/migrations/README.md`. O backend atual continua usando JSON; nenhuma migration é executada no start.

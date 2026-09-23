@@ -13,7 +13,17 @@
     "banheiros": 1,
     "vagas": 1,
     "destaque": false,
-    "diretorioImagens": "imovel1"
+    "fotos": [
+      "/media/1/ae770393-80ab-44d2-892a-adc52c51f465.jpeg",
+      "/media/1/4af807c4-4bbc-41ba-b846-da0cd0f02479.jpeg",
+      "/media/1/60b9de5f-ecc7-474f-86fe-9891efad89de.jpeg",
+      "/media/1/b6a429e1-1430-4ec7-8f1d-8f1a1addbc1d.jpeg",
+      "/media/1/d642d25d-a310-4b79-8c9b-d26c5783d5ae.jpeg",
+      "/media/1/83f96806-8eb3-4b04-a1eb-0539459b91f5.jpeg",
+      "/media/1/5de9b9f9-0642-4bf1-a65d-300e32d3419d.jpeg"
+    ],
+    "imagemPrincipal": "/media/1/ae770393-80ab-44d2-892a-adc52c51f465.jpeg",
+    "status": "Disponível"
   },
   {
     "id": 2,
@@ -28,8 +38,23 @@
     "quartos": 3,
     "banheiros": 2,
     "vagas": 4,
-    "diretorioImagens": "imovel2",
-    "destaque": false
+    "destaque": false,
+    "fotos": [
+      "/media/2/384dc9cf-a45a-43ed-83b9-b5b7754e6045.jpeg",
+      "/media/2/78f712f8-f74a-4a8d-bd58-af6ff4b802ee.jpeg",
+      "/media/2/affa1d99-1a9f-4e81-a1ed-f16dd7905c6a.jpeg",
+      "/media/2/1c024a80-8e7c-47d2-ac88-a74de380a595.jpeg",
+      "/media/2/33a7949c-4b02-4d07-a05e-f89ec9066df4.jpeg",
+      "/media/2/4460a23f-7f2d-41f9-9793-d90264b1e0ce.jpeg",
+      "/media/2/128063c0-af3c-4681-bb62-454c6e2b1bfd.jpeg",
+      "/media/2/6c7c477f-13f6-4364-825c-4759cb4934f7.jpeg",
+      "/media/2/12249cae-4cd2-4efa-961f-0fa2381d6004.jpeg",
+      "/media/2/c60c0267-7af6-47be-b367-d0cc528b920e.jpeg",
+      "/media/2/b8391a32-3fbd-490e-90c7-5fcf4049efb0.jpeg",
+      "/media/2/b732c253-17cf-4465-b3fe-dedecb1cbdeb.jpeg"
+    ],
+    "imagemPrincipal": "/media/2/384dc9cf-a45a-43ed-83b9-b5b7754e6045.jpeg",
+    "status": "Disponível"
   },
   {
     "id": 3,
@@ -44,8 +69,22 @@
     "quartos": 2,
     "banheiros": 1,
     "vagas": 1,
-    "diretorioImagens": "imovel3",
-    "destaque": true
+    "destaque": true,
+    "fotos": [
+      "/media/3/d033e318-4a83-4f00-bf97-093a1fc19ed8.jpeg",
+      "/media/3/99db4609-7290-4de7-993f-eb2045ec9940.jpeg",
+      "/media/3/9edfa27f-df88-4c29-a5be-a3b6ce4afeb0.jpeg",
+      "/media/3/3ff5f0fe-f21a-4351-958a-55307457f6be.jpeg",
+      "/media/3/2aa450c8-6952-42b2-b533-b2f36708b27b.jpeg",
+      "/media/3/45e54510-3e2e-40c4-b7f4-24485893130c.jpeg",
+      "/media/3/b745871a-30ae-4947-81e5-ffeb71f4580e.jpeg",
+      "/media/3/bb8d1365-45aa-4a20-8dd9-2892867ff5bf.jpeg",
+      "/media/3/01e02071-7272-410e-9d25-5e5f5aadc432.jpeg",
+      "/media/3/2f41daac-83f7-4053-9130-d14c132cb1b9.jpeg",
+      "/media/3/ea1939bd-432d-47ff-86b7-5201718605b3.jpeg"
+    ],
+    "imagemPrincipal": "/media/3/d033e318-4a83-4f00-bf97-093a1fc19ed8.jpeg",
+    "status": "Disponível"
   },
   {
     "id": 4,
@@ -60,8 +99,21 @@
     "quartos": 4,
     "banheiros": 4,
     "vagas": 3,
-    "diretorioImagens": "imovel4",
-    "destaque": false
+    "destaque": false,
+    "fotos": [
+      "/media/4/8e7d9dfd-1cac-4af1-95ae-d762d3547e62.jpeg",
+      "/media/4/7ac41772-0783-4712-b47e-891bea8d7cd1.jpeg",
+      "/media/4/eb19198b-710e-4c99-b97a-98b48144ea2e.jpeg",
+      "/media/4/b37d1b9f-babd-4fae-ad13-f5a39d9e85cc.jpeg",
+      "/media/4/7273a973-ec1a-46c1-92bf-c9fef286ae37.jpeg",
+      "/media/4/41d5dc7d-47ab-43cf-8620-f91641a741ee.jpeg",
+      "/media/4/22896e0e-67f5-47fc-a568-91b7738537fd.jpeg",
+      "/media/4/6449006b-0b8a-46a9-9244-2a15ce80d200.jpeg",
+      "/media/4/65f7382d-25d1-49b4-92e3-2ec860664482.jpeg",
+      "/media/4/fe83d02b-35d4-45fe-b7d6-ce5e41c489f1.jpeg"
+    ],
+    "imagemPrincipal": "/media/4/8e7d9dfd-1cac-4af1-95ae-d762d3547e62.jpeg",
+    "status": "Disponível"
   },
   {
     "id": 5,
@@ -76,8 +128,25 @@
     "quartos": 2,
     "banheiros": 1,
     "vagas": 1,
-    "diretorioImagens": "imovel5",
-    "destaque": true
+    "destaque": true,
+    "fotos": [
+      "/media/5/9b8efd66-04b3-43a3-9f92-819998981357.jpeg",
+      "/media/5/d8df761b-60f1-405f-b151-07445ffb9e5d.jpeg",
+      "/media/5/ab854861-b2db-41a4-bf60-eab1c8c07f5a.jpeg",
+      "/media/5/ec579993-e6bf-467c-806a-a98e5c8272cc.jpeg",
+      "/media/5/30ef4d50-0c42-4b2f-abc4-1f80099bdccb.jpeg",
+      "/media/5/32dc7619-4008-41b2-94ea-6c53c595a504.jpeg",
+      "/media/5/c8150267-fb50-4c97-89ae-68ddf9d32a37.jpeg",
+      "/media/5/4029092f-4213-4198-b294-dd102c2c7759.jpeg",
+      "/media/5/b218c107-c268-4a8f-880f-a07a9bd70b76.jpeg",
+      "/media/5/a8efa9ef-4cf6-40fd-b45e-402e2c4fc0f4.jpeg",
+      "/media/5/2a02d2cb-e507-4258-a6ea-8ef7c2dadf3b.jpeg",
+      "/media/5/a3f32097-f99b-4a87-bc39-704a4c8b83d9.jpeg",
+      "/media/5/98f94ca1-c8f4-4c6f-a7be-c17a4d77d99c.jpeg",
+      "/media/5/cfe04860-2284-4be5-a9b4-dc74f179b902.jpeg"
+    ],
+    "imagemPrincipal": "/media/5/9b8efd66-04b3-43a3-9f92-819998981357.jpeg",
+    "status": "Disponível"
   },
   {
     "id": 6,
@@ -93,8 +162,26 @@
     "banheiros": 1,
     "vagas": 1,
     "vendido": true,
-    "diretorioImagens": "imovel6",
-    "destaque": true
+    "destaque": true,
+    "fotos": [
+      "/media/6/2247da1c-45f5-46f7-b435-b64426b6b26b.jpeg",
+      "/media/6/755938ed-65bf-44bb-b632-2960af79fc65.jpeg",
+      "/media/6/48c36592-e9e2-4022-97ed-c7f8192d545a.jpeg",
+      "/media/6/9e60a3d3-2ba5-40d5-8f6e-988972b6e5f9.jpeg",
+      "/media/6/1783df8b-18f4-49d2-a934-5b8dc0650f43.jpeg",
+      "/media/6/52e97134-931e-4837-bc99-42a422923a68.jpeg",
+      "/media/6/9192834f-217d-40ad-969a-d1ab09d96940.jpeg",
+      "/media/6/36e6c5a1-e0c7-48b0-babd-980f89e2a319.jpeg",
+      "/media/6/74d15ff6-a3c8-4d8d-9c82-4630da7c7db7.jpeg",
+      "/media/6/2e3c06fe-51cb-45a2-a90b-bbfcf7f0eb4f.jpeg",
+      "/media/6/6765e866-477d-4467-ba14-0aea00a10486.jpeg",
+      "/media/6/162f6a27-835f-443a-a757-513a06aa8a4f.jpeg",
+      "/media/6/cb8933ce-3293-440b-a23a-a103de05d0c2.jpeg",
+      "/media/6/25cd31c5-ee75-4e74-b0d0-81330fe345e8.jpeg",
+      "/media/6/af59f0ce-5bab-4dfa-b72c-702362ac55e0.jpeg"
+    ],
+    "imagemPrincipal": "/media/6/2247da1c-45f5-46f7-b435-b64426b6b26b.jpeg",
+    "status": "Vendido"
   },
   {
     "id": 7,
@@ -109,8 +196,23 @@
     "quartos": 2,
     "banheiros": 1,
     "vagas": 1,
-    "diretorioImagens": "v1",
-    "destaque": false
+    "destaque": false,
+    "fotos": [
+      "/media/7/f9127bd6-356d-499b-a024-d46d8033aba6.jpeg",
+      "/media/7/c9ff354b-48f0-4a25-b3e7-eddf3e819bcc.jpeg",
+      "/media/7/78b131b6-e2a1-4c96-bd83-ff3d047e98bc.jpeg",
+      "/media/7/7afbcf3c-3abc-45f3-b78b-26738ed4f421.jpeg",
+      "/media/7/020c17b3-6347-4a5d-a5a5-fe665c1ef5c1.jpeg",
+      "/media/7/1dc615ef-66cf-4db5-a67b-eb57cbe05363.jpeg",
+      "/media/7/74d92514-3a38-40fe-a373-79503609fb48.jpeg",
+      "/media/7/cbf46383-e736-4fa3-99d1-7333784a87ba.jpeg",
+      "/media/7/9a554e38-fcdf-4d3b-950e-4240716e6735.jpeg",
+      "/media/7/7456843c-b53d-4cbf-ba7a-f553fb264b65.jpeg",
+      "/media/7/df45a2d6-5d48-456a-a8cf-a1deeaa5d54d.jpeg",
+      "/media/7/8cb8d57e-9602-45a8-8ef8-3eb7be637feb.jpeg"
+    ],
+    "imagemPrincipal": "/media/7/f9127bd6-356d-499b-a024-d46d8033aba6.jpeg",
+    "status": "Disponível"
   },
   {
     "id": 8,
@@ -125,7 +227,18 @@
     "quartos": 2,
     "banheiros": 1,
     "vagas": 1,
-    "diretorioImagens": "v2"
+    "fotos": [
+      "/media/8/7e00e823-8224-4f14-bb0f-54017cfb4a08.jpeg",
+      "/media/8/ac855b4f-0890-437a-b3a1-5e70d6f6c6a4.jpeg",
+      "/media/8/c47e10c7-f338-4d9f-8c79-030e888e998b.jpeg",
+      "/media/8/fdd89020-48da-4223-b078-f8d5662f905c.jpeg",
+      "/media/8/a4c0db04-cbae-4507-b065-03f1aaa34400.jpeg",
+      "/media/8/aa05514c-1c9d-449d-a6cc-06671caf9335.jpeg",
+      "/media/8/71ec20cc-abf2-4719-aa44-8c0269899ffb.jpeg",
+      "/media/8/9cf59770-28be-4e94-961c-22216701fe97.jpeg"
+    ],
+    "imagemPrincipal": "/media/8/7e00e823-8224-4f14-bb0f-54017cfb4a08.jpeg",
+    "status": "Disponível"
   },
   {
     "id": 9,
@@ -140,8 +253,22 @@
     "quartos": 2,
     "banheiros": 1,
     "vagas": 1,
-    "diretorioImagens": "imovel3",
-    "destaque": true
+    "destaque": true,
+    "fotos": [
+      "/media/9/23bc202a-2e89-425f-9004-67de6279dbf8.jpeg",
+      "/media/9/33ca1401-fab2-465d-9e52-af62fdebb3ce.jpeg",
+      "/media/9/3ef00749-f8bb-4653-82dc-4ef5734ed3af.jpeg",
+      "/media/9/be1b4cd5-d193-435c-82e1-243fadf1196d.jpeg",
+      "/media/9/df5727b8-d33d-46a2-bea3-17c19e61ee5d.jpeg",
+      "/media/9/89c59ad8-2af6-4fa4-b5d6-7221b6098351.jpeg",
+      "/media/9/d69026ea-111d-4b92-8bea-1931bdf1c397.jpeg",
+      "/media/9/71933c0e-ec6a-4357-8cd1-a8bb310ad99b.jpeg",
+      "/media/9/49e7b73b-e51b-4afa-973e-c8a26048ac35.jpeg",
+      "/media/9/8c141174-bef9-4e12-a091-49612a05e387.jpeg",
+      "/media/9/1090e261-c084-4374-b381-32243c8bfeb2.jpeg"
+    ],
+    "imagemPrincipal": "/media/9/23bc202a-2e89-425f-9004-67de6279dbf8.jpeg",
+    "status": "Disponível"
   },
   {
     "id": 10,
@@ -156,7 +283,25 @@
     "quartos": 2,
     "banheiros": 1,
     "vagas": 1,
-    "diretorioImagens": "v3"
+    "fotos": [
+      "/media/10/0a1f4990-b2b6-4e4e-bd05-5c1247e6e3c7.jpeg",
+      "/media/10/886a4358-dab9-42b5-b077-1b59d7d23c89.jpeg",
+      "/media/10/2bce6280-faaa-4b4e-a91a-9872420c7920.jpeg",
+      "/media/10/8e205681-33dc-4e25-a1b7-7dea15e74f24.jpeg",
+      "/media/10/bf8dc514-8e2b-4e73-a7b2-4bddc78b6769.jpeg",
+      "/media/10/420a0a25-484d-4f6d-9daa-e18bb6445bc0.jpeg",
+      "/media/10/ec7cf228-a01d-4b35-96f3-ce9fbb660f54.jpeg",
+      "/media/10/d9a9e171-3be3-46ca-add4-3192ed1fdeec.jpeg",
+      "/media/10/9c63e1b1-fb2f-40bc-87d5-02b30053f7d7.jpeg",
+      "/media/10/ecde7f69-9de8-4e64-aac6-970f9ac398ba.jpeg",
+      "/media/10/2fe4cfbb-bd56-477a-95eb-91af1e134829.jpeg",
+      "/media/10/ad1d7d24-df10-4aa2-9da6-5fb9836f6eab.jpeg",
+      "/media/10/d98977a9-e8c3-48ba-801f-325f6263291e.jpeg",
+      "/media/10/eb872a82-f1a3-4d6e-a3a4-786c43bb7672.jpeg",
+      "/media/10/3bfd08d8-210b-44e1-925d-7c376eb1586a.jpeg"
+    ],
+    "imagemPrincipal": "/media/10/0a1f4990-b2b6-4e4e-bd05-5c1247e6e3c7.jpeg",
+    "status": "Disponível"
   },
   {
     "id": 11,
@@ -171,7 +316,24 @@
     "quartos": 2,
     "banheiros": 1,
     "vagas": 1,
-    "diretorioImagens": "imovel5"
+    "fotos": [
+      "/media/11/b023ff0f-6c04-4212-a0ae-7205d92bfba5.jpeg",
+      "/media/11/a2d9c11e-3cc2-4aa9-a526-78db4eab80e9.jpeg",
+      "/media/11/fff92f6d-a481-47fb-bc8a-62eb5c4a4ca5.jpeg",
+      "/media/11/92990bae-4646-47f6-9954-3425358dab6e.jpeg",
+      "/media/11/48701104-95c6-4e50-a9c2-ef3311f0e724.jpeg",
+      "/media/11/15fb96a5-a898-4b5a-93c6-d9a5fdff489d.jpeg",
+      "/media/11/b0db58e8-0848-4b59-b524-286e5ff4ca15.jpeg",
+      "/media/11/58429248-2c92-4660-846a-16a111e24fd6.jpeg",
+      "/media/11/d58e387a-30e3-4297-a237-5a133110ea60.jpeg",
+      "/media/11/bfa98390-f4c0-4bea-8c21-e4954a0c1338.jpeg",
+      "/media/11/85dcd9d0-0993-4be8-9acf-2ecbaca6f981.jpeg",
+      "/media/11/383c45ce-cd76-4f9f-84b6-b38690214a03.jpeg",
+      "/media/11/207a7541-d346-4cc7-9ac8-227e8091b907.jpeg",
+      "/media/11/70bfb5c5-b676-4b74-8f26-32071db02502.jpeg"
+    ],
+    "imagemPrincipal": "/media/11/b023ff0f-6c04-4212-a0ae-7205d92bfba5.jpeg",
+    "status": "Disponível"
   },
   {
     "id": 12,
@@ -187,7 +349,25 @@
     "banheiros": 1,
     "vagas": 1,
     "vendido": true,
-    "diretorioImagens": "imovel6"
+    "fotos": [
+      "/media/12/3942b0be-79f3-4310-807a-433d1d9afb76.jpeg",
+      "/media/12/8a5f423e-aae4-429a-8849-211b56968b16.jpeg",
+      "/media/12/5ffc379a-8d97-401d-9288-d01d154dc45a.jpeg",
+      "/media/12/9b99ef9d-c3a3-4d94-a1c9-d872c12e6f42.jpeg",
+      "/media/12/1f2f164d-4d10-4b14-9476-1740862a235f.jpeg",
+      "/media/12/9b425025-c44e-44c8-87b0-f4168d112f53.jpeg",
+      "/media/12/bd719d8a-a4dc-406b-96cc-7e58841ff2ee.jpeg",
+      "/media/12/46bef6e5-2c2c-4098-9c72-11530df6bc65.jpeg",
+      "/media/12/4a3a3dc6-67d4-45d2-bbd2-ba633b0c54ee.jpeg",
+      "/media/12/930c94dc-98e4-4472-b81b-7c603f9bb2fb.jpeg",
+      "/media/12/67504108-7f7a-423d-9d98-8362c9d43ca2.jpeg",
+      "/media/12/3595d14e-c54d-4558-a456-67dc94c9ce17.jpeg",
+      "/media/12/e9352c69-5022-4140-9c94-6380f803cf31.jpeg",
+      "/media/12/e580bd1b-edf3-4121-9a51-802c7fa2eaab.jpeg",
+      "/media/12/a66bc758-c11f-4640-b0ea-14f77588cf6c.jpeg"
+    ],
+    "imagemPrincipal": "/media/12/3942b0be-79f3-4310-807a-433d1d9afb76.jpeg",
+    "status": "Vendido"
   },
   {
     "id": 13,
@@ -202,7 +382,27 @@
     "quartos": 3,
     "banheiros": 3,
     "vagas": 2,
-    "diretorioImagens": "v6"
+    "fotos": [
+      "/media/13/37e09107-5b77-41a2-a9ea-27e5ab79003a.jpeg",
+      "/media/13/3e306096-22e6-4736-b950-7b94f0fa2ec1.jpeg",
+      "/media/13/9476d319-3f92-4282-9fe0-c1268c932d24.jpeg",
+      "/media/13/73fc1203-5b15-4c2f-a374-0e8d2d247693.jpeg",
+      "/media/13/5befbdfd-8100-44f9-9a8a-d2c458bd8ed9.jpeg",
+      "/media/13/bdd91c28-cb5e-4533-b5d6-6eb395bc9fb7.jpeg",
+      "/media/13/8a7ca6f3-4536-4f64-8f83-0c0693d97459.jpeg",
+      "/media/13/f06f82b9-0ef6-4fe3-8831-64490033c655.jpeg",
+      "/media/13/c05a9b92-bff9-4143-88dc-378f747445b6.jpeg",
+      "/media/13/ca354688-90b9-405e-89ba-6faf189d414c.jpeg",
+      "/media/13/5153e12e-046b-473c-9dd5-f78b24daad95.jpeg",
+      "/media/13/dcb5d63c-e0ce-4789-a237-abe490025798.jpeg",
+      "/media/13/4471e029-5c87-4069-b03b-cd3c59eb14c2.jpeg",
+      "/media/13/59959c9f-eab1-42ff-a570-41851d41e357.jpeg",
+      "/media/13/d5b05ce9-6ef9-4563-9169-6dfe79380c1c.jpeg",
+      "/media/13/e127cb35-8324-4622-95ac-0b071cdde426.jpeg",
+      "/media/13/3ec8d96c-5389-43b6-8cf2-bcca6ec1b989.jpeg"
+    ],
+    "imagemPrincipal": "/media/13/37e09107-5b77-41a2-a9ea-27e5ab79003a.jpeg",
+    "status": "Disponível"
   },
   {
     "id": 14,
@@ -217,7 +417,26 @@
     "quartos": 4,
     "banheiros": 2,
     "vagas": 2,
-    "diretorioImagens": "v7"
+    "fotos": [
+      "/media/14/c4bc632f-8003-4aa7-be01-d6db0ce3dd42.jpeg",
+      "/media/14/cc07c111-54c9-4cb2-8572-f84c0b9ee952.jpeg",
+      "/media/14/2f22ce7c-32ec-40e7-893d-f283738b1f32.jpeg",
+      "/media/14/e7ed891b-f465-45df-9bb8-9afc283eda7c.jpeg",
+      "/media/14/de63d4db-854d-4270-a9de-e814ac7d285f.jpeg",
+      "/media/14/452ed8b1-bb4b-4a96-aed3-925e852c1797.jpeg",
+      "/media/14/4036f3d5-48b7-4478-8713-1edd2c906fc2.jpeg",
+      "/media/14/e46c298d-3a78-4e6c-8f16-34d6a913915b.jpeg",
+      "/media/14/ddb054b5-232a-4d2b-8824-16d2fbd0cc7d.jpeg",
+      "/media/14/9fc06db3-cc56-4ae4-b80f-d8725ef3b127.jpeg",
+      "/media/14/deae19c9-d770-4df8-b68e-cef2bc573f2c.jpeg",
+      "/media/14/83bf14c6-d1c7-4195-a6b2-392b103a8af2.jpeg",
+      "/media/14/6999f5f6-1b09-44cc-921d-f67801f91d49.jpeg",
+      "/media/14/50837cc0-bb10-49bb-be92-e5068b5f45d9.jpeg",
+      "/media/14/73ec2fc8-f102-4075-9c81-0c0486e5a81e.jpeg",
+      "/media/14/6a27ae7f-0460-4b32-bacf-2e6f5b381a0c.jpeg"
+    ],
+    "imagemPrincipal": "/media/14/c4bc632f-8003-4aa7-be01-d6db0ce3dd42.jpeg",
+    "status": "Disponível"
   },
   {
     "id": 15,
@@ -232,7 +451,25 @@
     "quartos": 2,
     "banheiros": 1,
     "vagas": 1,
-    "diretorioImagens": "v8"
+    "fotos": [
+      "/media/15/bd9b3188-0bca-460f-8763-c06f49024a9a.jpeg",
+      "/media/15/90cc59fc-e07f-4859-b260-b49c2b9a3ad5.jpeg",
+      "/media/15/651e0f35-bc90-4d54-a799-011c1799fda7.jpeg",
+      "/media/15/f87c0629-99b1-4895-949e-32427ceb8a44.jpeg",
+      "/media/15/6bb927cf-9833-41c5-953d-85fdccaeb7e5.jpeg",
+      "/media/15/11cd12d3-b1cc-40d9-8834-15e49e9ef814.jpeg",
+      "/media/15/c687ec84-f4c6-4c05-92d6-ca9bf814ab55.jpeg",
+      "/media/15/850f75dc-ab5b-4072-80b0-02563c3648f2.jpeg",
+      "/media/15/7a91228c-4bb2-4647-8ca0-4adf50dc0a64.jpeg",
+      "/media/15/2d6f6f0e-6e05-42aa-8c69-9706d6b4ef33.jpeg",
+      "/media/15/6810c9ec-d8af-4f95-9bb8-9f656b5a7300.jpeg",
+      "/media/15/ff135c74-b549-4d68-beb6-89bdebb16216.jpeg",
+      "/media/15/a9147bda-8791-4840-9177-7c00e5bae13d.jpeg",
+      "/media/15/c9143315-18cf-4f58-80ec-b160c6c37243.jpeg",
+      "/media/15/e80b2527-83a3-4738-b654-7ef92981da5f.jpeg"
+    ],
+    "imagemPrincipal": "/media/15/bd9b3188-0bca-460f-8763-c06f49024a9a.jpeg",
+    "status": "Disponível"
   },
   {
     "id": 16,
@@ -247,7 +484,16 @@
     "quartos": null,
     "banheiros": null,
     "vagas": null,
-    "diretorioImagens": "v9"
+    "fotos": [
+      "/media/16/e9571564-e432-47ae-beba-aff211cd40cf.jpeg",
+      "/media/16/a48884c2-8fea-4ee6-a2fa-f3b91f6a67f3.jpeg",
+      "/media/16/351f1ef1-98b6-4a39-8e89-47c7ea67ed45.jpeg",
+      "/media/16/edad018a-63d2-467a-9864-8e8616fa0576.jpeg",
+      "/media/16/383adbff-5883-4eef-ad14-f3ddaea35781.jpeg",
+      "/media/16/8b5ada1c-87bc-46e3-83c4-6849b552fdd3.jpeg"
+    ],
+    "imagemPrincipal": "/media/16/e9571564-e432-47ae-beba-aff211cd40cf.jpeg",
+    "status": "Disponível"
   },
   {
     "id": 17,
@@ -262,8 +508,37 @@
     "quartos": null,
     "banheiros": null,
     "vagas": null,
-    "diretorioImagens": "v10",
-    "destaque": true
+    "destaque": true,
+    "fotos": [
+      "/media/17/d75b7138-5d69-49fa-add6-cbb17a767033.jpeg",
+      "/media/17/5088125e-b35e-41c5-a919-6bfcc753f6ce.jpeg",
+      "/media/17/da17db4c-d94d-49df-a55e-43e5eff57f48.jpeg",
+      "/media/17/fc884a0c-3ee2-4f48-ad8c-9a88e4304456.jpeg",
+      "/media/17/7026a324-1bb5-4046-876a-cfdff662b881.jpeg",
+      "/media/17/0eecf2e2-a8a1-447c-90e4-4bd5a8cc9151.jpeg",
+      "/media/17/6578c826-d27b-466c-aaf5-53bc1d77dfc2.jpeg",
+      "/media/17/11bc9775-a103-4519-a713-6805ec6f4b38.jpeg",
+      "/media/17/bc73782d-2ec1-4da4-9da8-d1d79712f5ba.jpeg",
+      "/media/17/1b562b02-ef76-4a3f-9796-32f3333908d6.jpeg",
+      "/media/17/df49d882-420c-45de-a878-45f5f49f4619.jpeg",
+      "/media/17/bb2b855c-058b-4a24-979f-be050723ed90.jpeg",
+      "/media/17/ae5f949e-6469-401d-8b7e-dec6afa95ed2.jpeg",
+      "/media/17/e3f8f414-835c-4adb-a1ef-1a9ae540b540.jpeg",
+      "/media/17/4952ba08-2144-4ce6-9b3c-150f5e6b83b6.jpeg",
+      "/media/17/18608d1e-97e4-4e98-afb6-7f6e73cef5ca.jpeg",
+      "/media/17/a8b3586a-26e5-40f6-a262-b6d5fdac5f24.jpeg",
+      "/media/17/f5853183-a944-4198-893f-cf3841bb8d87.jpeg",
+      "/media/17/735bff52-fab2-4f5e-9f3a-24eaa54a5cd6.jpeg",
+      "/media/17/382b52d2-4c9c-45ed-821e-33f7ff70ac00.jpeg",
+      "/media/17/ca54407b-75f8-4eb3-8945-2311d53d4a2c.jpeg",
+      "/media/17/44dc80b3-e4e6-4436-a9f1-cc7febd91899.jpeg",
+      "/media/17/aba0e785-ae03-4139-80dc-1ccd461d7d67.jpeg",
+      "/media/17/2f3d63b2-023b-49f5-b9cf-92ff678fb05d.jpeg",
+      "/media/17/59cd9a86-c1da-4997-b473-95a2c53500aa.jpeg",
+      "/media/17/b609f573-1e99-4e40-ad5b-ee06a4de6a7d.jpeg"
+    ],
+    "imagemPrincipal": "/media/17/d75b7138-5d69-49fa-add6-cbb17a767033.jpeg",
+    "status": "Disponível"
   },
   {
     "id": 18,
@@ -278,7 +553,24 @@
     "quartos": 4,
     "banheiros": 4,
     "vagas": 4,
-    "diretorioImagens": "v11"
+    "fotos": [
+      "/media/18/7a41275e-6222-45d2-83be-73130f9a7aeb.jpeg",
+      "/media/18/d6483218-044b-4ad5-84d9-c7391151d8e2.jpeg",
+      "/media/18/fbe5aa6d-296e-4d10-9189-f49c72713324.jpeg",
+      "/media/18/78d42a09-3541-48ca-95c6-9dc66dc35181.jpeg",
+      "/media/18/09f5737c-64f3-4582-978d-8defa53b086d.jpeg",
+      "/media/18/1c068325-cf93-4933-969f-a56974f51033.jpeg",
+      "/media/18/5b3af10e-bddd-4394-86e3-2ede1a43d1b2.jpeg",
+      "/media/18/89f0f3a4-cf60-4551-a3d1-c0939d5c35a2.jpeg",
+      "/media/18/71a3fc15-6961-49fa-b75c-40ccbbe7fc0b.jpeg",
+      "/media/18/963d153e-2905-45d9-90d1-20378d52c31a.jpeg",
+      "/media/18/6fc0b9fa-2b0d-4ff2-a581-d2f0747daa6c.jpeg",
+      "/media/18/cccd0b4a-1e58-40de-86e7-913af25daa50.jpeg",
+      "/media/18/7efe4335-77c4-4a93-bdbf-6f68833c9337.jpeg",
+      "/media/18/5b7eb3c8-2a70-4edf-ba46-8cf2623df487.jpeg"
+    ],
+    "imagemPrincipal": "/media/18/7a41275e-6222-45d2-83be-73130f9a7aeb.jpeg",
+    "status": "Disponível"
   },
   {
     "titulo": "Casa",
