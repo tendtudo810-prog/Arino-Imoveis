@@ -1,7 +1,6 @@
-const API_URL = window.ARINO_API_URL;
+const API_URL = window.ARINO_API_URL || "https://jogging-early-bat.abasthan.app";
 
 document.addEventListener("DOMContentLoaded", () => {
-
     const form = document.getElementById("loginForm");
     const emailInput = document.getElementById("email");
     const senhaInput = document.getElementById("senha");
@@ -14,7 +13,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     form.addEventListener("submit", async (event) => {
-
         // Impede o navegador de recarregar a página
         event.preventDefault();
 
@@ -29,7 +27,6 @@ document.addEventListener("DOMContentLoaded", () => {
         mostrarMensagem("Entrando...", "info");
 
         try {
-
             const resposta = await fetch(
                 `${API_URL}/api/Auth/login`,
                 {
@@ -37,7 +34,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     headers: {
                         "Content-Type": "application/json"
                     },
-                    credentials: "include",
                     body: JSON.stringify({
                         email: email,
                         senha: senha
@@ -52,7 +48,6 @@ document.addEventListener("DOMContentLoaded", () => {
             // ========================================
 
             if (!resposta.ok) {
-
                 mostrarMensagem(
                     dados.mensagem ||
                     `Erro ao fazer login. Código: ${resposta.status}`,
@@ -62,12 +57,24 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
 
+            // ========================================
+            // VERIFICA TOKEN
+            // ========================================
+
             if (!dados.token) {
-                console.error("Diagnóstico de autenticação: login respondeu sem JWT.");
-                mostrarMensagem("A API autenticou, mas não enviou uma sessão válida.", "erro");
+                console.error(
+                    "Diagnóstico de autenticação: login respondeu sem JWT."
+                );
+
+                mostrarMensagem(
+                    "A API autenticou, mas não enviou uma sessão válida.",
+                    "erro"
+                );
+
                 return;
             }
 
+            // Guarda o token somente nesta sessão do navegador
             sessionStorage.setItem("adminToken", dados.token);
 
             // ========================================
@@ -88,24 +95,25 @@ document.addEventListener("DOMContentLoaded", () => {
             }, 500);
 
         } catch (erro) {
-            console.error("Diagnóstico de autenticação: falha no POST /api/Auth/login.", erro);
+            console.error(
+                "Diagnóstico de autenticação: falha no POST /api/Auth/login.",
+                erro
+            );
 
             mostrarMensagem(
                 erro instanceof TypeError
-                    ? `Não foi possível conectar à API em ${API_URL}. Inicie o backend e tente novamente.`
+                    ? `Não foi possível conectar à API em ${API_URL}.`
                     : "Não foi possível concluir o login. Tente novamente.",
                 "erro"
             );
         }
     });
 
-
     // ========================================
     // MENSAGEM
     // ========================================
 
     function mostrarMensagem(texto, tipo) {
-
         if (!mensagem) {
             console.warn("Elemento #mensagem não encontrado.");
             return;
@@ -114,5 +122,4 @@ document.addEventListener("DOMContentLoaded", () => {
         mensagem.textContent = texto;
         mensagem.className = `mensagem ${tipo}`;
     }
-
 });
