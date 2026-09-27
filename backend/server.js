@@ -421,7 +421,15 @@ function validateProperty(input) {
     if (!property.cidade) return "Informe a cidade do imóvel.";
     if (!/^[A-Z]{2}$/.test(property.estado)) return "Informe um estado válido.";
 
-    property.preco = Number(property.preco);
+    // Converter preço para número se for string, mas não multiplicar
+    if (typeof property.preco === "string") {
+        // Remover formatação brasileira antes de converter
+        const digits = property.preco.replace(/\D/g, "");
+        property.preco = Number(digits);
+    } else {
+        property.preco = Number(property.preco);
+    }
+    
     if (!Number.isFinite(property.preco) || property.preco <= 0) {
         return "Informe um preço válido.";
     }

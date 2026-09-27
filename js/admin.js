@@ -458,6 +458,8 @@
 
                 item.className =
                     "property-row";
+                
+                item.dataset.id = property.id;
 
                 const image =
                     document.createElement(
@@ -473,6 +475,10 @@
                         imageUrl(
                             source
                         );
+                    
+                    // Adicionar lazy loading para melhorar performance
+                    image.loading = "lazy";
+                    image.decoding = "async";
                 } else {
                     image.hidden =
                         true;
@@ -768,7 +774,11 @@
                         image.src =
                             imageUrl(
                                 source
-                            );
+                        );
+                        
+                        // Adicionar lazy loading para melhorar performance
+                        image.loading = "lazy";
+                        image.decoding = "async";
                     }
 
                     image.alt =
@@ -940,7 +950,8 @@
         renderProperties();
         updateStats();
 
-        await loadHighlights();
+        // Carregar destaques em paralelo após ter os imóveis
+        loadHighlights().catch(console.error);
 
         setApiStatus(
             `${properties.length} imóvel(is) carregado(s).`,
@@ -1025,7 +1036,11 @@
                 }
             );
 
-            await loadProperties();
+            // Atualizar estado local ao invés de recarregar tudo
+            property.destaque = true;
+            await loadHighlights();
+            renderProperties();
+            updateStats();
 
             setMessage(
                 featuredMessage,
@@ -1220,7 +1235,12 @@
                 throw addError;
             }
 
-            await loadProperties();
+            // Atualizar estado local ao invés de recarregar tudo
+            oldProperty.destaque = false;
+            newProperty.destaque = true;
+            await loadHighlights();
+            renderProperties();
+            updateStats();
 
             if (
                 featuredProperties.length !==
@@ -1290,6 +1310,10 @@
 
                 image.alt =
                     "Foto do imóvel";
+                
+                // Adicionar lazy loading para melhorar performance
+                image.loading = "lazy";
+                image.decoding = "async";
 
                 image.onerror =
                     () => {
@@ -1378,7 +1402,17 @@
                                 normalized
                             );
 
-                            renderProperties();
+                            // Não é necessário re-renderizar a lista inteira
+                            // Apenas atualizar o item específico se estiver visível
+                            const propertyItem = propertyList?.querySelector(
+                                `article[data-id="${property.id}"]`
+                            );
+                            if (propertyItem) {
+                                const image = propertyItem.querySelector('img');
+                                if (image && property.imagemPrincipal) {
+                                    image.src = imageUrl(property.imagemPrincipal);
+                                }
+                            }
 
                             setMessage(
                                 formMessage,
@@ -1474,7 +1508,17 @@
                                     normalized
                                 );
 
-                                renderProperties();
+                                // Não é necessário re-renderizar a lista inteira
+                                // Apenas atualizar o item específico se estiver visível
+                                const propertyItem = propertyList?.querySelector(
+                                    `article[data-id="${property.id}"]`
+                                );
+                                if (propertyItem) {
+                                    const image = propertyItem.querySelector('img');
+                                    if (image && property.imagemPrincipal) {
+                                        image.src = imageUrl(property.imagemPrincipal);
+                                    }
+                                }
 
                                 setMessage(
                                     formMessage,
@@ -1880,10 +1924,8 @@
             }
         );
 
-        data.preco =
-            parsePriceInput(
-                data.preco
-            );
+        // Não converter preço aqui - usar dataset.rawDigits
+        // data.preco será tratado abaixo
 
         const destaque =
             document.getElementById(
@@ -1930,6 +1972,13 @@
                         Boolean
                     )
                 : [];
+
+        // Não enviar o campo de preço do input formatado
+        // Usar apenas os dígitos brutos do dataset
+        delete data.preco;
+        if (priceInput?.dataset.rawDigits) {
+            data.preco = Number(priceInput.dataset.rawDigits);
+        }
 
         delete data.fotosUpload;
 
@@ -2215,7 +2264,8 @@
 
             renderProperties();
 
-            await loadProperties();
+            // Não é necessário recarregar tudo, já atualizamos o estado local
+            // loadProperties();
 
             resetForm();
 
@@ -2281,7 +2331,16 @@
                 }
             );
 
-            await loadProperties();
+            // Atualizar estado local ao invés de recarregar tudo
+            const index = properties.findIndex(
+                (item) => String(item.id) === String(property.id)
+            );
+            if (index !== -1) {
+                properties.splice(index, 1);
+            }
+            renderProperties();
+            updateStats();
+            await loadHighlights();
 
             setMessage(
                 formMessage,
@@ -2551,8 +2610,8 @@
                                     credentials:
                                         "omit",
 
-                                    cache:
-                                        "no-store"
+                                    // POST requests should not be cached
+                                    cache: "no-store"
                                 }
                             );
                         }
