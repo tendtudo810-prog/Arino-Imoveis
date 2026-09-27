@@ -1,1569 +1,1268 @@
-const http = require("http");
-const fs = require("fs");
-const path = require("path");
-const crypto = require("crypto");
+const http = require("node:http");
+const fs = require("node:fs");
+const path = require("node:path");
+const crypto = require("node:crypto");
+const { URL } = require("node:url");
 const bcrypt = require("bcryptjs");
 const Busboy = require("busboy");
 
-const PORT = Number(process.env.PORT || 5254);
+function loadEnvironmentFile(filePath) {
+    if (!fs.existsSync(filePath)) return;
+
+    for (const line of fs.readFileSync(filePath, "utf8").split(/\r?\n/)) {
+        const match = line.match(/^\s*([A-Z_][A-Z0-9_]*)\s*=\s*(.*)\s*$/);
+        if (!match || process.env[match[1]]) continue;
+        process.env[match[1]] = match[2].replace(/^['"]|['"]$/g, "");
+    }
+}
+
+if (process.env.NODE_ENV !== "production") {
+    loadEnvironmentFile(path.join(__dirname, ".env"));
+    loadEnvironmentFile(path.join(__dirname, ".env.local"));
+}
+
+const NODE_ENV = process.env.NODE_ENV || "development";
+const configuredPort = process.env.PORT || (NODE_ENV === "production" ? "" : "5254");
+const PORT = Number(configuredPort);
+
+if (!configuredPort || !Number.isInteger(PORT) || PORT < 0 || PORT > 65535) {
+    throw new Error("A variável PORT deve ser um número válido. Em produção, o provedor deve definir PORT.");
+}
 
 const DATA_FILE = path.resolve(
-  process.env.DATA_FILE || path.join(__dirname, "data", "imoveis.json")
+    process.env.DATA_FILE || path.join(__dirname, "data", "imoveis.json")
 );
 
 const UPLOADS_DIR = path.resolve(
-  process.env.UPLOADS_DIR || path.join(__dirname, "uploads")
+    process.env.UPLOADS_DIR || path.join(__dirname, "uploads")
 );
 
 const ADMIN_EMAIL = String(process.env.ADMIN_EMAIL || "")
-  .trim()
-  .toLowerCase();
+    .trim()
+    .toLowerCase();
 
-const ADMIN_PASSWORD_HASH = String(
-  process.env.ADMIN_PASSWORD_HASH || ""
-);
-
+const ADMIN_PASSWORD_HASH = String(process.env.ADMIN_PASSWORD_HASH || "");
 const AUTH_SECRET = String(process.env.AUTH_SECRET || "");
+const AUTH_ISSUER = String(process.env.AUTH_ISSUER || "arino-imoveis-api");
+const AUTH_AUDIENCE = String(process.env.AUTH_AUDIENCE || "arino-imoveis-admin");
+const API_BUILD = "abasthan-fixed-cors-v3";
 
-const FRONTEND_ORIGINS = String(
-  process.env.FRONTEND_ORIGINS ||
-  "http://127.0.0.1:5500,http://localhost:5500,http://localhost:3000"
+const DEFAULT_FRONTEND_ORIGINS = [
+    "https://www.arinoimoveis.com.br",
+    "https://arinoimoveis.com.br",
+    "http://localhost:5500",
+    "http://127.0.0.1:5500",
+    "http://localhost:5501",
+    "http://127.0.0.1:5501",
+    "http://localhost:5502",
+    "http://127.0.0.1:5502",
+    "http://localhost:3000"
+];
+
+const configuredOrigins = String(
+    process.env.FRONTEND_ORIGINS ||
+    process.env.FRONTEND_ORIGIN ||
+    ""
 )
-  .split(",")
-  .map(v => v.trim())
-  .filter(Boolean);
+    .split(",")
+    .map((origin) => origin.trim())
+    .filter(Boolean);
 
-const TOKEN_TTL_SECONDS = 8 * 60 * 60;
+const FRONTEND_ORIGINS = new Set([
+    ...DEFAULT_FRONTEND_ORIGINS,
+    ...configuredOrigins
+]);
 
+const TOKEN_MAX_AGE = 8 * 60 * 60;
+const revokedTokens = new Set();
 const MAX_UPLOADS = 10;
-const MAX_FILE_SIZE = 8 * 1024 * 1024;
+const MAX_IMAGE_SIZE = 8 * 1024 * 1024;
+const MAX_JSON_SIZE = 2 * 1024 * 1024;
 
+const allowedStatuses = new Set([
+    "Disponível",
+    "Vendido",
+    "Rascunho"
+]);
 
-// =====================================================
-// ARMAZENAMENTO
-// =====================================================
+const uploadRules = new Map([
+    [
+        "image/jpeg",
+        {
+            extensions: new Set([".jpg", ".jpeg"]),
+            signature: (buffer) =>
+                buffer.length >= 3 &&
+                buffer[0] === 0xff &&
+                buffer[1] === 0xd8 &&
+                buffer[2] === 0xff
+        }
+    ],
+    [
+        "image/png",
+        {
+            extensions: new Set([".png"]),
+            signature: (buffer) =>
+                buffer.subarray(0, 8).equals(
+                    Buffer.from([137, 80, 78, 71, 13, 10, 26, 10])
+                )
+        }
+    ],
+    [
+        "image/webp",
+        {
+            extensions: new Set([".webp"]),
+            signature: (buffer) =>
+                buffer.length >= 12 &&
+                buffer.subarray(0, 4).toString() === "RIFF" &&
+                buffer.subarray(8, 12).toString() === "WEBP"
+        }
+    ]
+]);
 
 function ensureStorage() {
-  fs.mkdirSync(path.dirname(DATA_FILE), {
-    recursive: true
-  });
+    fs.mkdirSync(path.dirname(DATA_FILE), { recursive: true });
+    fs.mkdirSync(UPLOADS_DIR, { recursive: true });
 
-  fs.mkdirSync(UPLOADS_DIR, {
-    recursive: true
-  });
-
-  if (!fs.existsSync(DATA_FILE)) {
-    fs.writeFileSync(DATA_FILE, "[]", "utf8");
-  }
+    if (!fs.existsSync(DATA_FILE)) {
+        fs.writeFileSync(DATA_FILE, "[]\n", "utf8");
+    }
 }
-
 
 function readProperties() {
-  ensureStorage();
+    ensureStorage();
 
-  const data = JSON.parse(
-    fs.readFileSync(DATA_FILE, "utf8") || "[]"
-  );
-
-  return Array.isArray(data) ? data : [];
+    try {
+        const data = JSON.parse(fs.readFileSync(DATA_FILE, "utf8") || "[]");
+        return Array.isArray(data) ? data : [];
+    } catch (error) {
+        throw new Error(`Banco JSON inválido: ${error.message}`);
+    }
 }
 
+function writeProperties(properties) {
+    ensureStorage();
 
-function writeProperties(data) {
-  ensureStorage();
-
-  const tempFile = DATA_FILE + ".tmp";
-
-  fs.writeFileSync(
-    tempFile,
-    JSON.stringify(data, null, 2),
-    "utf8"
-  );
-
-  fs.renameSync(tempFile, DATA_FILE);
-}
-
-
-// =====================================================
-// RESPOSTAS
-// =====================================================
-
-function sendJson(res, status, payload) {
-  res.writeHead(status, {
-    "Content-Type": "application/json; charset=utf-8",
-    "Cache-Control": "no-store"
-  });
-
-  res.end(JSON.stringify(payload));
-}
-
-
-// =====================================================
-// CORS
-// =====================================================
-
-function cors(req, res) {
-  const origin = req.headers.origin || "";
-
-  if (FRONTEND_ORIGINS.includes(origin)) {
-    res.setHeader(
-      "Access-Control-Allow-Origin",
-      origin
+    const temporaryFile = `${DATA_FILE}.tmp`;
+    fs.writeFileSync(
+        temporaryFile,
+        `${JSON.stringify(properties, null, 2)}\n`,
+        "utf8"
     );
-
-    res.setHeader("Vary", "Origin");
-  }
-
-  res.setHeader(
-    "Access-Control-Allow-Credentials",
-    "true"
-  );
-
-  res.setHeader(
-    "Access-Control-Allow-Headers",
-    "Content-Type, Authorization"
-  );
-
-  res.setHeader(
-    "Access-Control-Allow-Methods",
-    "GET, POST, PUT, PATCH, DELETE, OPTIONS"
-  );
+    fs.renameSync(temporaryFile, DATA_FILE);
 }
 
-
-// =====================================================
-// JWT
-// =====================================================
-
-function base64url(value) {
-  return Buffer
-    .from(value)
-    .toString("base64url");
+function getStoredImages(property) {
+    return Array.isArray(property.fotos) ? property.fotos : [];
 }
 
+function withImages(property) {
+    const storedImages = getStoredImages(property);
+    const mainImage =
+        property.imagemPrincipal && storedImages.includes(property.imagemPrincipal)
+            ? property.imagemPrincipal
+            : storedImages[0] || "";
+
+    const orderedImages = mainImage
+        ? [mainImage, ...storedImages.filter((image) => image !== mainImage)]
+        : storedImages;
+
+    const publicProperty = { ...property };
+    delete publicProperty.diretorioImagens;
+
+    return {
+        ...publicProperty,
+        status: property.status || (property.vendido ? "Vendido" : "Disponível"),
+        fotos: orderedImages,
+        fotosGerenciadas: storedImages,
+        imagemPrincipal: mainImage
+    };
+}
+
+function encodeBase64Url(value) {
+    return Buffer.from(value).toString("base64url");
+}
 
 function createToken(email) {
-  const now = Math.floor(Date.now() / 1000);
+    const now = Math.floor(Date.now() / 1000);
 
-  const header = base64url(
-    JSON.stringify({
-      alg: "HS256",
-      typ: "JWT"
-    })
-  );
-
-  const payload = base64url(
-    JSON.stringify({
-      sub: email,
-      email,
-      role: "admin",
-      iat: now,
-      exp: now + TOKEN_TTL_SECONDS
-    })
-  );
-
-  const unsigned = `${header}.${payload}`;
-
-  const signature = crypto
-    .createHmac("sha256", AUTH_SECRET)
-    .update(unsigned)
-    .digest("base64url");
-
-  return `${unsigned}.${signature}`;
-}
-
-
-function verifyToken(token) {
-  if (!token || !AUTH_SECRET) {
-    return null;
-  }
-
-  const parts = token.split(".");
-
-  if (parts.length !== 3) {
-    return null;
-  }
-
-  const unsigned = `${parts[0]}.${parts[1]}`;
-
-  const expected = crypto
-    .createHmac("sha256", AUTH_SECRET)
-    .update(unsigned)
-    .digest("base64url");
-
-  const a = Buffer.from(parts[2]);
-  const b = Buffer.from(expected);
-
-  if (
-    a.length !== b.length ||
-    !crypto.timingSafeEqual(a, b)
-  ) {
-    return null;
-  }
-
-  try {
-    const data = JSON.parse(
-      Buffer
-        .from(parts[1], "base64url")
-        .toString("utf8")
+    const header = encodeBase64Url(
+        JSON.stringify({ alg: "HS256", typ: "JWT" })
     );
 
+    const payload = encodeBase64Url(
+        JSON.stringify({
+            email,
+            role: "Admin",
+            iss: AUTH_ISSUER,
+            aud: AUTH_AUDIENCE,
+            jti: crypto.randomUUID(),
+            iat: now,
+            exp: now + TOKEN_MAX_AGE
+        })
+    );
+
+    const unsignedToken = `${header}.${payload}`;
+
+    const signature = crypto
+        .createHmac("sha256", AUTH_SECRET)
+        .update(unsignedToken)
+        .digest("base64url");
+
+    return `${unsignedToken}.${signature}`;
+}
+
+function getBearerToken(request) {
+    const authorization = request.headers.authorization || "";
+    return authorization.startsWith("Bearer ")
+        ? authorization.slice(7).trim()
+        : "";
+}
+
+function getAuthenticatedEmail(request) {
+    const token = getBearerToken(request);
+
+    if (!token || !AUTH_SECRET) return null;
+
+    const parts = token.split(".");
+    if (parts.length !== 3) return null;
+
+    const [header, payload, signature] = parts;
+
+    const expected = crypto
+        .createHmac("sha256", AUTH_SECRET)
+        .update(`${header}.${payload}`)
+        .digest("base64url");
+
+    const actualBuffer = Buffer.from(signature);
+    const expectedBuffer = Buffer.from(expected);
+
     if (
-      !data.exp ||
-      data.exp < Math.floor(Date.now() / 1000)
+        actualBuffer.length !== expectedBuffer.length ||
+        !crypto.timingSafeEqual(actualBuffer, expectedBuffer)
     ) {
-      return null;
+        return null;
     }
 
-    if (
-      data.role !== "admin" ||
-      data.email !== ADMIN_EMAIL
-    ) {
-      return null;
-    }
-
-    return data;
-
-  } catch {
-    return null;
-  }
-}
-
-
-function auth(req, res) {
-  const value =
-    req.headers.authorization || "";
-
-  const token =
-    value.startsWith("Bearer ")
-      ? value.slice(7).trim()
-      : "";
-
-  if (!verifyToken(token)) {
-    sendJson(res, 401, {
-      erro: "Não autorizado. Faça login novamente."
-    });
-
-    return false;
-  }
-
-  return true;
-}
-
-
-// =====================================================
-// JSON BODY
-// =====================================================
-
-function bodyJson(req) {
-  return new Promise((resolve, reject) => {
-
-    let body = "";
-
-    req.setEncoding("utf8");
-
-    req.on("data", chunk => {
-
-      body += chunk;
-
-      if (body.length > 2 * 1024 * 1024) {
-        reject(
-          new Error("Requisição muito grande.")
+    try {
+        const data = JSON.parse(
+            Buffer.from(payload, "base64url").toString("utf8")
         );
-      }
-
-    });
-
-    req.on("end", () => {
-
-      try {
-
-        resolve(
-          body
-            ? JSON.parse(body)
-            : {}
-        );
-
-      } catch {
-
-        reject(
-          new Error("JSON inválido.")
-        );
-
-      }
-
-    });
-
-    req.on("error", reject);
-  });
-}
-
-
-// =====================================================
-// UTILIDADES DE IMÓVEIS
-// =====================================================
-
-function slugify(value) {
-
-  return String(value || "")
-    .normalize("NFD")
-    .replace(/[\u0300-\u036f]/g, "")
-    .toLowerCase()
-    .trim()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-+|-+$/g, "");
-}
-
-
-function normalizeProperty(input, old = {}) {
-
-  const data = {
-    ...old,
-    ...input
-  };
-
-  const titulo = String(
-    data.titulo ??
-    data.title ??
-    data.nome ??
-    ""
-  ).trim();
-
-  const descricao = String(
-    data.descricao ??
-    data.description ??
-    ""
-  ).trim();
-
-  const cidade = String(
-    data.cidade ??
-    data.city ??
-    ""
-  ).trim();
-
-  const tipo = String(
-    data.tipo ??
-    data.type ??
-    ""
-  ).trim();
-
-  const rawPrice =
-    data.preco ??
-    data.price ??
-    0;
-
-  const preco =
-    typeof rawPrice === "number"
-      ? rawPrice
-      : Number(
-          String(rawPrice)
-            .replace(/[^\d,.-]/g, "")
-            .replace(",", ".")
-        ) || 0;
-
-  return {
-    ...data,
-
-    id: old.id ?? data.id,
-
-    titulo,
-
-    descricao,
-
-    cidade,
-
-    tipo,
-
-    preco,
-
-    fotos:
-      Array.isArray(data.fotos)
-        ? data.fotos.filter(Boolean)
-        : (old.fotos || []),
-
-    destaque:
-      Boolean(data.destaque),
-
-    slug:
-      String(
-        data.slug ||
-        slugify(titulo)
-      )
-  };
-}
-
-
-function nextId(items) {
-
-  return items.reduce(
-    (max, item) =>
-      Math.max(
-        max,
-        Number(item.id) || 0
-      ),
-    0
-  ) + 1;
-}
-
-
-function findProperty(items, id) {
-
-  return items.find(
-    item =>
-      String(item.id) === String(id)
-  );
-}
-
-
-// =====================================================
-// UPLOADS
-// =====================================================
-
-function safe(value) {
-
-  return String(value)
-    .replace(/[^a-zA-Z0-9_-]/g, "");
-}
-
-
-function extensionForMime(mime) {
-
-  const extensions = {
-
-    "image/jpeg": ".jpg",
-
-    "image/png": ".png",
-
-    "image/webp": ".webp",
-
-    "image/gif": ".gif",
-
-    "image/avif": ".avif"
-
-  };
-
-  return extensions[mime] || "";
-}
-
-
-function uploadFiles(req, propertyId) {
-
-  return new Promise((resolve, reject) => {
-
-    const busboy = Busboy({
-
-      headers: req.headers,
-
-      limits: {
-
-        files: MAX_UPLOADS,
-
-        fileSize: MAX_FILE_SIZE
-
-      }
-
-    });
-
-    const result = [];
-
-    let tooLarge = false;
-
-    busboy.on(
-      "file",
-      (field, file, info) => {
 
         if (
-          ![
-            "foto",
-            "fotos",
-            "images"
-          ].includes(field)
+            revokedTokens.has(data.jti) ||
+            data.role !== "Admin" ||
+            data.email !== ADMIN_EMAIL ||
+            data.iss !== AUTH_ISSUER ||
+            data.aud !== AUTH_AUDIENCE ||
+            !data.exp ||
+            data.exp <= Math.floor(Date.now() / 1000)
         ) {
-
-          file.resume();
-
-          return;
+            return null;
         }
 
-        const extension =
-          extensionForMime(
-            info.mimeType
-          );
+        return data.email;
+    } catch {
+        return null;
+    }
+}
 
-        if (!extension) {
+function revokeToken(request) {
+    const token = getBearerToken(request);
+    if (!token) return;
 
-          file.resume();
+    const payload = token.split(".")[1];
+    if (!payload) return;
 
-          return;
+    try {
+        const data = JSON.parse(
+            Buffer.from(payload, "base64url").toString("utf8")
+        );
+
+        if (data.jti) {
+            revokedTokens.add(data.jti);
+        }
+    } catch {
+        // Token inválido já não representa uma sessão válida.
+    }
+}
+
+function setCorsHeaders(request, response) {
+    const origin = request.headers.origin || "";
+
+    if (FRONTEND_ORIGINS.has(origin)) {
+        response.setHeader(
+            "Access-Control-Allow-Origin",
+            origin
+        );
+    }
+
+    response.setHeader(
+        "Access-Control-Allow-Credentials",
+        "true"
+    );
+
+    response.setHeader(
+        "Access-Control-Allow-Methods",
+        "GET,POST,PUT,PATCH,DELETE,OPTIONS"
+    );
+
+    response.setHeader(
+        "Access-Control-Allow-Headers",
+        "Content-Type, Authorization"
+    );
+
+    response.setHeader(
+        "Vary",
+        "Origin"
+    );
+}
+
+function sendJson(request, response, status, payload, extraHeaders = {}) {
+    if (response.writableEnded || response.destroyed || response.headersSent) {
+        return false;
+    }
+
+    setCorsHeaders(request, response);
+
+    response.writeHead(status, {
+        "Content-Type": "application/json; charset=utf-8",
+        "Cache-Control": "no-store",
+        ...extraHeaders
+    });
+
+    if (status === 204) {
+        response.end();
+        return true;
+    }
+
+    response.end(JSON.stringify(payload));
+    return true;
+}
+
+function readRequestBody(request) {
+    return new Promise((resolve, reject) => {
+        let body = "";
+        let rejected = false;
+
+        request.setEncoding("utf8");
+
+        request.on("data", (chunk) => {
+            if (rejected) return;
+
+            body += chunk;
+
+            if (Buffer.byteLength(body, "utf8") > MAX_JSON_SIZE) {
+                rejected = true;
+                reject(new Error("Requisição muito grande."));
+                request.resume();
+            }
+        });
+
+        request.on("end", () => {
+            if (!rejected) resolve(body);
+        });
+
+        request.on("error", reject);
+    });
+}
+
+function parseJsonBody(body) {
+    try {
+        return body ? JSON.parse(body) : {};
+    } catch {
+        throw new Error("JSON inválido.");
+    }
+}
+
+async function requireJson(request) {
+    return parseJsonBody(await readRequestBody(request));
+}
+
+function requireAuth(request, response) {
+    const email = getAuthenticatedEmail(request);
+
+    if (!email) {
+        sendJson(request, response, 401, {
+            mensagem: "Não autenticado. Faça login novamente."
+        });
+        return null;
+    }
+
+    return email;
+}
+
+function nextId(properties) {
+    return Math.max(
+        0,
+        ...properties.map((property) => Number(property.id) || 0)
+    ) + 1;
+}
+
+function normalizeBoolean(value) {
+    return value === true || value === 1 || value === "1" || value === "true";
+}
+
+function validateProperty(input) {
+    if (!input || typeof input !== "object" || Array.isArray(input)) {
+        return "Dados inválidos.";
+    }
+
+    const property = { ...input };
+
+    property.titulo = String(property.titulo || "").trim();
+    property.tipo = String(property.tipo || "").trim();
+    property.cidade = String(property.cidade || "").trim();
+    property.estado = String(property.estado || "").trim().toUpperCase();
+    property.localizacao = String(property.localizacao || "").trim();
+    property.descricao = String(property.descricao || "").trim();
+
+    if (!property.titulo) return "Informe o título do imóvel.";
+    if (!property.tipo) return "Informe o tipo do imóvel.";
+    if (!property.cidade) return "Informe a cidade do imóvel.";
+    if (!/^[A-Z]{2}$/.test(property.estado)) return "Informe um estado válido.";
+
+    property.preco = Number(property.preco);
+    if (!Number.isFinite(property.preco) || property.preco <= 0) {
+        return "Informe um preço válido.";
+    }
+
+    for (const field of ["area", "quartos", "banheiros", "vagas"]) {
+        if (property[field] === "" || property[field] === null || property[field] === undefined) {
+            property[field] = null;
+            continue;
         }
 
-        const directory =
-          path.join(
-            UPLOADS_DIR,
-            safe(propertyId)
-          );
+        const value = Number(property[field]);
 
-        fs.mkdirSync(
-          directory,
-          {
-            recursive: true
-          }
+        if (!Number.isFinite(value) || value < 0) {
+            return `Informe um valor válido para ${field}.`;
+        }
+
+        property[field] = value;
+    }
+
+    property.fotos = Array.isArray(property.fotos)
+        ? property.fotos
+            .filter((photo) => typeof photo === "string" && photo.trim())
+            .map((photo) => photo.trim())
+            .slice(0, 30)
+        : [];
+
+    property.imagemPrincipal =
+        typeof property.imagemPrincipal === "string"
+            ? property.imagemPrincipal.trim()
+            : "";
+
+    property.status = allowedStatuses.has(property.status)
+        ? property.status
+        : "Disponível";
+
+    property.destaque = normalizeBoolean(property.destaque);
+    property.vendido = property.status === "Vendido";
+
+    return property;
+}
+
+function validateStoredImage(property, photo) {
+    return Array.isArray(property.fotos) && property.fotos.includes(photo);
+}
+
+function writeUploadedFile(propertyId, file) {
+    const rule = uploadRules.get(file.mimeType);
+    const extension = path.extname(file.originalName).toLowerCase();
+
+    if (
+        !rule ||
+        !rule.extensions.has(extension) ||
+        file.buffer.length === 0 ||
+        file.buffer.length > MAX_IMAGE_SIZE ||
+        !rule.signature(file.buffer)
+    ) {
+        throw new Error(
+            "Arquivo de imagem inválido. Use JPG, JPEG, PNG ou WEBP com até 8 MB."
         );
+    }
 
-        const filename =
-          crypto.randomUUID() +
-          extension;
+    const directory = path.join(UPLOADS_DIR, String(propertyId));
+    fs.mkdirSync(directory, { recursive: true });
 
-        const absolute =
-          path.join(
-            directory,
-            filename
-          );
+    const fileName = `${crypto.randomUUID()}${extension}`;
+    const absolutePath = path.join(directory, fileName);
 
-        const output =
-          fs.createWriteStream(
-            absolute
-          );
+    fs.writeFileSync(absolutePath, file.buffer, { flag: "wx" });
 
-        file.on(
-          "limit",
-          () => {
-            tooLarge = true;
-          }
-        );
+    return `/media/${encodeURIComponent(propertyId)}/${encodeURIComponent(fileName)}`;
+}
 
-        file.pipe(output);
+function readMultipartImages(request) {
+    return new Promise((resolve, reject) => {
+        const contentType = request.headers["content-type"] || "";
 
-        output.on(
-          "finish",
-          () => {
+        if (!contentType.toLowerCase().startsWith("multipart/form-data")) {
+            reject(new Error("Envie as imagens como multipart/form-data."));
+            return;
+        }
 
-            if (!tooLarge) {
+        const files = [];
+        let parser;
 
-              result.push(
-                `/media/${safe(propertyId)}/${filename}`
-              );
+        try {
+            parser = Busboy({
+                headers: request.headers,
+                limits: {
+                    files: MAX_UPLOADS,
+                    fileSize: MAX_IMAGE_SIZE
+                }
+            });
+        } catch (error) {
+            reject(error);
+            return;
+        }
 
-            } else {
-
-              try {
-                fs.unlinkSync(absolute);
-              } catch {}
-
+        parser.on("file", (fieldName, stream, info) => {
+            if (!["foto", "fotos", "images", "images[]"].includes(fieldName)) {
+                stream.resume();
+                return;
             }
 
-          }
-        );
+            const chunks = [];
+            let size = 0;
+            let tooLarge = false;
 
-        output.on(
-          "error",
-          reject
-        );
+            stream.on("data", (chunk) => {
+                size += chunk.length;
+                chunks.push(chunk);
+            });
 
-      }
-    );
+            stream.on("limit", () => {
+                tooLarge = true;
+            });
 
-    busboy.on(
-      "finish",
-      () => {
+            stream.on("end", () => {
+                if (tooLarge) {
+                    reject(new Error("Cada imagem deve ter no máximo 8 MB."));
+                    return;
+                }
 
-        if (tooLarge) {
+                files.push({
+                    fieldName,
+                    originalName: info.filename,
+                    mimeType: info.mimeType,
+                    buffer: Buffer.concat(chunks, size)
+                });
+            });
+        });
 
-          reject(
-            new Error(
-              "Uma imagem ultrapassou 8 MB."
-            )
-          );
+        parser.on("finish", () => resolve(files));
+        parser.on("error", reject);
+        request.on("error", reject);
 
-          return;
-        }
-
-        resolve(result);
-      }
-    );
-
-    busboy.on(
-      "error",
-      reject
-    );
-
-    req.pipe(busboy);
-  });
+        request.pipe(parser);
+    });
 }
 
-
-// =====================================================
-// FOTOS
-// =====================================================
-
-function serveMedia(req, res, pathname) {
-
-  const relative =
-    decodeURIComponent(
-      pathname.slice(
-        "/media/".length
-      )
-    );
-
-  const absolute =
-    path.resolve(
-      UPLOADS_DIR,
-      relative
-    );
-
-  if (
-    !absolute.startsWith(
-      path.resolve(UPLOADS_DIR)
-    )
-  ) {
-
-    return sendJson(
-      res,
-      403,
-      {
-        erro: "Acesso negado."
-      }
-    );
-
-  }
-
-  const mimeTypes = {
-
-    ".jpg": "image/jpeg",
-
-    ".jpeg": "image/jpeg",
-
-    ".png": "image/png",
-
-    ".webp": "image/webp",
-
-    ".gif": "image/gif",
-
-    ".avif": "image/avif"
-
-  };
-
-  const mime =
-    mimeTypes[
-      path
-        .extname(absolute)
-        .toLowerCase()
-    ] ||
-    "application/octet-stream";
-
-  try {
-
-    res.writeHead(
-      200,
-      {
-        "Content-Type": mime,
-
-        "Cache-Control":
-          "public, max-age=3600"
-      }
-    );
-
-    res.end(
-      fs.readFileSync(
-        absolute
-      )
-    );
-
-  } catch {
-
-    sendJson(
-      res,
-      404,
-      {
-        erro:
-          "Imagem não encontrada."
-      }
-    );
-
-  }
+function safeMediaPart(value) {
+    try {
+        return decodeURIComponent(String(value))
+            .replace(/[^A-Za-z0-9._-]/g, "");
+    } catch {
+        return "";
+    }
 }
 
+function serveMedia(request, response, pathname) {
+    if (response.writableEnded || response.destroyed) {
+        return;
+    }
 
-// =====================================================
-// ROTAS
-// =====================================================
+    setCorsHeaders(request, response);
 
-async function handle(req, res) {
+    const rawRelative = pathname.slice("/media/".length);
+    const parts = rawRelative
+        .split("/")
+        .filter(Boolean)
+        .map(safeMediaPart);
 
-  cors(req, res);
+    if (parts.length !== 2 || !parts[0] || !parts[1]) {
+        response.writeHead(404);
+        response.end();
+        return;
+    }
 
-  if (req.method === "OPTIONS") {
+    const uploadsRoot = path.resolve(UPLOADS_DIR);
+    const filePath = path.resolve(uploadsRoot, parts[0], parts[1]);
+    const relativePath = path.relative(uploadsRoot, filePath);
 
-    res.writeHead(204);
+    if (relativePath.startsWith("..") || path.isAbsolute(relativePath)) {
+        response.writeHead(403);
+        response.end();
+        return;
+    }
 
-    return res.end();
+    const extension = path.extname(filePath).toLowerCase();
+    const mimeTypes = {
+        ".jpg": "image/jpeg",
+        ".jpeg": "image/jpeg",
+        ".png": "image/png",
+        ".webp": "image/webp"
+    };
+    const contentType = mimeTypes[extension];
 
-  }
+    if (!contentType) {
+        response.writeHead(404);
+        response.end();
+        return;
+    }
 
-  const url =
-    new URL(
-      req.url,
-      `http://${req.headers.host || "localhost"}`
-    );
-
-  const pathname =
-    url.pathname;
-
-
-  // HEALTH
-
-  if (
-    req.method === "GET" &&
-    pathname === "/api/health"
-  ) {
-
-    return sendJson(
-      res,
-      200,
-      {
-        status: "ok",
-
-        api:
-          "arino-imoveis",
-
-        time:
-          new Date().toISOString()
-      }
-    );
-
-  }
-
-
-  // FOTOS
-
-  if (
-    pathname.startsWith("/media/")
-  ) {
-
-    return serveMedia(
-      req,
-      res,
-      pathname
-    );
-
-  }
-
-
-  // LOGIN
-
-  if (
-    req.method === "POST" &&
-    pathname === "/api/auth/login"
-  ) {
-
+    let stats;
     try {
-
-      const data =
-        await bodyJson(req);
-
-      const email =
-        String(
-          data.email ||
-          data.emailAdmin ||
-          ""
-        )
-        .trim()
-        .toLowerCase();
-
-      const senha =
-        String(
-          data.senha ||
-          data.password ||
-          data.senhaAdmin ||
-          ""
-        );
-
-      if (!email || !senha) {
-
-        return sendJson(
-          res,
-          400,
-          {
-            erro:
-              "Informe e-mail e senha."
-          }
-        );
-
-      }
-
-      if (
-        !ADMIN_EMAIL ||
-        !ADMIN_PASSWORD_HASH ||
-        !AUTH_SECRET
-      ) {
-
-        return sendJson(
-          res,
-          500,
-          {
-            erro:
-              "Login da API não configurado."
-          }
-        );
-
-      }
-
-      const valid =
-        email === ADMIN_EMAIL &&
-        await bcrypt.compare(
-          senha,
-          ADMIN_PASSWORD_HASH
-        );
-
-      if (!valid) {
-
-        return sendJson(
-          res,
-          401,
-          {
-            erro:
-              "E-mail ou senha inválidos."
-          }
-        );
-
-      }
-
-      return sendJson(
-        res,
-        200,
-        {
-
-          sucesso: true,
-
-          token:
-            createToken(email),
-
-          usuario: {
-
-            email,
-
-            role:
-              "admin"
-
-          }
-
-        }
-      );
-
-    } catch (error) {
-
-      return sendJson(
-        res,
-        400,
-        {
-          erro:
-            error.message
-        }
-      );
-
+        stats = fs.statSync(filePath);
+    } catch {
+        response.writeHead(404);
+        response.end();
+        return;
     }
 
-  }
-
-
-  // TODOS OS IMÓVEIS
-
-  if (
-    req.method === "GET" &&
-    pathname === "/api/Imoveis"
-  ) {
-
-    return sendJson(
-      res,
-      200,
-      readProperties()
-    );
-
-  }
-
-
-  // DESTAQUES
-
-  if (
-    req.method === "GET" &&
-    pathname ===
-      "/api/Imoveis/destaques"
-  ) {
-
-    return sendJson(
-      res,
-      200,
-      readProperties()
-        .filter(
-          item =>
-            item.destaque === true
-        )
-    );
-
-  }
-
-
-  const propertyMatch =
-    pathname.match(
-      /^\/api\/Imoveis\/([^/]+)$/
-    );
-
-  const photoMatch =
-    pathname.match(
-      /^\/api\/Imoveis\/([^/]+)\/fotos$/
-    );
-
-  const mainPhotoMatch =
-    pathname.match(
-      /^\/api\/Imoveis\/([^/]+)\/foto-principal$/
-    );
-
-  const highlightMatch =
-    pathname.match(
-      /^\/api\/Imoveis\/([^/]+)\/destaque$/
-    );
-
-
-  // IMÓVEL INDIVIDUAL
-
-  if (
-    req.method === "GET" &&
-    propertyMatch
-  ) {
-
-    const property =
-      findProperty(
-        readProperties(),
-        propertyMatch[1]
-      );
-
-    if (!property) {
-
-      return sendJson(
-        res,
-        404,
-        {
-          erro:
-            "Imóvel não encontrado."
-        }
-      );
-
+    if (!stats.isFile()) {
+        response.writeHead(404);
+        response.end();
+        return;
     }
 
-    return sendJson(
-      res,
-      200,
-      property
-    );
+    response.writeHead(200, {
+        "Content-Type": contentType,
+        "Content-Length": stats.size,
+        "Cache-Control": "public, max-age=31536000, immutable"
+    });
 
-  }
+    const stream = fs.createReadStream(filePath);
 
-
-  // PROTEÇÃO
-
-  if (
-    (
-      propertyMatch ||
-      photoMatch ||
-      mainPhotoMatch ||
-      highlightMatch
-    ) &&
-    [
-      "POST",
-      "PUT",
-      "PATCH",
-      "DELETE"
-    ].includes(req.method)
-  ) {
-
-    if (!auth(req, res)) {
-      return;
-    }
-
-  }
-
-
-  // CRIAR IMÓVEL
-
-  if (
-    req.method === "POST" &&
-    pathname === "/api/Imoveis"
-  ) {
-
-    try {
-
-      const properties =
-        readProperties();
-
-      const body =
-        await bodyJson(req);
-
-      const property =
-        normalizeProperty(
-          {
-            ...body,
-
-            id:
-              nextId(properties)
-          }
-        );
-
-      if (!property.titulo) {
-
-        return sendJson(
-          res,
-          400,
-          {
-            erro:
-              "Informe o título do imóvel."
-          }
-        );
-
-      }
-
-      if (
-        property.destaque &&
-        properties.filter(
-          item =>
-            item.destaque
-        ).length >= 6
-      ) {
-
-        return sendJson(
-          res,
-          400,
-          {
-            erro:
-              "Já existem 6 imóveis em destaque."
-          }
-        );
-
-      }
-
-      properties.push(
-        property
-      );
-
-      writeProperties(
-        properties
-      );
-
-      return sendJson(
-        res,
-        201,
-        property
-      );
-
-    } catch (error) {
-
-      return sendJson(
-        res,
-        400,
-        {
-          erro:
-            error.message
+    stream.on("error", (error) => {
+        console.error("Erro ao ler imagem:", error);
+        if (!response.writableEnded) {
+            response.destroy();
         }
-      );
+    });
 
-    }
-
-  }
-
-
-  // EDITAR IMÓVEL
-
-  if (
-    req.method === "PUT" &&
-    propertyMatch
-  ) {
-
-    try {
-
-      const properties =
-        readProperties();
-
-      const index =
-        properties.findIndex(
-          item =>
-            String(item.id) ===
-            String(propertyMatch[1])
-        );
-
-      if (index < 0) {
-
-        return sendJson(
-          res,
-          404,
-          {
-            erro:
-              "Imóvel não encontrado."
-          }
-        );
-
-      }
-
-      const body =
-        await bodyJson(req);
-
-      const property =
-        normalizeProperty(
-          body,
-          properties[index]
-        );
-
-      if (
-        property.destaque &&
-        !properties[index].destaque &&
-        properties.filter(
-          item =>
-            item.destaque
-        ).length >= 6
-      ) {
-
-        return sendJson(
-          res,
-          400,
-          {
-            erro:
-              "Já existem 6 imóveis em destaque."
-          }
-        );
-
-      }
-
-      properties[index] =
-        property;
-
-      writeProperties(
-        properties
-      );
-
-      return sendJson(
-        res,
-        200,
-        property
-      );
-
-    } catch (error) {
-
-      return sendJson(
-        res,
-        400,
-        {
-          erro:
-            error.message
-        }
-      );
-
-    }
-
-  }
-
-
-  // EXCLUIR IMÓVEL
-
-  if (
-    req.method === "DELETE" &&
-    propertyMatch
-  ) {
-
-    const properties =
-      readProperties();
-
-    const index =
-      properties.findIndex(
-        item =>
-          String(item.id) ===
-          String(propertyMatch[1])
-      );
-
-    if (index < 0) {
-
-      return sendJson(
-        res,
-        404,
-        {
-          erro:
-            "Imóvel não encontrado."
-        }
-      );
-
-    }
-
-    properties.splice(
-      index,
-      1
-    );
-
-    writeProperties(
-      properties
-    );
-
-    return sendJson(
-      res,
-      200,
-      {
-        sucesso: true
-      }
-    );
-
-  }
-
-
-  // UPLOAD DE FOTOS
-
-  if (
-    req.method === "POST" &&
-    photoMatch
-  ) {
-
-    try {
-
-      const properties =
-        readProperties();
-
-      const property =
-        findProperty(
-          properties,
-          photoMatch[1]
-        );
-
-      if (!property) {
-
-        return sendJson(
-          res,
-          404,
-          {
-            erro:
-              "Imóvel não encontrado."
-          }
-        );
-
-      }
-
-      const urls =
-        await uploadFiles(
-          req,
-          property.id
-        );
-
-      if (!urls.length) {
-
-        return sendJson(
-          res,
-          400,
-          {
-            erro:
-              "Nenhuma imagem válida foi enviada."
-          }
-        );
-
-      }
-
-      property.fotos =
-        Array.isArray(
-          property.fotos
-        )
-          ? property.fotos
-          : [];
-
-      property.fotos.push(
-        ...urls
-      );
-
-      writeProperties(
-        properties
-      );
-
-      return sendJson(
-        res,
-        201,
-        {
-          sucesso: true,
-
-          fotos:
-            urls,
-
-          imovel:
-            property
-        }
-      );
-
-    } catch (error) {
-
-      return sendJson(
-        res,
-        400,
-        {
-          erro:
-            error.message
-        }
-      );
-
-    }
-
-  }
-
-
-  // FOTO PRINCIPAL
-
-  if (
-    req.method === "PUT" &&
-    mainPhotoMatch
-  ) {
-
-    try {
-
-      const properties =
-        readProperties();
-
-      const property =
-        findProperty(
-          properties,
-          mainPhotoMatch[1]
-        );
-
-      if (!property) {
-
-        return sendJson(
-          res,
-          404,
-          {
-            erro:
-              "Imóvel não encontrado."
-          }
-        );
-
-      }
-
-      const body =
-        await bodyJson(req);
-
-      const photo =
-        String(
-          body.url ||
-          body.foto ||
-          ""
-        );
-
-      if (
-        !photo ||
-        !(
-          property.fotos || []
-        ).includes(photo)
-      ) {
-
-        return sendJson(
-          res,
-          400,
-          {
-            erro:
-              "A foto não pertence ao imóvel."
-          }
-        );
-
-      }
-
-      property.fotos = [
-
-        photo,
-
-        ...(
-          property.fotos || []
-        ).filter(
-          item =>
-            item !== photo
-        )
-
-      ];
-
-      property.fotoPrincipal =
-        photo;
-
-      writeProperties(
-        properties
-      );
-
-      return sendJson(
-        res,
-        200,
-        {
-          sucesso: true,
-
-          imovel:
-            property
-        }
-      );
-
-    } catch (error) {
-
-      return sendJson(
-        res,
-        400,
-        {
-          erro:
-            error.message
-        }
-      );
-
-    }
-
-  }
-
-
-  // DESTAQUE
-
-  if (
-    req.method === "PUT" &&
-    highlightMatch
-  ) {
-
-    try {
-
-      const properties =
-        readProperties();
-
-      const property =
-        findProperty(
-          properties,
-          highlightMatch[1]
-        );
-
-      if (!property) {
-
-        return sendJson(
-          res,
-          404,
-          {
-            erro:
-              "Imóvel não encontrado."
-          }
-        );
-
-      }
-
-      const body =
-        await bodyJson(req);
-
-      const enabled =
-        Boolean(
-          body.destaque ??
-          body.highlight ??
-          true
-        );
-
-      if (
-        enabled &&
-        !property.destaque &&
-        properties.filter(
-          item =>
-            item.destaque
-        ).length >= 6
-      ) {
-
-        return sendJson(
-          res,
-          400,
-          {
-            erro:
-              "Já existem 6 imóveis em destaque."
-          }
-        );
-
-      }
-
-      property.destaque =
-        enabled;
-
-      writeProperties(
-        properties
-      );
-
-      return sendJson(
-        res,
-        200,
-        {
-          sucesso: true,
-
-          imovel:
-            property
-        }
-      );
-
-    } catch (error) {
-
-      return sendJson(
-        res,
-        400,
-        {
-          erro:
-            error.message
-        }
-      );
-
-    }
-
-  }
-
-
-  return sendJson(
-    res,
-    404,
-    {
-      erro:
-        "Rota não encontrada."
-    }
-  );
-
+    stream.pipe(response);
 }
 
+function getFeatured(properties) {
+    return properties.filter((property) => property.destaque === true);
+}
 
-// =====================================================
-// INICIAR SERVIDOR
-// =====================================================
+function getFeaturedCount(properties) {
+    return getFeatured(properties).length;
+}
+
+async function routeApi(request, response, url) {
+    const pathname = url.pathname.replace(/\/+$/, "").toLowerCase() || "/";
+
+    if (request.method === "GET" && pathname === "/api/health") {
+        return sendJson(request, response, 200, {
+            status: "ok",
+            api: "arino-imoveis",
+            build: API_BUILD,
+            time: new Date().toISOString()
+        });
+    }
+
+    if (request.method === "POST" && pathname === "/api/auth/login") {
+        try {
+            const data = await requireJson(request);
+            const email = String(data.email || data.emailAdmin || "").trim().toLowerCase();
+            const senha = String(data.senha || data.password || data.senhaAdmin || "");
+
+            if (!email || !senha) {
+                return sendJson(request, response, 400, {
+                    mensagem: "Informe e-mail e senha."
+                });
+            }
+
+            if (!ADMIN_EMAIL || !ADMIN_PASSWORD_HASH || !AUTH_SECRET) {
+                console.error("Login da API não configurado: faltam secrets de produção.");
+                return sendJson(request, response, 500, {
+                    mensagem: "Login da API não configurado."
+                });
+            }
+
+            const validEmail = email === ADMIN_EMAIL;
+            const validPassword = await bcrypt.compare(senha, ADMIN_PASSWORD_HASH);
+
+            if (!validEmail || !validPassword) {
+                console.warn("Login recusado: credenciais inválidas.");
+                return sendJson(request, response, 401, {
+                    mensagem: "E-mail ou senha inválidos."
+                });
+            }
+
+            const token = createToken(ADMIN_EMAIL);
+
+            console.log("Login aprovado para o administrador.");
+
+            return sendJson(request, response, 200, {
+                autenticado: true,
+                sucesso: true,
+                token,
+                email: ADMIN_EMAIL,
+                usuario: {
+                    email: ADMIN_EMAIL,
+                    role: "Admin"
+                }
+            });
+        } catch (error) {
+            console.error("Erro no login:", error);
+            return sendJson(request, response, 400, {
+                mensagem: error.message || "Requisição inválida."
+            });
+        }
+    }
+
+    if (request.method === "POST" && pathname === "/api/auth/logout") {
+        revokeToken(request);
+        return sendJson(request, response, 200, {
+            mensagem: "Sessão encerrada."
+        });
+    }
+
+    if (request.method === "GET" && pathname === "/api/auth/teste-admin") {
+        const email = getAuthenticatedEmail(request);
+
+        if (!email) {
+            return sendJson(request, response, 401, {
+                mensagem: "Não autenticado."
+            });
+        }
+
+        return sendJson(request, response, 200, {
+            autenticado: true,
+            email
+        });
+    }
+
+    if (request.method === "GET" && pathname === "/api/imoveis/destaques") {
+        return sendJson(
+            request,
+            response,
+            200,
+            getFeatured(readProperties()).map(withImages)
+        );
+    }
+
+    if (request.method === "GET" && pathname === "/api/admin/destaques") {
+        const email = requireAuth(request, response);
+        if (!email) return;
+
+        const properties = readProperties();
+        const destaques = getFeatured(properties);
+        const disponiveis = properties.filter((property) => property.destaque !== true);
+
+        return sendJson(request, response, 200, {
+            quantidade: destaques.length,
+            destaques: destaques.map(withImages),
+            disponiveis: disponiveis.map(withImages)
+        });
+    }
+
+    if (request.method === "POST" && pathname === "/api/imoveis/destaques/trocar") {
+        const email = requireAuth(request, response);
+        if (!email) return;
+
+        try {
+            const { antigoId, novoId } = await requireJson(request);
+            const properties = readProperties();
+            const currentHighlights = getFeatured(properties);
+            const oldProperty = properties.find((property) => String(property.id) === String(antigoId));
+            const newProperty = properties.find((property) => String(property.id) === String(novoId));
+
+            if (!oldProperty || !newProperty) {
+                return sendJson(request, response, 404, {
+                    mensagem: "Imóvel antigo ou novo não encontrado."
+                });
+            }
+
+            if (currentHighlights.length !== 6) {
+                return sendJson(request, response, 409, {
+                    mensagem: "A troca exige exatamente 6 destaques configurados."
+                });
+            }
+
+            if (oldProperty.destaque !== true || newProperty.destaque === true) {
+                return sendJson(request, response, 409, {
+                    mensagem: "Escolha um destaque atual e um imóvel fora do destaque."
+                });
+            }
+
+            oldProperty.destaque = false;
+            newProperty.destaque = true;
+
+            writeProperties(properties);
+
+            return sendJson(request, response, 200, {
+                mensagem: "Destaque trocado com sucesso.",
+                quantidade: properties.filter((property) => property.destaque === true).length,
+                destaques: properties.filter((property) => property.destaque === true).map(withImages)
+            });
+        } catch (error) {
+            return sendJson(request, response, 400, {
+                mensagem: error.message || "Requisição inválida."
+            });
+        }
+    }
+
+    if (request.method === "GET" && pathname === "/api/imoveis") {
+        return sendJson(
+            request,
+            response,
+            200,
+            readProperties().map(withImages)
+        );
+    }
+
+    const photoMatch = pathname.match(/^\/api\/imoveis\/([^/]+)\/fotos$/i);
+    if (photoMatch && ["POST", "DELETE"].includes(request.method)) {
+        const email = requireAuth(request, response);
+        if (!email) return;
+
+        const properties = readProperties();
+        const property = properties.find(
+            (item) => String(item.id) === decodeURIComponent(photoMatch[1])
+        );
+
+        if (!property) {
+            return sendJson(request, response, 404, {
+                mensagem: "Imóvel não encontrado."
+            });
+        }
+
+        try {
+            if (request.method === "POST") {
+                const files = await readMultipartImages(request);
+
+                if (!files.length) {
+                    return sendJson(request, response, 400, {
+                        mensagem: "Selecione pelo menos uma imagem."
+                    });
+                }
+
+                if (files.length > MAX_UPLOADS) {
+                    return sendJson(request, response, 400, {
+                        mensagem: `Você pode enviar no máximo ${MAX_UPLOADS} imagens por vez.`
+                    });
+                }
+
+                const newPhotos = files.map((file) => writeUploadedFile(property.id, file));
+
+                property.fotos = [
+                    ...(Array.isArray(property.fotos) ? property.fotos : []),
+                    ...newPhotos
+                ];
+
+                if (!property.imagemPrincipal) {
+                    property.imagemPrincipal = newPhotos[0];
+                }
+
+                writeProperties(properties);
+
+                return sendJson(request, response, 201, withImages(property));
+            }
+
+            const { foto } = await requireJson(request);
+
+            if (!validateStoredImage(property, foto)) {
+                return sendJson(request, response, 404, {
+                    mensagem: "Foto não encontrada."
+                });
+            }
+
+            property.fotos = property.fotos.filter((image) => image !== foto);
+
+            if (property.imagemPrincipal === foto) {
+                property.imagemPrincipal = property.fotos[0] || "";
+            }
+
+            if (typeof foto === "string" && foto.startsWith("/media/")) {
+                const mediaPath = path.resolve(
+                    UPLOADS_DIR,
+                    ...foto.replace(/^\/media\//i, "").split("/").map(safeMediaPart)
+                );
+
+                const uploadsRoot = path.resolve(UPLOADS_DIR);
+                const relativePath = path.relative(uploadsRoot, mediaPath);
+
+                if (
+                    !relativePath.startsWith("..") &&
+                    !path.isAbsolute(relativePath) &&
+                    fs.existsSync(mediaPath)
+                ) {
+                    fs.unlinkSync(mediaPath);
+                }
+            }
+
+            writeProperties(properties);
+
+            return sendJson(request, response, 200, withImages(property));
+        } catch (error) {
+            return sendJson(request, response, 400, {
+                mensagem: error.message || "Não foi possível processar as imagens."
+            });
+        }
+    }
+
+    const mainImageMatch = pathname.match(/^\/api\/imoveis\/([^/]+)\/(?:imagem-principal|foto-principal)$/i);
+    if (mainImageMatch && request.method === "PUT") {
+        const email = requireAuth(request, response);
+        if (!email) return;
+
+        try {
+            const { foto, url } = await requireJson(request);
+            const selectedPhoto = typeof foto === "string" ? foto : url;
+            const properties = readProperties();
+            const property = properties.find(
+                (item) => String(item.id) === decodeURIComponent(mainImageMatch[1])
+            );
+
+            if (!property) {
+                return sendJson(request, response, 404, {
+                    mensagem: "Imóvel não encontrado."
+                });
+            }
+
+            if (!validateStoredImage(property, selectedPhoto)) {
+                return sendJson(request, response, 400, {
+                    mensagem: "A imagem principal precisa pertencer ao imóvel."
+                });
+            }
+
+            property.imagemPrincipal = selectedPhoto;
+            writeProperties(properties);
+
+            return sendJson(request, response, 200, withImages(property));
+        } catch (error) {
+            return sendJson(request, response, 400, {
+                mensagem: error.message || "Requisição inválida."
+            });
+        }
+    }
+
+    const highlightMatch = pathname.match(/^\/api\/imoveis\/([^/]+)\/destaque$/i);
+    if (highlightMatch && ["POST", "PUT", "DELETE"].includes(request.method)) {
+        const email = requireAuth(request, response);
+        if (!email) return;
+
+        const properties = readProperties();
+        const property = properties.find(
+            (item) => String(item.id) === decodeURIComponent(highlightMatch[1])
+        );
+
+        if (!property) {
+            return sendJson(request, response, 404, {
+                mensagem: "Imóvel não encontrado."
+            });
+        }
+
+        const count = getFeaturedCount(properties);
+
+        if (request.method === "POST") {
+            if (property.destaque === true) {
+                return sendJson(request, response, 409, {
+                    mensagem: "Este imóvel já está em destaque."
+                });
+            }
+
+            if (count >= 6) {
+                return sendJson(request, response, 409, {
+                    mensagem: "Já existem 6 imóveis em destaque. Use a troca de destaque."
+                });
+            }
+
+            property.destaque = true;
+            writeProperties(properties);
+
+            return sendJson(request, response, 200, {
+                mensagem: "Imóvel adicionado ao destaque.",
+                quantidade: getFeaturedCount(properties),
+                imovel: withImages(property)
+            });
+        }
+
+        if (request.method === "DELETE") {
+            if (property.destaque !== true) {
+                return sendJson(request, response, 409, {
+                    mensagem: "Este imóvel não está em destaque."
+                });
+            }
+
+            if (count <= 6) {
+                return sendJson(request, response, 409, {
+                    mensagem: "Não é permitido ficar com menos de 6 imóveis em destaque. Use 'Trocar imóvel' para substituir este anúncio."
+                });
+            }
+
+            property.destaque = false;
+            writeProperties(properties);
+
+            return sendJson(request, response, 200, {
+                mensagem: "Imóvel removido do destaque.",
+                quantidade: getFeaturedCount(properties),
+                imovel: withImages(property)
+            });
+        }
+
+        try {
+            const data = await requireJson(request);
+            const enabled = normalizeBoolean(
+                data.destaque ?? data.highlight ?? true
+            );
+
+            if (!enabled) {
+                return sendJson(request, response, 409, {
+                    mensagem: "Não é permitido remover um dos 6 destaques por edição. Use 'Trocar imóvel'."
+                });
+            }
+
+            if (property.destaque === true) {
+                return sendJson(request, response, 409, {
+                    mensagem: "Este imóvel já está em destaque."
+                });
+            }
+
+            if (count >= 6) {
+                return sendJson(request, response, 409, {
+                    mensagem: "Já existem 6 imóveis em destaque. Use 'Trocar imóvel'."
+                });
+            }
+
+            property.destaque = true;
+            writeProperties(properties);
+
+            return sendJson(request, response, 200, {
+                mensagem: "Imóvel adicionado ao destaque.",
+                quantidade: getFeaturedCount(properties),
+                imovel: withImages(property)
+            });
+        } catch (error) {
+            return sendJson(request, response, 400, {
+                mensagem: error.message || "Requisição inválida."
+            });
+        }
+    }
+
+    const propertyMatch = pathname.match(/^\/api\/(?:imoveis|imovel)\/([^/]+)$/i);
+    if (propertyMatch && ["GET", "PUT", "DELETE"].includes(request.method)) {
+        const id = decodeURIComponent(propertyMatch[1]);
+        const properties = readProperties();
+        const index = properties.findIndex((item) => String(item.id) === id);
+
+        if (request.method === "GET") {
+            if (index === -1) {
+                return sendJson(request, response, 404, {
+                    mensagem: "Imóvel não encontrado."
+                });
+            }
+
+            return sendJson(request, response, 200, withImages(properties[index]));
+        }
+
+        const email = requireAuth(request, response);
+        if (!email) return;
+
+        if (index === -1) {
+            return sendJson(request, response, 404, {
+                mensagem: "Imóvel não encontrado."
+            });
+        }
+
+        if (request.method === "DELETE") {
+            if (
+                properties[index].destaque === true &&
+                getFeaturedCount(properties) <= 6
+            ) {
+                return sendJson(request, response, 409, {
+                    mensagem: "Não é possível excluir um dos 6 destaques. Troque o destaque primeiro."
+                });
+            }
+
+            const [removed] = properties.splice(index, 1);
+            writeProperties(properties);
+
+            return sendJson(request, response, 200, {
+                mensagem: "Imóvel excluído com sucesso.",
+                id: removed.id
+            });
+        }
+
+        try {
+            const input = await requireJson(request);
+            const validation = validateProperty(input);
+
+            if (typeof validation === "string") {
+                return sendJson(request, response, 400, {
+                    mensagem: validation
+                });
+            }
+
+            const wasFeatured = properties[index].destaque === true;
+
+            if (wasFeatured && validation.destaque !== true) {
+                return sendJson(request, response, 409, {
+                    mensagem: "Este imóvel faz parte dos 6 destaques. Use 'Trocar imóvel' para substituí-lo."
+                });
+            }
+
+            if (
+                validation.destaque === true &&
+                !wasFeatured &&
+                getFeaturedCount(properties) >= 6
+            ) {
+                return sendJson(request, response, 409, {
+                    mensagem: "Já existem 6 imóveis em destaque. Use 'Trocar imóvel' para substituir um anúncio."
+                });
+            }
+
+            const updated = {
+                ...properties[index],
+                ...validation,
+                id: properties[index].id
+            };
+
+            if (!Object.prototype.hasOwnProperty.call(input, "diretorioImagens")) {
+                updated.diretorioImagens = properties[index].diretorioImagens;
+            }
+
+            properties[index] = updated;
+            writeProperties(properties);
+
+            return sendJson(request, response, 200, withImages(updated));
+        } catch (error) {
+            return sendJson(request, response, 400, {
+                mensagem: error.message || "Requisição inválida."
+            });
+        }
+    }
+
+    if (request.method === "POST" && pathname === "/api/imoveis") {
+        const email = requireAuth(request, response);
+        if (!email) return;
+
+        try {
+            const input = await requireJson(request);
+            const validation = validateProperty(input);
+
+            if (typeof validation === "string") {
+                return sendJson(request, response, 400, {
+                    mensagem: validation
+                });
+            }
+
+            const properties = readProperties();
+            const highlightCount = getFeaturedCount(properties);
+
+            if (validation.destaque && highlightCount >= 6) {
+                return sendJson(request, response, 409, {
+                    mensagem: "Já existem 6 imóveis em destaque. Use a troca de destaque para substituir um anúncio."
+                });
+            }
+
+            const created = {
+                ...validation,
+                id: nextId(properties)
+            };
+
+            properties.push(created);
+            writeProperties(properties);
+
+            return sendJson(request, response, 201, withImages(created));
+        } catch (error) {
+            return sendJson(request, response, 400, {
+                mensagem: error.message || "Requisição inválida."
+            });
+        }
+    }
+
+    return sendJson(request, response, 404, {
+        mensagem: "Endpoint não encontrado."
+    });
+}
+
+const server = http.createServer(async (request, response) => {
+    setCorsHeaders(request, response);
+
+    if (request.method === "OPTIONS") {
+        return sendJson(request, response, 204, {});
+    }
+
+    const url = new URL(
+        request.url,
+        `http://${request.headers.host || "localhost"}`
+    );
+
+    if (
+        request.method === "GET" &&
+        url.pathname.toLowerCase().startsWith("/media/")
+    ) {
+        try {
+            serveMedia(request, response, url.pathname);
+        } catch (error) {
+            console.error("Erro ao servir mídia:", error);
+            if (!response.headersSent) {
+                response.writeHead(500);
+                response.end();
+            } else if (!response.writableEnded) {
+                response.destroy();
+            }
+        }
+
+        return;
+    }
+
+    if (!url.pathname.toLowerCase().startsWith("/api/")) {
+        return sendJson(request, response, 404, {
+            mensagem: "Use um endpoint /api."
+        });
+    }
+
+    try {
+        await routeApi(request, response, url);
+    } catch (error) {
+        console.error("Erro interno da API:", error);
+
+        if (!response.headersSent) {
+            sendJson(
+                request,
+                response,
+                500,
+                NODE_ENV === "production"
+                    ? { mensagem: "Erro interno do servidor." }
+                    : {
+                        mensagem: "Erro interno do servidor.",
+                        detalhe: error.message
+                    }
+            );
+        }
+    }
+});
 
 ensureStorage();
 
-http
-  .createServer(
-    (req, res) => {
+server.listen("0.0.0.0", () => {
+    console.log(
+        `API Arino Imóveis disponível na porta ${PORT} (${NODE_ENV}). Build: ${API_BUILD}`
+    );
+});
 
-      handle(
-        req,
-        res
-      ).catch(
-        error => {
+function shutdown(signal) {
+    console.log(`Recebido ${signal}; encerrando servidor.`);
 
-          console.error(
-            error
-          );
-
-          if (!res.headersSent) {
-
-            sendJson(
-              res,
-              500,
-              {
-                erro:
-                  "Erro interno da API."
-              }
-            );
-
-          }
-
+    server.close((error) => {
+        if (error) {
+            console.error("Erro ao encerrar servidor:", error);
+            process.exitCode = 1;
         }
-      );
 
-    }
-  )
-  .listen(
-    PORT,
-    "0.0.0.0",
-    () => {
+        process.exit();
+    });
+}
 
-      console.log(
-        `Arino Imóveis API: http://localhost:${PORT}`
-      );
-
-    }
-  );
+process.once("SIGTERM", () => shutdown("SIGTERM"));
+process.once("SIGINT", () => shutdown("SIGINT"));
