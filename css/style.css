@@ -154,10 +154,7 @@ header {
 ========================================================= */
 
 .picture {
-    width: 48px;
-    height: 48px;
-
-    flex: 0 0 48px;
+    width: 10%;
 
     object-fit: contain;
 }
@@ -182,8 +179,9 @@ header {
     gap: 34px;
 }
 
-.header > dl {
+.header {
     display: flex;
+    gap: 40px;
     align-items: center;
     justify-content: center;
 
@@ -191,6 +189,12 @@ header {
 
     margin: 0;
     padding: 0;
+
+    text-align: center;
+    position: absolute;
+    left: 40%;
+    top: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .header a {
@@ -281,7 +285,11 @@ header {
     align-items: center;
     justify-content: center;
 
-    flex: 0 0 auto;
+
+    position: absolute;
+    top: 50%;
+    left: 80%;
+    transform: translate(-50%, -50%);
 
     height: 40px;
     min-width: 150px;
@@ -303,18 +311,15 @@ header {
     text-decoration: none;
     white-space: nowrap;
 
-    transition:
-        background 0.25s ease,
-        color 0.25s ease,
-        transform 0.25s ease,
-        box-shadow 0.25s ease;
+    transition: 0.6s;
 }
 
 .telefone:hover {
     background: transparent;
     color: var(--gold-primary);
-    transform: translateY(-1px);
+    transform: scale(1.2px);
     box-shadow: 0 8px 20px rgba(255, 195, 0, 0.18);
+    transition: 0.6s;
 }
 
 
