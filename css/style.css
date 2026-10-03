@@ -92,7 +92,7 @@ body {
 
     overflow-x: hidden;
 
-    background: var(--black);
+    background-color: var(--black-deep);
 
     color: var(--white);
 
