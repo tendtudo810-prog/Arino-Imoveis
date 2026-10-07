@@ -29,12 +29,55 @@ if (!configuredPort || !Number.isInteger(PORT) || PORT < 0 || PORT > 65535) {
     throw new Error("A variável PORT deve ser um número válido. Em produção, o provedor deve definir PORT.");
 }
 
-const DATA_FILE = path.resolve(
-    process.env.DATA_FILE || path.join(__dirname, "data", "imoveis.json")
+const APPLICATION_ROOT = path.resolve(__dirname, "..");
+const PERSISTENT_STORAGE_ROOT = path.join(
+    path.sep,
+    "var",
+    "lib",
+    "arino-imoveis"
 );
 
-const UPLOADS_DIR = path.resolve(
-    process.env.UPLOADS_DIR || path.join(__dirname, "uploads")
+function resolveStoragePath(environmentVariable, fallback) {
+    const configuredPath = process.env[environmentVariable];
+    const storagePath = configuredPath || fallback;
+
+    if (NODE_ENV === "production" && !path.isAbsolute(storagePath)) {
+        throw new Error(
+            `${environmentVariable} deve apontar para um caminho absoluto no armazenamento persistente em produção.`
+        );
+    }
+
+    const resolvedPath = path.resolve(storagePath);
+
+    if (NODE_ENV === "production") {
+        const relativePath = path.relative(APPLICATION_ROOT, resolvedPath);
+        if (
+            relativePath === "" ||
+            (!relativePath.startsWith(`..${path.sep}`) &&
+                relativePath !== ".." &&
+                !path.isAbsolute(relativePath))
+        ) {
+            throw new Error(
+                `${environmentVariable} não pode apontar para dentro da pasta da aplicação em produção.`
+            );
+        }
+    }
+
+    return resolvedPath;
+}
+
+const DATA_FILE = resolveStoragePath(
+    "DATA_FILE",
+    NODE_ENV === "production"
+        ? path.join(PERSISTENT_STORAGE_ROOT, "data", "imoveis.json")
+        : path.join(__dirname, "data", "imoveis.json")
+);
+
+const UPLOADS_DIR = resolveStoragePath(
+    "UPLOADS_DIR",
+    NODE_ENV === "production"
+        ? path.join(PERSISTENT_STORAGE_ROOT, "uploads")
+        : path.join(__dirname, "uploads")
 );
 
 const ADMIN_EMAIL = String(process.env.ADMIN_EMAIL || "")
@@ -124,6 +167,12 @@ function ensureStorage() {
     fs.mkdirSync(UPLOADS_DIR, { recursive: true });
 
     if (!fs.existsSync(DATA_FILE)) {
+        if (NODE_ENV === "production") {
+            throw new Error(
+                "DATA_FILE não existe no armazenamento persistente. Restaure o backup do estado atual antes de iniciar a API."
+            );
+        }
+
         fs.writeFileSync(DATA_FILE, "[]\n", "utf8");
     }
 }
@@ -795,21 +844,42 @@ async function routeApi(request, response, url) {
                 });
             }
 
+            if (String(antigoId) === String(novoId)) {
+                return sendJson(request, response, 409, {
+                    mensagem: "Escolha dois imóveis diferentes para fazer a troca."
+                });
+            }
+
             if (oldProperty.destaque !== true || newProperty.destaque === true) {
                 return sendJson(request, response, 409, {
                     mensagem: "Escolha um destaque atual e um imóvel fora do destaque."
                 });
             }
 
-            oldProperty.destaque = false;
-            newProperty.destaque = true;
+            const nextProperties = properties.map((property) => {
+                if (String(property.id) === String(antigoId)) {
+                    return { ...property, destaque: false };
+                }
 
-            writeProperties(properties);
+                if (String(property.id) === String(novoId)) {
+                    return { ...property, destaque: true };
+                }
+
+                return property;
+            });
+
+            if (getFeaturedCount(nextProperties) !== 6) {
+                return sendJson(request, response, 409, {
+                    mensagem: "A troca não pode ser concluída sem manter exatamente 6 destaques."
+                });
+            }
+
+            writeProperties(nextProperties);
 
             return sendJson(request, response, 200, {
                 mensagem: "Destaque trocado com sucesso.",
-                quantidade: properties.filter((property) => property.destaque === true).length,
-                destaques: properties.filter((property) => property.destaque === true).map(withImages)
+                quantidade: getFeaturedCount(nextProperties),
+                destaques: getFeatured(nextProperties).map(withImages)
             });
         } catch (error) {
             return sendJson(request, response, 400, {
@@ -978,9 +1048,11 @@ async function routeApi(request, response, url) {
                 });
             }
 
-            if (count >= 6) {
+            if (count !== 5) {
                 return sendJson(request, response, 409, {
-                    mensagem: "Já existem 6 imóveis em destaque. Use a troca de destaque."
+                    mensagem: count >= 6
+                        ? "Já existem 6 imóveis em destaque. Use a troca de destaque."
+                        : "A adição só pode completar a vitrine quando houver exatamente 5 destaques."
                 });
             }
 
@@ -1001,9 +1073,9 @@ async function routeApi(request, response, url) {
                 });
             }
 
-            if (count <= 6) {
+            if (count !== 7) {
                 return sendJson(request, response, 409, {
-                    mensagem: "Não é permitido ficar com menos de 6 imóveis em destaque. Use 'Trocar imóvel' para substituir este anúncio."
+                    mensagem: "A remoção só pode corrigir uma vitrine com 7 destaques e deixá-la com exatamente 6. Use 'Trocar imóvel' para substituir anúncios."
                 });
             }
 
@@ -1035,9 +1107,11 @@ async function routeApi(request, response, url) {
                 });
             }
 
-            if (count >= 6) {
+            if (count !== 5) {
                 return sendJson(request, response, 409, {
-                    mensagem: "Já existem 6 imóveis em destaque. Use 'Trocar imóvel'."
+                    mensagem: count >= 6
+                        ? "Já existem 6 imóveis em destaque. Use 'Trocar imóvel'."
+                        : "A adição só pode completar a vitrine quando houver exatamente 5 destaques."
                 });
             }
 
@@ -1084,10 +1158,10 @@ async function routeApi(request, response, url) {
         if (request.method === "DELETE") {
             if (
                 properties[index].destaque === true &&
-                getFeaturedCount(properties) <= 6
+                getFeaturedCount(properties) !== 7
             ) {
                 return sendJson(request, response, 409, {
-                    mensagem: "Não é possível excluir um dos 6 destaques. Troque o destaque primeiro."
+                    mensagem: "A exclusão não pode deixar a vitrine diferente de 6 destaques. Use 'Trocar imóvel' primeiro."
                 });
             }
 
@@ -1121,10 +1195,12 @@ async function routeApi(request, response, url) {
             if (
                 validation.destaque === true &&
                 !wasFeatured &&
-                getFeaturedCount(properties) >= 6
+                getFeaturedCount(properties) !== 5
             ) {
                 return sendJson(request, response, 409, {
-                    mensagem: "Já existem 6 imóveis em destaque. Use 'Trocar imóvel' para substituir um anúncio."
+                    mensagem: getFeaturedCount(properties) >= 6
+                        ? "Já existem 6 imóveis em destaque. Use 'Trocar imóvel' para substituir um anúncio."
+                        : "A adição só pode completar a vitrine quando houver exatamente 5 destaques."
                 });
             }
 
@@ -1166,9 +1242,11 @@ async function routeApi(request, response, url) {
             const properties = readProperties();
             const highlightCount = getFeaturedCount(properties);
 
-            if (validation.destaque && highlightCount >= 6) {
+            if (validation.destaque && highlightCount !== 5) {
                 return sendJson(request, response, 409, {
-                    mensagem: "Já existem 6 imóveis em destaque. Use a troca de destaque para substituir um anúncio."
+                    mensagem: highlightCount >= 6
+                        ? "Já existem 6 imóveis em destaque. Use a troca de destaque para substituir um anúncio."
+                        : "A adição só pode completar a vitrine quando houver exatamente 5 destaques."
                 });
             }
 
@@ -1253,7 +1331,7 @@ const server = http.createServer(async (request, response) => {
 
 ensureStorage();
 
-server.listen("0.0.0.0", () => {
+server.listen(PORT, "0.0.0.0", () => {
     console.log(
         `API Arino Imóveis disponível na porta ${PORT} (${NODE_ENV}). Build: ${API_BUILD}`
     );

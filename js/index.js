@@ -106,7 +106,6 @@ async function blobReadProperties() {
     const data = JSON.parse(Buffer.concat(chunks).toString("utf8"));
     return Array.isArray(data) ? data : [];
   } catch (error) {
-    // Primeiro deploy: se o blob ainda não existe, usa o JSON local como seed.
     if (error && (error.status === 404 || error.code === "BLOB_NOT_FOUND")) return null;
     throw error;
   }
@@ -130,11 +129,13 @@ async function readProperties() {
   if (!USE_BLOB) return localReadProperties();
 
   const fromBlob = await blobReadProperties();
-  if (fromBlob) return fromBlob;
+  if (fromBlob === null) {
+    throw new Error(
+      "O arquivo de imóveis não existe no armazenamento persistente. Restauração automática desativada."
+    );
+  }
 
-  const seeded = localReadProperties();
-  await blobWriteProperties(seeded);
-  return seeded;
+  return fromBlob;
 }
 
 async function writeProperties(properties) {
@@ -610,13 +611,35 @@ async function handler(req, res) {
         });
       }
 
-      oldProperty.destaque = false;
-      newProperty.destaque = true;
-      await writeProperties(properties);
+      if (String(antigoId) === String(novoId)) {
+        return sendJson(req, res, 409, {
+          mensagem: "Escolha dois imóveis diferentes para fazer a troca."
+        });
+      }
+
+      const nextProperties = properties.map((property) => {
+        if (String(property.id) === String(antigoId)) {
+          return { ...property, destaque: false };
+        }
+        if (String(property.id) === String(novoId)) {
+          return { ...property, destaque: true };
+        }
+        return property;
+      });
+
+      const nextHighlights = nextProperties.filter((property) => property.destaque === true);
+      if (nextHighlights.length !== 6) {
+        return sendJson(req, res, 409, {
+          mensagem: "A troca não pode ser concluída sem manter exatamente 6 destaques."
+        });
+      }
+
+      await writeProperties(nextProperties);
 
       return sendJson(req, res, 200, {
         mensagem: "Destaque trocado com sucesso.",
-        destaques: properties.filter(p => p.destaque === true).map(withImages)
+        quantidade: nextHighlights.length,
+        destaques: nextHighlights.map(withImages)
       });
     } catch {
       return sendJson(req, res, 400, { mensagem: "Requisição inválida." });
@@ -743,15 +766,22 @@ async function handler(req, res) {
       if (property.destaque === true) {
         return sendJson(req, res, 409, { mensagem: "Este imóvel já está em destaque." });
       }
-      if (count >= 6) {
+      if (count !== 5) {
         return sendJson(req, res, 409, {
-          mensagem: "Já existem 6 imóveis em destaque. Remova um imóvel antes de adicionar outro."
+          mensagem: count >= 6
+            ? "Já existem 6 imóveis em destaque. Use 'Trocar imóvel'."
+            : "A adição só pode completar a vitrine quando houver exatamente 5 destaques."
         });
       }
       property.destaque = true;
     } else {
       if (property.destaque !== true) {
         return sendJson(req, res, 409, { mensagem: "Este imóvel não está em destaque." });
+      }
+      if (count !== 7) {
+        return sendJson(req, res, 409, {
+          mensagem: "A remoção só pode corrigir uma vitrine com 7 destaques e deixá-la com exatamente 6. Use 'Trocar imóvel'."
+        });
       }
       property.destaque = false;
     }
@@ -785,10 +815,10 @@ async function handler(req, res) {
 
       if (
         property.destaque === true &&
-        properties.filter(p => p.destaque === true).length <= 6
+        properties.filter(p => p.destaque === true).length !== 7
       ) {
         return sendJson(req, res, 409, {
-          mensagem: "Remova ou troque o destaque antes de excluir este imóvel."
+          mensagem: "A exclusão não pode deixar a vitrine diferente de 6 destaques. Use 'Trocar imóvel' primeiro."
         });
       }
 
@@ -821,9 +851,19 @@ async function handler(req, res) {
         if (
           validated.destaque &&
           property.destaque !== true &&
-          properties.filter(p => p.destaque === true).length >= 6
+          properties.filter(p => p.destaque === true).length !== 5
         ) {
-          return sendJson(req, res, 409, { mensagem: "Já existem 6 imóveis em destaque." });
+          const count = properties.filter(p => p.destaque === true).length;
+          return sendJson(req, res, 409, {
+            mensagem: count >= 6
+              ? "Já existem 6 imóveis em destaque. Use 'Trocar imóvel'."
+              : "A adição só pode completar a vitrine quando houver exatamente 5 destaques."
+          });
+        }
+        if (property.destaque === true && validated.destaque !== true) {
+          return sendJson(req, res, 409, {
+            mensagem: "Não é permitido remover um dos 6 destaques por edição. Use 'Trocar imóvel'."
+          });
         }
 
         const index = properties.findIndex(p => String(p.id) === id);
@@ -865,9 +905,14 @@ async function handler(req, res) {
 
       if (
         property.destaque &&
-        properties.filter(p => p.destaque === true).length >= 6
+        properties.filter(p => p.destaque === true).length !== 5
       ) {
-        return sendJson(req, res, 409, { mensagem: "Já existem 6 imóveis em destaque." });
+        const count = properties.filter(p => p.destaque === true).length;
+        return sendJson(req, res, 409, {
+          mensagem: count >= 6
+            ? "Já existem 6 imóveis em destaque. Use 'Trocar imóvel'."
+            : "A adição só pode completar a vitrine quando houver exatamente 5 destaques."
+        });
       }
 
       const created = {

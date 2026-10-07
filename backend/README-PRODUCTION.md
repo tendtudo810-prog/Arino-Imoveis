@@ -1,17 +1,12 @@
 # Relatório de Preparação para Produção - API Arino Imóveis
 
-## Arquivos alterados
+## Situação atual
 
-1. **backend/.env.production.example** - Atualizado com CORS correto para produção
-2. **backend/.env** - Criado com configuração de desenvolvimento
-3. **backend/package.json** - Adicionado campo `engines` com versão mínima do Node
-4. **.gitignore** - Adicionado `.env.local` e `.env` para proteção de secrets
-5. **backend/data/imoveis.json.backup** - Backup de segurança criado antes de alterações
-
-## Arquivos criados
-
-1. **backend/.env** - Arquivo de configuração de desenvolvimento (não commitar no Git)
-2. **backend/data/imoveis.json.backup** - Backup do JSON original
+- A API JSON atual está em `backend/server.js`; não foi executada migração para PostgreSQL.
+- `backend/env.production.example` define caminhos esperados, mas este repositório não configura nem comprova a montagem de um volume persistente no host.
+- Os JSONs em `backend/data/` são snapshots versionados, não backup do estado administrativo ao vivo. Faça e confira esse backup no host antes de mudar os caminhos de storage.
+- Foi obtida uma cópia local de `GET /api/Imoveis` em `backend/data/imoveis.json.backup-20261006.json` (17 imóveis, 6 destaques; ignorada pelo Git). Ela ainda precisa ser conferida contra o arquivo ativo no host antes de uma troca de caminho.
+- Em produção, a API usa `/var/lib/arino-imoveis/data/imoveis.json` e `/var/lib/arino-imoveis/uploads` por padrão; `DATA_FILE` e `UPLOADS_DIR` podem sobrescrevê-los com caminhos absolutos fora da pasta da aplicação. Se o JSON persistente não existir, o processo falha explicitamente em vez de restaurar os imóveis versionados ou criar silenciosamente `[]`.
 
 ## Variáveis de ambiente
 
@@ -70,6 +65,22 @@ npm start
    - Production: `/var/lib/arino-imoveis/uploads` (configurável)
 
 **IMPORTANTE:** O provedor de hospedagem DEVE oferecer filesystem persistente para estes diretórios. Caso contrário, os dados serão perdidos a cada deploy/reinício.
+
+O exemplo `backend/env.production.example` apenas define os caminhos; ele não
+provisiona o volume no provedor. Monte o volume persistente em
+`/var/lib/arino-imoveis` antes de iniciar a API e configure `DATA_FILE` e
+`UPLOADS_DIR` no ambiente do serviço. Em produção, a API recusa caminhos
+relativos ou localizados dentro da pasta da aplicação, para não gravar no
+filesystem descartável do deploy.
+
+`backend/data/imoveis.json` continua sendo apenas o conjunto de dados incluído
+no código-fonte. A API não o usa como fallback quando o storage persistente foi
+configurado. Se o arquivo no volume ainda não existir, a API falha explicitamente
+em vez de iniciar com uma lista vazia ou importar o JSON versionado. Uma lista
+administrativa já salva como `[]` permanece vazia após reinicializações. Não
+apague nem substitua o arquivo atual ao configurar o volume: copie o estado
+administrativo vigente para o volume somente após criar e conferir um backup
+desse estado no ambiente de hospedagem.
 
 ## CORS
 
@@ -156,27 +167,26 @@ npm start
 
 ## Status Final
 
-A API está **PREPARADA PARA DEPLOY** com as seguintes ressalvas:
+A API está pronta no código para usar storage externo configurado, mas o deploy
+não deve ser considerado persistente até verificar o volume no host:
 
 1. **Funcionalidade principal:** ✅ 100% operacional
 2. **Autenticação:** ✅ JWT funcionando corretamente
-3. **Dados:** ✅ JSON persistente funcionando
+3. **Dados:** ⚠️ JSON grava no caminho configurado; persistência entre redeploys depende de volume montado pelo host
 4. **Imagens:** ⚠️ Sistema híbrido requer migração manual
-5. **Produção:** ✅ Configurações de ambiente prontas
+5. **Produção:** ⚠️ Configure caminhos absolutos e confira o volume antes de iniciar a nova versão
 6. **Segurança:** ✅ Proteções implementadas
 
 ## Próximos Passos Recomendados
 
-1. **Escolher provedor:** Selecionar provedor com filesystem persistente
+1. **Storage:** Confirmar/montar volume persistente e copiar o estado ao vivo após backup
 2. **Configurar secrets:** Definir variáveis de ambiente no provedor
-3. **Migrar imagens:** Mover imagens legacias para sistema novo
+3. **Migrar imagens:** Mover imagens legadas somente se necessário e após backup
 4. **Testar produção:** Validar todos os endpoints em ambiente de produção
-5. **Planejar PostgreSQL:** Iniciar planejamento para migração do JSON para PostgreSQL
 
 ## Notas Técnicas
 
-- O sistema atual usa JSON + filesystem temporariamente até migração PostgreSQL
-- A URL pública será `https://api.arinoimoveis.com.br`
+- O sistema atual usa JSON e uma única API, sem PostgreSQL
+- A URL pública atualmente configurada no frontend é `https://jogging-early-bat.abasthan.app`
 - Não há dependência de PostgreSQL nesta fase
 - O graceful shutdown evita corrupção do JSON durante encerramento
-- Backup do JSON foi criado em `backend/data/imoveis.json.backup`

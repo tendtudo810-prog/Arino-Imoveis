@@ -4,7 +4,7 @@
   "description": "Backend local da API de imóveis, executado sem dependências externas.",
   "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "node --test test/server.integration.test.js",
     "start": "node server.js"
   },
   "keywords": [],

@@ -668,14 +668,15 @@
 
         if (addButton) {
             addButton.disabled =
-                count >=
-                MAX_FEATURED;
+                count !==
+                MAX_FEATURED - 1;
 
             addButton.title =
-                count >=
-                MAX_FEATURED
+                count >= MAX_FEATURED
                     ? "Já existem 6 imóveis em destaque. Use Trocar imóvel."
-                    : "Adicionar imóvel ao destaque";
+                    : count === MAX_FEATURED - 1
+                        ? "Adicionar o sexto imóvel ao destaque."
+                        : "A adição só pode completar a vitrine quando houver exatamente 5 destaques.";
         }
 
         if (swapButton) {
@@ -959,17 +960,45 @@
         );
     }
 
+    async function refreshAdminLists() {
+        const [propertyData, highlightData] =
+            await Promise.all([
+                publicGet("/api/Imoveis"),
+                publicGet("/api/Imoveis/destaques")
+            ]);
+
+        if (
+            !Array.isArray(propertyData) ||
+            !Array.isArray(highlightData)
+        ) {
+            throw new Error(
+                "A API retornou uma lista inválida de imóveis."
+            );
+        }
+
+        properties =
+            propertyData.map(
+                normalizeProperty
+            );
+
+        renderProperties();
+        renderHighlights(highlightData);
+        updateStats();
+    }
+
     async function addHighlight() {
         const count =
             featuredProperties.length;
 
         if (
-            count >=
-            MAX_FEATURED
+            count !==
+            MAX_FEATURED - 1
         ) {
             setMessage(
                 featuredMessage,
-                "Já existem 6 imóveis em destaque. Para substituir um anúncio, use 'Trocar imóvel'.",
+                count >= MAX_FEATURED
+                    ? "Já existem 6 imóveis em destaque. Para substituir um anúncio, use 'Trocar imóvel'."
+                    : "A adição só pode completar a vitrine quando houver exatamente 5 destaques.",
                 "warning"
             );
 
@@ -1177,70 +1206,82 @@
             return;
         }
 
+        const swapButton =
+            document.getElementById(
+                "swapHighlightButton"
+            );
+
+        if (swapButton) {
+            swapButton.disabled = true;
+        }
+
+        let swapCompleted = false;
+
         try {
             setMessage(
                 featuredMessage,
                 "Trocando imóvel em destaque..."
             );
 
-            /*
-             * A API atual não possui uma rota específica
-             * para troca atômica.
-             *
-             * Então:
-             *
-             * 1. removemos o antigo;
-             * 2. adicionamos o novo;
-             * 3. se der erro, tentamos restaurar o antigo.
-             *
-             * O estado final precisa voltar a ser 6.
-             */
-
-            await request(
-                `/api/Imoveis/${encodeURIComponent(oldId)}/destaque`,
+            const result =
+                await request(
+                "/api/Imoveis/destaques/trocar",
                 {
-                    method:
-                        "DELETE"
+                    method: "POST",
+                    body: JSON.stringify({
+                        antigoId: oldId,
+                        novoId: newId
+                    })
                 }
             );
 
-            try {
-                await request(
-                    `/api/Imoveis/${encodeURIComponent(newId)}/destaque`,
-                    {
-                        method:
-                            "POST"
-                    }
-                );
-            } catch (
-                addError
+            if (
+                result?.quantidade !== MAX_FEATURED ||
+                !Array.isArray(result.destaques) ||
+                result.destaques.length !== MAX_FEATURED
             ) {
-                try {
-                    await request(
-                        `/api/Imoveis/${encodeURIComponent(oldId)}/destaque`,
-                        {
-                            method:
-                                "POST"
-                        }
-                    );
-                } catch (
-                    rollbackError
-                ) {
-                    console.error(
-                        "Falha ao restaurar o destaque anterior:",
-                        rollbackError
-                    );
-                }
-
-                throw addError;
+                throw new Error(
+                    "A API não confirmou a troca com exatamente 6 destaques."
+                );
             }
 
-            // Atualizar estado local ao invés de recarregar tudo
-            oldProperty.destaque = false;
-            newProperty.destaque = true;
-            await loadHighlights();
+            swapCompleted = true;
+
+            const featuredIds =
+                new Set(
+                    result.destaques.map(
+                        (property) => String(property.id)
+                    )
+                );
+
+            properties =
+                properties.map(
+                    (property) => ({
+                        ...property,
+                        destaque: featuredIds.has(
+                            String(property.id)
+                        )
+                    })
+                );
+
             renderProperties();
+            renderHighlights(result.destaques);
             updateStats();
+
+            try {
+                await refreshAdminLists();
+            } catch (refreshError) {
+                console.error(
+                    "A troca foi persistida, mas não foi possível atualizar as listas:",
+                    refreshError
+                );
+                setMessage(
+                    featuredMessage,
+                    `Troca concluída, mas não foi possível atualizar as listas: ${refreshError.message}`,
+                    "warning"
+                );
+                return;
+            }
 
             if (
                 featuredProperties.length !==
@@ -1257,11 +1298,24 @@
                 "success"
             );
         } catch (error) {
+            if (!swapCompleted) {
+                try {
+                    await refreshAdminLists();
+                } catch (refreshError) {
+                    console.error(
+                        "Não foi possível sincronizar o painel após a falha na troca:",
+                        refreshError
+                    );
+                }
+            }
+
             setMessage(
                 featuredMessage,
                 error.message,
                 "error"
             );
+        } finally {
+            syncHighlightControls();
         }
     }
 
@@ -2170,11 +2224,13 @@
                 payload.destaque ===
                     true &&
                 !wasFeatured &&
-                count >=
-                    MAX_FEATURED
+                count !==
+                    MAX_FEATURED - 1
             ) {
                 throw new Error(
-                    "Já existem 6 imóveis em destaque. Use 'Trocar imóvel' para substituir um deles."
+                    count >= MAX_FEATURED
+                        ? "Já existem 6 imóveis em destaque. Use 'Trocar imóvel' para substituir um deles."
+                        : "A adição só pode completar a vitrine quando houver exatamente 5 destaques."
                 );
             }
 
