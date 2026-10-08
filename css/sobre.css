@@ -88,10 +88,6 @@ html {
 
 body {
 
-    min-width: 320px;
-
-    overflow-x: hidden;
-
     background: var(--black);
 
     color: var(--white);
@@ -193,6 +189,17 @@ header {
 
     box-shadow: var(--header-shadow);
 
+    pointer-events: auto;
+}
+
+.nav-panel {
+    position: absolute;
+    inset: 0;
+    display: contents;
+    pointer-events: none;
+}
+
+.nav-panel > * {
     pointer-events: auto;
 }
 
@@ -557,12 +564,12 @@ header {
 .info h2 {
     position: absolute;
     top: 100%;
-    left: 114%;
+    left: 76%;
     transform: translate(-50%, -50%);
     color: #fff;
     font-size: 40px;
     margin-top: 147vh;
-    width: 100%
+    width: auto;
 }
 
 .info p {
@@ -788,6 +795,14 @@ header {
         padding-bottom: 2rem;
     }
 
+    .fundo {
+        position: relative;
+        top: auto;
+        left: auto;
+        height: auto;
+        padding: 1rem 1.25rem 0;
+    }
+
     nav.sections {
         display: flex;
         flex-wrap: wrap;
@@ -798,6 +813,24 @@ header {
         position: relative;
         z-index: 100;
         width: 100%;
+    }
+
+    .nav-panel {
+        display: none;
+        width: 100%;
+        order: 4;
+        border: 1px solid rgba(255, 195, 0, 0.18);
+        border-radius: 12px;
+        background: rgba(5, 7, 13, 0.97);
+        flex-direction: column;
+        gap: 0.75rem;
+        padding: 0.75rem;
+        margin-top: 0.5rem;
+        pointer-events: auto;
+    }
+
+    .sections.is-open .nav-panel {
+        display: flex;
     }
 
     .menu-toggle {
@@ -837,15 +870,14 @@ header {
         flex-direction: column;
         align-items: center;
         gap: 0;
-        order: 4;
         width: 100%;
-        padding: 0.75rem 0;
-        background: rgba(5, 7, 13, 0.97);
-        border: 1px solid rgba(255, 195, 0, 0.2);
-        border-radius: 12px;
+        padding: 0;
+        background: transparent;
+        border: none;
+        border-radius: 0;
     }
 
-    .header.is-open {
+    .sections.is-open .header {
         display: flex;
     }
 
@@ -864,14 +896,29 @@ header {
     .telefone {
         position: static;
         transform: none;
-        order: 3;
-        width: auto;
+        display: inline-flex;
+        justify-content: center;
+        width: 100%;
+        min-height: 44px;
+        margin-left: 0;
         padding: 0.75rem 1rem;
         font-size: clamp(0.7rem, 2.5vw, 0.875rem);
         white-space: nowrap;
-        min-height: 44px;
+        left: auto;
+        top: auto;
+    }
+
+    .cadastro {
+        position: static;
+        transform: none;
         display: inline-flex;
-        align-items: center;
+        justify-content: center;
+        width: 100%;
+        min-height: 44px;
+        margin-left: 0;
+        padding: 0.75rem 1rem;
+        left: auto;
+        top: auto;
     }
 
     .telefone:hover {
@@ -891,6 +938,38 @@ header {
         width: 100%;
         height: auto;
         display: block;
+    }
+
+    .hero-text {
+        position: relative;
+        order: 3;
+        top: auto;
+        left: auto;
+        transform: none;
+        width: 100%;
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 1.5rem 1.25rem 2rem;
+        text-align: left;
+    }
+
+    .hero-text label {
+        position: static;
+        transform: none;
+        display: block;
+        margin-bottom: 0.75rem;
+    }
+
+    .hero-text h1 {
+        font-size: clamp(2rem, 6vw, 3rem);
+        line-height: 1.1;
+    }
+
+    .hero-text p {
+        width: 100%;
+        margin-top: 1rem;
+        font-size: clamp(0.95rem, 2.2vw, 1.05rem);
+        line-height: 1.6;
     }
 
     .texto {
@@ -980,17 +1059,59 @@ header {
 
     /* --- Vídeo + CTA --- */
     .vid {
-        position: static;
+        position: relative;
+        display: grid;
+        place-items: center;
+        top: auto;
+        left: auto;
         transform: none;
-        margin: 0;
+        margin: 2rem 0 0;
         width: 100%;
+        min-height: clamp(320px, 60vh, 560px);
         overflow: hidden;
     }
 
     .video {
+        position: absolute;
+        inset: 0;
         width: 100%;
-        height: auto;
+        height: 100%;
         display: block;
+        object-fit: cover;
+    }
+
+    .font {
+        position: relative;
+        z-index: 1;
+        top: auto;
+        left: auto;
+        transform: none;
+        width: min(100%, 760px);
+        padding: 2rem 1.25rem;
+        box-sizing: border-box;
+    }
+
+    .font h1 {
+        font-size: clamp(1.75rem, 6vw, 2.75rem);
+        line-height: 1.1;
+    }
+
+    .font p {
+        width: 100%;
+        margin-top: 1rem;
+        font-size: clamp(0.95rem, 2.2vw, 1.05rem);
+        line-height: 1.6;
+    }
+
+    .font a {
+        position: static;
+        transform: none;
+        width: auto;
+        min-width: 150px;
+        max-width: 100%;
+        margin: 1.25rem 0 0;
+        padding: 0.85rem 1.5rem;
+        min-height: 44px;
     }
 
     .txt {
@@ -1030,6 +1151,11 @@ header {
 
     /* --- Rodapé --- */
     .footer {
+        position: relative;
+        top: auto;
+        left: auto;
+        transform: none;
+        width: 100%;
         margin-top: 0;
         padding: 40px 1.25rem 24px;
     }
@@ -1063,39 +1189,13 @@ header {
     }
 
     #mission,
-    .info,
-    .txt {
+    .info {
         padding-left: 1rem;
         padding-right: 1rem;
     }
 
-    .txt {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        margin-top: 150vh;
-    }
-
-    .texto {
-        padding: 0 1rem;
-    }
-
-    .btn {
-        margin: 1.25rem 1rem 0;
-    }
-
-    .texto {
-        position: absolute;
-        top: 40%;
-        left: 2%;
-        width: 100%;
-        transform: translate(-50%, -50%);
-        transform: scale(0.7);
-    }
-
     .footer {
-        margin-top: 30vh;
+        margin-top: 2rem;
     }
 }
 
@@ -1127,6 +1227,14 @@ header {
         font-size: 1.6rem;
     }
 
+    .hero-text h1 {
+        font-size: clamp(1.75rem, 7vw, 2.25rem);
+    }
+
+    .hero-text p {
+        font-size: 0.95rem;
+    }
+
     #mission h2,
     .info h2 {
         font-size: 1.5rem;
@@ -1140,62 +1248,3 @@ header {
     }
 }
 
-@media (max-width: 430px) {
-
-    nav.sections {
-        padding: 0.75rem 0.875rem;
-    }
-
-    .picture {
-        width: clamp(80px, 24vw, 100px);
-    }
-}
-
-@media (max-width: 390px) {
-
-    .header a {
-        font-size: 0.95rem;
-        padding: 0.75rem;
-    }
-
-    .telefone {
-        font-size: 0.75rem;
-        padding: 0.6rem 0.65rem;
-    }
-}
-
-@media (max-width: 360px) {
-
-    .picture {
-        width: 78px;
-    }
-
-    .menu-toggle {
-        width: 40px;
-        height: 40px;
-        font-size: 1rem;
-    }
-}
-
-@media (max-width: 320px) {
-
-    nav.sections {
-        padding: 0.65rem 0.75rem;
-    }
-
-    #mission,
-    .info,
-    .txt {
-        padding-left: 0.85rem;
-        padding-right: 0.85rem;
-    }
-
-    .texto {
-        padding: 0 0.85rem;
-    }
-
-    .btn {
-        margin: 1rem 0.85rem 0;
-        width: calc(100% - 1.7rem);
-    }
-}

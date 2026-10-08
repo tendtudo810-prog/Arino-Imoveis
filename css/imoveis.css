@@ -88,10 +88,6 @@ html {
 
 body {
 
-    min-width: 320px;
-
-    overflow-x: hidden;
-
     background: var(--black);
 
     color: var(--white);
@@ -193,6 +189,17 @@ header {
 
     box-shadow: var(--header-shadow);
 
+    pointer-events: auto;
+}
+
+.nav-panel {
+    position: absolute;
+    inset: 0;
+    display: contents;
+    pointer-events: none;
+}
+
+.nav-panel > * {
     pointer-events: auto;
 }
 
@@ -684,6 +691,14 @@ header {
         padding: 0;
     }
 
+    .fundo {
+        position: relative;
+        top: auto;
+        left: auto;
+        height: auto;
+        padding: 1rem 1.25rem 0;
+    }
+
     nav.sections {
         position: relative;
         height: auto;
@@ -695,6 +710,24 @@ header {
         padding: 1rem 1.25rem;
         background: rgba(5, 7, 13, 0.95);
         border-bottom: 1px solid rgba(255, 195, 0, 0.15);
+    }
+
+    .nav-panel {
+        display: none;
+        width: 100%;
+        order: 4;
+        border: 1px solid rgba(255, 195, 0, 0.18);
+        border-radius: 12px;
+        background: rgba(5, 7, 13, 0.97);
+        flex-direction: column;
+        gap: 0.75rem;
+        padding: 0.75rem;
+        margin-top: 0.5rem;
+        pointer-events: auto;
+    }
+
+    .sections.is-open .nav-panel {
+        display: flex;
     }
 
     .picture {
@@ -728,16 +761,15 @@ header {
         flex-direction: column;
         align-items: center;
         gap: 0;
-        order: 4;
         width: 100%;
-        padding: 0.75rem 0;
-        background: rgba(5, 7, 13, 0.97);
-        border: 1px solid rgba(255, 195, 0, 0.2);
-        border-radius: 12px;
-        margin-top: 0.5rem;
+        padding: 0;
+        background: transparent;
+        border: none;
+        border-radius: 0;
+        margin-top: 0;
     }
 
-    .header.is-open {
+    .sections.is-open .header {
         display: flex;
     }
 
@@ -756,14 +788,27 @@ header {
     .telefone {
         position: static;
         transform: none;
-        order: 3;
+        display: inline-flex;
+        justify-content: center;
+        width: auto;
+        min-height: 44px;
+        margin-left: 0;
         padding: 0.75rem 1rem;
         font-size: clamp(0.7rem, 2.5vw, 0.875rem);
         white-space: nowrap;
-        min-height: 44px;
+        left: auto;
+        top: auto;
+    }
+
+    .cadastro {
+        position: static;
+        transform: none;
         display: inline-flex;
-        align-items: center;
-        width: auto;
+        justify-content: center;
+        width: 100%;
+        min-height: 44px;
+        margin-left: 0;
+        padding: 0.75rem 1rem;
         left: auto;
         top: auto;
     }
@@ -870,70 +915,3 @@ header {
     }
 }
 
-@media (max-width: 430px) {
-
-    nav.sections {
-        padding: 0.75rem 0.875rem;
-    }
-
-    .picture {
-        width: clamp(70px, 22vw, 90px);
-    }
-
-    .menu-toggle {
-        width: 40px;
-        height: 40px;
-        font-size: 1rem;
-    }
-}
-
-@media (max-width: 390px) {
-
-    .header a {
-        font-size: 0.9rem;
-        padding: 0.75rem;
-    }
-
-    .telefone {
-        font-size: clamp(0.65rem, 2.5vw, 0.75rem);
-        padding: 0.6rem 0.65rem;
-    }
-}
-
-@media (max-width: 375px) {
-}
-
-@media (max-width: 360px) {
-
-    .picture {
-        width: clamp(60px, 20vw, 75px);
-    }
-
-    .menu-toggle {
-        width: 38px;
-        height: 38px;
-        font-size: 0.95rem;
-    }
-
-    .imovel-info {
-        padding: 14px;
-    }
-}
-
-@media (max-width: 320px) {
-
-    nav.sections,
-    .imoveis {
-        padding-left: 0.75rem;
-        padding-right: 0.75rem;
-    }
-
-    .picture {
-        width: 55px;
-    }
-
-    .menu-toggle {
-        width: 36px;
-        height: 36px;
-    }
-}
