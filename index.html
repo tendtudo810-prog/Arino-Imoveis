@@ -1,253 +1,265 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>ARINO IMÓVEIS</title>
-    <link rel="stylesheet" href="css/style.css" />
-    <link rel="shortcut icon" href="pic1/Logo.png" type="image/x-icon" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
-      integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
-  </head>
-  <body>
-    <div class="fundo">
-      <nav class="sections" aria-label="Menu principal">
-        <img src="pic1/Black & White.png" alt="Arino Imóveis" class="picture" />
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Arino Imóveis: imóveis para comprar e alugar, com atendimento próximo do primeiro contato à assinatura.">
+<title>Arino Imóveis — Encontre o lar que conta a sua história</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://db.onlinewebfonts.com/c/9d4d074c9335825a23cce178ee03b498?family=P22+Mackinac+W01+Book" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
 
-        <button
-          type="button"
-          class="menu-toggle"
-          aria-label="Abrir menu de navegação"
-          aria-expanded="false"
-        >
-          <i class="fa-solid fa-bars"></i>
-        </button>
+<!-- ============ HERO ============ -->
+<section class="hero" id="top">
+  <div class="bg" id="bg" aria-hidden="true">
+    <video id="bgVideo" muted playsinline autoplay preload="auto" crossorigin="anonymous" src="https://d8j0ntlcm91z4.cloudfront.net/user_38xzZboKViGWJOttwIXH07lWA1P/hf_20260422_112520_ee819691-f2e8-4c54-bb77-3fb72c84eaa5.mp4"></video>
+    <canvas id="bgCanvas"></canvas>
+  </div>
 
-        <div class="nav-panel">
-          <div class="header" aria-label="Navegação principal">
-            <a href="index.html">Home</a>
-            <a href="sobre-nos.html">Sobre nós</a>
-            <a href="imoveis.html">Imóveis</a>
-            <a href="avaliacoes.html">Avaliações</a>
-          </div>
+  <header class="nav">
+    <a class="logo" href="#top" aria-label="Arino Imóveis, início">
+      <img src="pic1/Black & White.png" alt="" class="svg">
+      <span>Arino Imóveis</span>
+    </a>
+    <nav class="links" aria-label="Principal">
+      <a href="#imoveis">Comprar</a>
+      <a href="#processo">Como funciona</a>
+      <a href="sobre-nos.html">Sobre</a>
+      <a href="#contato">Contato</a>
+    </nav>
+    <a class="btn nav-cta" href="#contato">Agendar visita</a>
+    <button class="menu-btn" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="mnav">
+      <svg viewBox="0 0 24 24" aria-hidden="true" class="i-menu"><path d="M4 5h16"/><path d="M4 12h16"/><path d="M4 19h16"/></svg>
+      <svg viewBox="0 0 24 24" aria-hidden="true" class="i-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+    </button>
+  </header>
 
-          <a href="login.html" class="cadastro">Login</a>
-
-          <a
-            href="https://wa.me/5561996973773?text=Olá,%20vi%20o%20site%20da%20Arino%20Imóveis%20e%20gostaria%20de%20mais%20informações."
-            target="_blank"
-            class="telefone"
-          >
-            Entrar em Contato
-          </a>
-        </div>
-      </nav>
+  <nav class="mnav" id="mnav" aria-label="Menu" aria-hidden="true">
+    <div class="mnav-inner">
+      <a href="#imoveis">Comprar</a>
+      <a href="#imoveis">Alugar</a>
+      <a href="#processo">Como funciona</a>
+      <a href="#sobre">Sobre</a>
+      <a href="#contato">Contato</a>
+      <a class="btn" href="https://wa.me/5561996973773?text=Olá,%20vi%20o%20site%20da%20Arino%20Imóveis%20e%20gostaria%20de%20mais%20informações.">Agendar visita</a>
     </div>
+  </nav>
 
-    <div class="container hero-video">
-      <video
-        src="pic1/Back.mp4"
-        class="ctn-img"
-        autoplay
-        muted
-        loop
-        playsinline
-      ></video>
-      <div class="hero-caption">
-          <h1 class="title">Transformando sonhos em novos endereços.</h1>
-          <p class="subtitle">
-            Mais do que imóveis, oferecemos segurança, confiança e o suporte
-            necessário para você encontrar o lugar perfeito para construir novas
-            memórias. Acompanhamos cada etapa da sua jornada, com atendimento
-            próximo, transparência e dedicação para transformar sua busca pelo
-            novo endereço em uma experiência tranquila, segura e especial.
-          </p>
-        <a href="imoveis.html" class="btn-hero">Imóveis Disponíveis</a>
+  <div class="copy">
+    <!-- PLACEHOLDER: texto de apoio, revisar com o conteúdo final -->
+    <h1>Encontre o lar que<br>conta a sua história.</h1>
+    <p class="sub">Imóveis para comprar e alugar, com atendimento próximo do primeiro contato até a assinatura.</p>
+    <a class="btn hero-btn" href="#imoveis">Ver imóveis</a>
+  </div>
+
+  <div class="panel-wrap">
+    <form class="panel search" id="search" role="search" aria-label="Buscar imóveis">
+      <p class="label">Buscar imóvel</p>
+      <div class="search-grid">
+        <label class="field">
+          <span>Finalidade</span>
+          <select name="finalidade" id="finalidade">
+            <option value="comprar">Comprar</option>
+            <option value="alugar">Alugar</option>
+          </select>
+        </label>
+        <label class="field">
+          <span>Tipo</span>
+          <select name="tipo">
+            <option>Apartamento</option>
+            <option>Casa</option>
+            <option>Terreno</option>
+            <option>Comercial</option>
+          </select>
+        </label>
+        <label class="field">
+          <span>Cidade ou bairro</span>
+          <input name="local" type="text" placeholder="Onde você quer morar?" autocomplete="off">
+        </label>
+        <button class="btn search-btn" type="submit">Buscar</button>
       </div>
-    </div>
+    </form>
+  </div>
+</section>
 
-    <div class="status">
-      <h1 class="stats">Nossas Qualidades</h1>
-      <p>
-        Mais do que números, estes resultados representam a confiança dos nossos
-        clientes e o compromisso da Arino Imóveis em oferecer um atendimento
-        próximo, transparente e dedicado em cada negociação.
-      </p>
-      <label for="#" class="lbl">ARINO IMÓVEIS</label>
-    </div>
+<main id="conteudo">
 
-    <div class="info">
-      <div class="info-item">
-        <h2 class="infor">98%</h2>
-        <p class="txt">Clientes Satisfeitos</p>
-      </div>
-      <div class="info-item">
-        <h2 class="infor">1:1</h2>
-        <p class="txt1">Atendimento Exclusivo</p>
-      </div>
-      <div class="info-item">
-        <h2 class="infor">24/7</h2>
-        <p class="txt2">Suporte via WhatsApp</p>
-      </div>
-      <div class="info-item">
-        <h2 class="infor">CRECI</h2>
-        <p class="txt3">Corretor Credenciado</p>
-      </div>
-    </div>
+  <!-- ============ IMÓVEIS EM DESTAQUE ============ -->
+  <section class="section section-light" id="imoveis" aria-labelledby="imoveis-titulo">
+    <div class="wrap">
+      <header class="section-head reveal">
+        <p class="eyebrow">Destaques</p>
+        <h2 id="imoveis-titulo" class="display">Imóveis escolhidos para você.</h2>
+      </header>
 
-    <div class="df">
-      <label for="#">DESTAQUE</label>
-      <h1>Imóveis em Destaque</h1>
-      <p>
-        Explore uma seleção de imóveis que unem qualidade, localização
-        privilegiada e excelente custo-benefício.
-      </p>
-    </div>
-
-    <div class="imoveis" id="imoveis-grid"></div>
-
-    <div class="cta">
-      <video
-        src="pic1/12978459-hd_1920_1080_24fps (1) (1) (1) (1).mp4"
-        autoplay
-        muted
-        playsinline
-        loop
-        class="vid"
-      ></video>
-
-      <div class="cta-caption">
-        <label for="#">COMPRE AGORA</label>
-        <h2 class="ct">Seu novo endereço começa aqui.</h2>
-        <p>
-          Estamos prontos para ajudar você a comprar, vender ou alugar com
-          segurança, transparência e um atendimento dedicado.
-        </p>
-        <a href="imoveis.html">Ver Mais</a>
-      </div>
-    </div>
-
-    <div class="bento">
-      <label for="#">FAQ</label>
-      <h2>Tudo o que você precisa em um só lugar</h2>
-      <p>
-        Conheça os diferenciais que tornam a experiência de comprar, vender ou
-        alugar um imóvel mais simples, segura e eficiente.
-      </p>
-    </div>
-
-    <div class="perguntas">
-      <div class="pergunta">
-        <div class="pergunta-header">
-          <h4>Como posso agendar uma visita a um imóvel?</h4>
-          <i class="fa-solid fa-plus"></i>
-        </div>
-        <div class="pergunta-resposta">
-          <p>
-            Você pode solicitar uma visita pelo WhatsApp ou telefone e nossa
-            equipe organiza a melhor data para você.
-          </p>
-        </div>
+      <div class="chips reveal" role="group" aria-label="Filtrar imóveis">
+        <button class="chip" type="button" data-filter="all" aria-pressed="true">Todos</button>
+        <button class="chip" type="button" data-filter="comprar" aria-pressed="false">Comprar</button>
+        <button class="chip" type="button" data-filter="alugar" aria-pressed="false">Alugar</button>
+        <button class="chip" type="button" data-filter="lancamento" aria-pressed="false">Lançamentos</button>
       </div>
 
-      <div class="pergunta">
-        <div class="pergunta-header">
-          <h4>Quais documentos preciso para comprar?</h4>
-          <i class="fa-solid fa-plus"></i>
+      <div class="prop-grid">
+        <!-- PLACEHOLDER: os 6 imóveis abaixo são exemplos. Trocar por imóveis reais (foto, bairro, preço e características). -->
+        <div class="prop-item reveal" data-kind="comprar" style="--d:0s">
+          <article class="prop">
+            <div class="prop-media"><span class="tag">Comprar</span></div>
+            <div class="prop-body">
+              <p class="prop-loc">Bairro · Cidade</p>
+              <h3>Apartamento de exemplo</h3>
+              <ul class="specs"><li>00 m²</li><li>0 quartos</li><li>0 vagas</li></ul>
+              <div class="prop-foot"><span class="price">R$ 000.000</span><a class="arrow" href="#contato" aria-label="Ver detalhes do imóvel"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a></div>
+            </div>
+          </article>
         </div>
-        <div class="pergunta-resposta">
-          <p>
-            Em geral, são necessários documento de identidade, CPF e comprovante
-            de renda para análise inicial.
-          </p>
+        <div class="prop-item reveal" data-kind="alugar" style="--d:.08s">
+          <article class="prop">
+            <div class="prop-media"><span class="tag">Alugar</span></div>
+            <div class="prop-body">
+              <p class="prop-loc">Bairro · Cidade</p>
+              <h3>Casa de exemplo</h3>
+              <ul class="specs"><li>00 m²</li><li>0 quartos</li><li>0 vagas</li></ul>
+              <div class="prop-foot"><span class="price">R$ 0.000 / mês</span><a class="arrow" href="#contato" aria-label="Ver detalhes do imóvel"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a></div>
+            </div>
+          </article>
         </div>
-      </div>
-
-      <div class="pergunta">
-        <div class="pergunta-header">
-          <h4>Vocês também ajudam na documentação?</h4>
-          <i class="fa-solid fa-plus"></i>
+        <div class="prop-item reveal" data-kind="lancamento" style="--d:.16s">
+          <article class="prop">
+            <div class="prop-media"><span class="tag">Lançamento</span></div>
+            <div class="prop-body">
+              <p class="prop-loc">Bairro · Cidade</p>
+              <h3>Empreendimento de exemplo</h3>
+              <ul class="specs"><li>00 m²</li><li>0 quartos</li><li>0 vagas</li></ul>
+              <div class="prop-foot"><span class="price">A partir de R$ 000.000</span><a class="arrow" href="#contato" aria-label="Ver detalhes do imóvel"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a></div>
+            </div>
+          </article>
         </div>
-        <div class="pergunta-resposta">
-          <p>
-            Sim. Acompanhamos todo o processo, desde a negociação até a
-            organização dos documentos necessários.
-          </p>
+        <div class="prop-item reveal" data-kind="comprar" style="--d:0s">
+          <article class="prop">
+            <div class="prop-media"><span class="tag">Comprar</span></div>
+            <div class="prop-body">
+              <p class="prop-loc">Bairro · Cidade</p>
+              <h3>Apartamento de exemplo</h3>
+              <ul class="specs"><li>00 m²</li><li>0 quartos</li><li>0 vagas</li></ul>
+              <div class="prop-foot"><span class="price">R$ 000.000</span><a class="arrow" href="#contato" aria-label="Ver detalhes do imóvel"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a></div>
+            </div>
+          </article>
         </div>
-      </div>
-
-      <div class="pergunta">
-        <div class="pergunta-header">
-          <h4>Posso vender meu imóvel com a Arino?</h4>
-          <i class="fa-solid fa-plus"></i>
+        <div class="prop-item reveal" data-kind="alugar" style="--d:.08s">
+          <article class="prop">
+            <div class="prop-media"><span class="tag">Alugar</span></div>
+            <div class="prop-body">
+              <p class="prop-loc">Bairro · Cidade</p>
+              <h3>Sala comercial de exemplo</h3>
+              <ul class="specs"><li>00 m²</li><li>0 salas</li><li>0 vagas</li></ul>
+              <div class="prop-foot"><span class="price">R$ 0.000 / mês</span><a class="arrow" href="#contato" aria-label="Ver detalhes do imóvel"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a></div>
+            </div>
+          </article>
         </div>
-        <div class="pergunta-resposta">
-          <p>
-            Claro. Fazemos uma avaliação completa do imóvel e montamos uma
-            estratégia para atrair compradores.
-          </p>
-        </div>
-      </div>
-
-      <div class="pergunta">
-        <div class="pergunta-header">
-          <h4>Atendem quais regiões?</h4>
-          <i class="fa-solid fa-plus"></i>
-        </div>
-        <div class="pergunta-resposta">
-          <p>
-            Atendemos clientes na região do Valparaíso de Goiás, nosso foco será
-            procurar o melhor imóvel nas melhores condições para sua realidade.
-          </p>
-        </div>
-      </div>
-
-      <div class="pergunta">
-        <div class="pergunta-header">
-          <h4>Há suporte após a compra?</h4>
-          <i class="fa-solid fa-plus"></i>
-        </div>
-        <div class="pergunta-resposta">
-          <p>
-            Sim. Nossa equipe segue disponível para dúvidas e suporte contínuo
-            após a negociação.
-          </p>
+        <div class="prop-item reveal" data-kind="lancamento" style="--d:.16s">
+          <article class="prop">
+            <div class="prop-media"><span class="tag">Lançamento</span></div>
+            <div class="prop-body">
+              <p class="prop-loc">Bairro · Cidade</p>
+              <h3>Casa em condomínio de exemplo</h3>
+              <ul class="specs"><li>00 m²</li><li>0 quartos</li><li>0 vagas</li></ul>
+              <div class="prop-foot"><span class="price">A partir de R$ 000.000</span><a class="arrow" href="#contato" aria-label="Ver detalhes do imóvel"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg></a></div>
+            </div>
+          </article>
         </div>
       </div>
     </div>
+  </section>
 
-    <footer class="footer">
-      <div class="footer-content">
-        <div>
-          <h3>ARINO IMÓVEIS</h3>
-          <p>Transformando sonhos em novos endereços.</p>
-        </div>
-        <div>
-          <h4>Contato</h4>
-          <a
-            href="https://wa.me/5561996973773?text=Olá,%20vi%20o%20site%20da%20Arino%20Imóveis%20e%20gostaria%20de%20mais%20informações."
-            target="_blank"
-            >(61) 99697-3773</a
-          >
-          <p>souantonioarino@gmail.com</p>
-        </div>
-        <div>
-          <h4>Redes</h4>
-          <p><i class="fa-brands fa-whatsapp"></i> WhatsApp</p>
-          <p><i class="fa-brands fa-instagram"></i> antonioarino</p>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        <p>© 2026 Arino Imóveis. Todos os direitos reservados.</p>
-      </div>
-    </footer>
+  <!-- ============ SOBRE (texto revelado palavra a palavra) ============ -->
+  <section class="section section-dark" id="sobre" aria-labelledby="sobre-titulo">
+    <div class="wrap">
+      <p class="eyebrow reveal">Sobre a Arino Imóveis</p>
+      <!-- PLACEHOLDER: texto institucional de exemplo -->
+      <h2 id="sobre-titulo" class="manifesto" data-words>Um imóvel é onde a vida acontece. Por isso cada opção é visitada, explicada com clareza e acompanhada até a chave na mão.</h2>
+    </div>
+  </section>
 
-    <script src="js/config.js"></script>
-    <script src="js/javascript.js"></script>
-  </body>
+  <!-- ============ DIFERENCIAIS (cards empilhados ao rolar) ============ -->
+  <section class="section section-light stack-section" id="diferenciais" aria-labelledby="dif-titulo">
+    <div class="wrap">
+      <header class="section-head reveal">
+        <p class="eyebrow">Por que a Arino</p>
+        <h2 id="dif-titulo" class="display">Negociar um imóvel precisa ser simples.</h2>
+      </header>
+      <!-- PLACEHOLDER: diferenciais de exemplo, revisar com a proposta real da imobiliária -->
+      <article class="stack-card" style="--i:0">
+        <span class="card-index">01</span>
+        <h3>Curadoria</h3>
+        <p>Imóveis selecionados e com documentação conferida antes de chegar até você.</p>
+      </article>
+      <article class="stack-card" style="--i:1">
+        <span class="card-index">02</span>
+        <h3>Atendimento próximo</h3>
+        <p>Um corretor responsável do início ao fim, no seu ritmo e no seu horário.</p>
+      </article>
+      <article class="stack-card" style="--i:2">
+        <span class="card-index">03</span>
+        <h3>Negociação transparente</h3>
+        <p>Condições e custos explicados por escrito, sem surpresas na assinatura.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ============ BAIRROS (faixa animada) ============ -->
+  <section class="section section-dark marquee-section" aria-label="Bairros atendidos">
+    <!-- PLACEHOLDER: nomes de bairros de exemplo -->
+    <div class="marquee">
+      <div class="marquee-track">
+        <span>Confiança</span><span>Qualidade</span><span>Serviço Profissional</span><span>Acessibilidade</span><span>Exclusividade</span><span>Disponibilidade</span>
+        <span aria-hidden="true">Confiança</span><span aria-hidden="true">Ágio</span><span aria-hidden="true">Apartamento</span><span aria-hidden="true">Reforma</span><span aria-hidden="true">Comprar</span><span aria-hidden="true">Casas</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ COMO FUNCIONA (linha que se preenche) ============ -->
+  <section class="section section-light" id="processo" aria-labelledby="proc-titulo">
+    <div class="wrap">
+      <header class="section-head reveal">
+        <p class="eyebrow">Como funciona</p>
+        <h2 id="proc-titulo" class="display">Do primeiro contato à chave na mão.</h2>
+      </header>
+      <ol class="steps">
+        <!-- PLACEHOLDER: etapas de exemplo -->
+        <li class="step"><span class="step-n">01</span><h3>Conte o que procura</h3><p>Tipo de imóvel, região, orçamento e prioridades.</p></li>
+        <li class="step"><span class="step-n">02</span><h3>Visite com um corretor</h3><p>Visitas presenciais ou por vídeo, no horário que for melhor para você.</p></li>
+        <li class="step"><span class="step-n">03</span><h3>Feche com segurança</h3><p>Análise de documentos e assinatura acompanhadas de perto.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ============ CONTATO ============ -->
+  <section class="section section-dark cta-section" id="contato" aria-labelledby="cta-titulo">
+    <div class="wrap cta-wrap reveal">
+      <p class="eyebrow">Contato</p>
+      <h2 id="cta-titulo" class="display">Pronto para encontrar o seu próximo imóvel?</h2>
+      <div class="cta-actions">
+        <a class="btn btn-lg" href="https://wa.me/5561996973773?text=Olá,%20vi%20o%20site%20da%20Arino%20Imóveis%20e%20gostaria%20de%20mais%20informações.">Agendar visita</a>
+      </div>
+      <!-- PLACEHOLDER: e-mail e WhatsApp fictícios, substituir pelos reais -->
+    </div>
+  </section>
+
+</main>
+
+<footer class="footer">
+  <div class="wrap footer-inner">
+    <span>© 2026 Arino Imóveis</span>
+    <nav aria-label="Rodapé"><a href="#imoveis">Comprar</a><a href="#imoveis">Alugar</a><a href="#sobre">Sobre</a><a href="#contato">Contato</a></nav>
+  </div>
+</footer>
+
+<script src="js/hero.js"></script>
+<script src="js/home.js"></script>
+</body>
 </html>
