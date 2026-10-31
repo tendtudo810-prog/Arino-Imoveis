@@ -1,564 +1,512 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap');
+/* =========================================================
+   login.css — versão responsiva
+   Desktop: card à direita sobre o vídeo (como antes).
+   Tablet e celular: card ocupa a tela e o vídeo fica ao fundo.
+   ========================================================= */
 
 :root {
-    --bg: #080808;
-    --card: rgba(18, 18, 18, 0.78);
-    --border: rgba(255, 255, 255, 0.09);
-    --text: #f5f5f5;
-    --muted: #8e8e8e;
-    --gold: #c9a45c;
-    --gold-light: #e3c37d;
-    --input: rgba(255, 255, 255, 0.045);
+    --kindly-green: #53ff86;
+    --kindly-input: #0c100e;
+    --kindly-text: #ffffff;
+    --kindly-muted: #737b76;
+    --line: rgba(53, 53, 53, 0.1);
+    --border-input: rgba(255, 255, 255, 0.151);
+    --fg: #fff;
+    --blue: #3054ff;
+
+    color-scheme: dark;
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
 }
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 html,
 body {
-    width: 100%;
-    min-height: 100%;
+    max-width: 100%;
+    overflow-x: hidden;   /* fallback para navegadores antigos */
+    overflow-x: clip;     /* corta o vídeo que sai da tela sem criar área de rolagem */
 }
 
 body {
-    font-family: "DM Sans", sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    overflow-x: hidden;
-}
-
-
-/* ========================================
-   BACKGROUND
-======================================== */
-
-.background {
-    position: fixed;
-    inset: 0;
-    overflow: hidden;
-    pointer-events: none;
-    z-index: 0;
-}
-
-.background::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-
-    background:
-        radial-gradient(
-            circle at 50% 20%,
-            rgba(201, 164, 92, 0.08),
-            transparent 32%
-        ),
-        linear-gradient(
-            135deg,
-            #080808 0%,
-            #0c0c0c 50%,
-            #070707 100%
-        );
-}
-
-.glow {
-    position: absolute;
-    width: 450px;
-    height: 450px;
-    border-radius: 50%;
-    filter: blur(130px);
-    opacity: 0.12;
-}
-
-.glow-1 {
-    top: -250px;
-    left: -150px;
-    background: var(--gold);
-}
-
-.glow-2 {
-    bottom: -300px;
-    right: -150px;
-    background: #ffffff;
-    opacity: 0.04;
-}
-
-
-/* ========================================
-   CONTAINER
-======================================== */
-
-.login-container {
-    position: relative;
-    z-index: 1;
-
-    min-height: 100vh;
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-
-    padding: 40px 20px;
-}
-
-
-/* ========================================
-   LOGIN CARD
-======================================== */
-
-.login-card {
-    width: 100%;
-    max-width: 450px;
-
-    padding: 48px;
-
-    background: var(--card);
-
-    border: 1px solid var(--border);
-    border-radius: 24px;
-
-    backdrop-filter: blur(25px);
-    -webkit-backdrop-filter: blur(25px);
-
-    box-shadow:
-        0 30px 80px rgba(0, 0, 0, 0.55),
-        inset 0 1px 0 rgba(255, 255, 255, 0.04);
-
-    animation: cardAppear 0.7s ease forwards;
-}
-
-@keyframes cardAppear {
-
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-
-/* ========================================
-   BRAND
-======================================== */
-
-.brand {
-    display: flex;
-    flex-direction: column;
-
-    margin-bottom: 48px;
-}
-
-.brand-name {
-    font-family: "Manrope", sans-serif;
-
-    font-size: 25px;
-    font-weight: 800;
-
-    letter-spacing: 0.16em;
-
-    color: var(--text);
-}
-
-.brand-subtitle {
-    margin-top: 3px;
-
-    font-size: 8px;
-    font-weight: 600;
-
-    letter-spacing: 0.55em;
-
-    color: var(--gold);
-}
-
-
-/* ========================================
-   HEADING
-======================================== */
-
-.login-heading {
-    margin-bottom: 34px;
-}
-
-.eyebrow {
-    display: block;
-
-    margin-bottom: 12px;
-
-    font-size: 10px;
-    font-weight: 700;
-
-    letter-spacing: 0.2em;
-
-    color: var(--gold);
-}
-
-.login-heading h1 {
-    font-family: "Manrope", sans-serif;
-
-    font-size: 38px;
-    line-height: 1.08;
-
-    letter-spacing: -0.04em;
-
-    font-weight: 700;
-}
-
-.login-heading h1 span {
-    color: var(--gold-light);
-}
-
-.login-heading p {
-    max-width: 330px;
-
-    margin-top: 16px;
-
-    font-size: 14px;
+    background-color: #0c0d0d;
+    color: #ffffff;
     line-height: 1.6;
-
-    color: var(--muted);
+    min-height: 100dvh;
 }
 
+/* ---------- fundo em vídeo ---------- */
 
-/* ========================================
-   FORM
-======================================== */
-
-.login-form {
-    display: flex;
-    flex-direction: column;
-
-    gap: 21px;
+.vid {
+    position: absolute;
+    top: 50%;
+    left: 30%;
+    width: 70%;
+    transform: translate(-50%, -50%);
+    -webkit-mask-image: linear-gradient(to top, transparent, #101828 80%, #101828 20%, transparent);
+    mask-image: linear-gradient(to top, transparent, #101828 20%, #101828 80%, transparent);
+    object-fit: cover;
+    opacity: 70%;
 }
 
-.input-group {
-    display: flex;
-    flex-direction: column;
+/* ---------- logotipo ---------- */
 
-    gap: 9px;
-}
-
-.input-group label {
-    font-size: 12px;
-    font-weight: 600;
-
-    color: #d4d4d4;
-}
-
-
-/* ========================================
-   INPUT
-======================================== */
-
-.input-wrapper {
-    position: relative;
-
+.logo {
     display: flex;
     align-items: center;
+    font-weight: 600;
+    gap: 10px;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
 }
 
-.input-wrapper > svg {
+.picture {
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+}
+
+/* ---------- card (lado direito no desktop) ---------- */
+
+.card {
     position: absolute;
-    left: 17px;
+    top: 0;
+    right: 0;
+    z-index: 100;
 
-    width: 18px;
-    height: 18px;
-
-    fill: none;
-    stroke: #737373;
-    stroke-width: 1.7;
-
-    pointer-events: none;
-
-    transition: stroke 0.25s ease;
-}
-
-.input-wrapper input {
-    width: 100%;
-    height: 54px;
-
-    padding: 0 48px;
-
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 12px;
-
-    outline: none;
-
-    background: var(--input);
-
-    color: var(--text);
-
-    font-family: inherit;
-    font-size: 14px;
-
-    transition:
-        border-color 0.25s ease,
-        background 0.25s ease,
-        box-shadow 0.25s ease;
-}
-
-.input-wrapper input::placeholder {
-    color: #555;
-}
-
-.input-wrapper input:focus {
-    border-color: rgba(201, 164, 92, 0.65);
-
-    background: rgba(255, 255, 255, 0.065);
-
-    box-shadow:
-        0 0 0 3px rgba(201, 164, 92, 0.08);
-}
-
-.input-wrapper:focus-within > svg {
-    stroke: var(--gold);
-}
-
-
-/* ========================================
-   SHOW PASSWORD
-======================================== */
-
-.toggle-password {
-    position: absolute;
-    right: 15px;
+    width: 50%;
+    min-height: 100vh;
+    min-height: 100dvh;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
-    width: 28px;
-    height: 28px;
-
-    border: none;
-    background: transparent;
-
-    cursor: pointer;
-}
-
-.toggle-password svg {
-    width: 18px;
-    height: 18px;
-
-    fill: none;
-    stroke: #666;
-    stroke-width: 1.6;
-
-    transition: stroke 0.25s ease;
-}
-
-.toggle-password:hover svg {
-    stroke: var(--gold);
-}
-
-
-/* ========================================
-   MESSAGE
-======================================== */
-
-.mensagem {
-    min-height: 18px;
-
-    margin-top: -5px;
-
-    font-size: 12px;
-    line-height: 1.4;
-
-    text-align: center;
-
-    transition: 0.25s ease;
-}
-
-.mensagem.erro {
-    color: #e27b7b;
-}
-
-.mensagem.sucesso {
-    color: #91c99c;
-}
-
-.mensagem.info {
-    color: var(--gold-light);
-}
-
-
-/* ========================================
-   LOGIN BUTTON
-======================================== */
-
-.login-button {
-    position: relative;
-
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-
-    width: 100%;
-    height: 56px;
-
-    padding: 0 20px 0 23px;
-
-    border: none;
-    border-radius: 12px;
+    padding: 78px clamp(24px, 6vw, 80px);
 
     background: linear-gradient(
         135deg,
-        var(--gold-light),
-        var(--gold)
+        rgba(5, 5, 5, 0.432) 0%,
+        rgba(5, 5, 5, 0.86) 55%,
+        rgba(10, 28, 17, 0.267) 100%
     );
-
-    color: #111;
-
-    font-family: inherit;
-    font-size: 13px;
-    font-weight: 700;
-
-    cursor: pointer;
-
-    overflow: hidden;
-
-    transition:
-        transform 0.25s ease,
-        box-shadow 0.25s ease;
+    -webkit-backdrop-filter: blur(24px);
+    backdrop-filter: blur(24px);
+    border-left: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: -20px 0 60px rgba(0, 0, 0, 0.22);
 }
 
-.login-button::before {
+.login-box {
+    width: 100%;
+    max-width: 420px;
+}
+
+/* ---------- textos ---------- */
+
+.texto {
+    font-size: 12px;
+    margin-bottom: 30px;
+    margin-top: 2vh;
+}
+
+.texto label {
+    color: var(--blue);
+    font-weight: 500;
+}
+
+/* ---------- campos ---------- */
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 18px;
+}
+
+.form-group label {
+    color: #e8ece9;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: -0.1px;
+}
+
+.form-group input {
+    width: 100%;
+    height: 54px;
+    padding: 0 16px;
+
+    background: var(--kindly-input);
+    color: var(--kindly-text);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    outline: none;
+
+    font-size: 14px;
+
+    transition: border-color 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+}
+
+.form-group input::placeholder {
+    color: #4c4e4d;
+}
+
+.form-group input:hover {
+    border-color: rgba(255, 255, 255, 0.28);
+}
+
+.form-group input:focus {
+    background: #0e1511;
+    border-color: #ffe8638c;
+    box-shadow: 0 0 0 4px rgba(255, 223, 83, 0.1), 0 8px 30px rgba(0, 0, 0, 0.25);
+}
+
+/* evita o fundo branco/amarelo do autofill do navegador */
+.form-group input:-webkit-autofill,
+.form-group input:-webkit-autofill:hover,
+.form-group input:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 100px var(--kindly-input) inset;
+    -webkit-text-fill-color: #ffffff;
+    caret-color: #ffffff;
+    border-color: var(--border-input);
+}
+
+/* ---------- botão principal ---------- */
+
+.kindly-submit {
+    position: relative;
+    margin-top: 24px;
+    width: 100%;
+    height: 54px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+
+    border: none;
+    border-radius: 12px;
+    color: var(--fg);
+    background: #e6b207d0;
+
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    overflow: hidden;
+    cursor: pointer;
+
+    transition: transform 0.25s ease, box-shadow 0.3s ease, background 0.3s ease;
+}
+
+.kindly-submit::before {
     content: "";
-
     position: absolute;
-
     top: 0;
     left: -100%;
-
-    width: 100%;
+    width: 60%;
     height: 100%;
-
-    background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(255, 255, 255, 0.25),
-        transparent
-    );
-
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+    transform: skewX(-20deg);
     transition: left 0.6s ease;
 }
 
-.login-button:hover {
-    transform: translateY(-2px);
-
-    box-shadow:
-        0 12px 30px rgba(201, 164, 92, 0.2);
-}
-
-.login-button:hover::before {
-    left: 100%;
-}
-
-.login-button:active {
-    transform: translateY(0);
-}
-
-.login-button svg {
+.kindly-submit span {
     position: relative;
-
-    width: 19px;
-    height: 19px;
-
-    fill: none;
-    stroke: #111;
-    stroke-width: 1.8;
+    z-index: 1;
 }
 
-
-/* ========================================
-   FOOTER
-======================================== */
-
-.login-footer {
-    margin-top: 32px;
-
-    padding-top: 25px;
-
-    border-top: 1px solid rgba(255, 255, 255, 0.06);
-
-    text-align: center;
+.kindly-submit-arrow {
+    font-size: 18px;
+    transition: transform 0.3s ease;
 }
 
-.login-footer a {
-    display: inline-flex;
+.kindly-submit:hover {
+    transform: translateY(-2px);
+    background: #e6b207d0;
+    box-shadow: 0 12px 35px rgba(83, 255, 134, 0.18);
+    color: #fff;
+}
+
+.kindly-submit:hover::before {
+    left: 130%;
+}
+
+.kindly-submit:hover .kindly-submit-arrow {
+    transform: translate(3px, -3px);
+}
+
+.kindly-submit:active {
+    transform: translateY(0) scale(0.98);
+    box-shadow: 0 5px 18px rgba(83, 255, 134, 0.12);
+}
+
+.kindly-submit:focus-visible,
+.social-btn:focus-visible,
+.form-group input:focus-visible {
+    outline: 2px solid var(--kindly-green);
+    outline-offset: 3px;
+}
+
+/* ---------- divisor ---------- */
+
+.divider {
+    display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 14px;
+    margin: 28px 0 20px;
+    color: var(--kindly-muted);
+    font-size: 13px;
+}
 
-    color: #777;
+.divider::before,
+.divider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--border-input);
+}
 
-    font-size: 12px;
+/* ---------- login social ---------- */
+
+.social-login {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.social-btn {
+    height: 54px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    background: var(--kindly-input);
+    color: #e8ece9;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+
+    transition: border-color 0.25s ease, background 0.25s ease, transform 0.25s ease;
+}
+
+.social-btn svg {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+}
+
+.social-btn:hover {
+    background: #0e1511;
+    border-color: rgba(255, 255, 255, 0.28);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
+}
+
+.social-btn:active {
+    transform: translateY(0) scale(0.98);
+}
+
+/* ---------- voltar ---------- */
+
+.voltar {
+    position: relative;
+    display: table;
+    margin: 24px auto 0;
     text-decoration: none;
-
+    color: #e9ebea;
+    font-size: 15px;
     transition: color 0.25s ease;
 }
 
-.login-footer a span {
-    font-size: 15px;
+.voltar::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 1px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
 }
 
-.login-footer a:hover {
-    color: var(--gold-light);
+.voltar:hover {
+    color: #8f8f8f;
 }
 
-
-/* ========================================
-   COPYRIGHT
-======================================== */
-
-.copyright {
-    margin-top: 24px;
-
-    color: #3f3f3f;
-
-    font-size: 10px;
-
-    letter-spacing: 0.08em;
+.voltar:hover::after {
+    transform: scaleX(1);
 }
 
+/* =========================================================
+   RESPONSIVO
+   ========================================================= */
 
-/* ========================================
-   MOBILE
-======================================== */
+/* notebooks e tablets em paisagem: card um pouco mais largo e espaço menor */
+@media (max-width: 1280px) {
+    .card {
+        width: 52%;
+        padding: 56px clamp(24px, 4vw, 56px);
+    }
+}
 
-@media (max-width: 520px) {
-
-    .login-container {
-        padding: 25px 16px;
+/* tablets e celulares: card ocupa a tela; vídeo vira fundo */
+@media (max-width: 900px) {
+    .card {
+        left: 0;
+        right: auto;
+        top: 0;
+        width: 100%;
+        min-height: 100dvh;
+        padding: 48px 32px;
+        border-left: 0;
+        box-shadow: none;
     }
 
-    .login-card {
-        padding: 34px 25px;
-
-        border-radius: 20px;
+    .vid {
+        width: 100%;
+        height: 100%;
+        left: 50%;
+        top: 50%;
+        opacity: 0.55;
     }
 
-    .brand {
-        margin-bottom: 38px;
+    .foto,
+    .back {
+        display: none;
+    }
+}
+
+/* celulares */
+@media (max-width: 480px) {
+    .card {
+        padding: max(28px, env(safe-area-inset-top)) 20px max(28px, env(safe-area-inset-bottom));
+        align-items: flex-start;
     }
 
-    .login-heading h1 {
-        font-size: 32px;
+    .login-box {
+        margin: auto 0;
     }
 
-    .login-heading p {
+    .texto {
         font-size: 13px;
+        margin-bottom: 22px;
+        margin-top: 0;
     }
 
-    .input-wrapper input {
+    .form-group {
+        margin-bottom: 14px;
+    }
+
+    .form-group input,
+    .kindly-submit,
+    .social-btn {
         height: 52px;
     }
 
-    .login-button {
-        height: 54px;
+    /* 16px evita o zoom automático do iPhone ao focar num campo */
+    .form-group input {
+        font-size: 16px;
     }
+
+    .kindly-submit {
+        margin-top: 20px;
+    }
+
+    .divider {
+        margin: 22px 0 16px;
+    }
+
+    .voltar {
+        margin-top: 20px;
+        padding: 8px 0;
+    }
+}
+
+/* telas baixas (celular deitado): o card rola em vez de cortar */
+@media (max-height: 700px) {
+    .card {
+        align-items: flex-start;
+        padding-top: 32px;
+        padding-bottom: 32px;
+    }
+
+    .login-box {
+        margin: auto 0;
+    }
+}
+
+/* celular deitado: campos e botões menores, sem empurrar o conteúdo para fora */
+@media (max-height: 500px) and (orientation: landscape) {
+    .card {
+        padding: 20px 32px;
+    }
+
+    .form-group input,
+    .kindly-submit,
+    .social-btn {
+        height: 44px;
+    }
+
+    .texto {
+        margin-bottom: 14px;
+    }
+
+    .form-group {
+        margin-bottom: 10px;
+    }
+}
+
+/* =========================================================
+   ANIMAÇÕES (inspiradas na vitrine do naocodei.com/free-code-css)
+   Só rodam para quem não pediu "menos movimento" no sistema.
+   Uso "backwards" para não travar os transforms de hover.
+   ========================================================= */
+
+@media (prefers-reduced-motion: no-preference) {
+    .foto,
+    .back {
+        animation: desfoque-resolve 1.2s ease-out backwards;
+    }
+
+    .texto,
+    .form-group,
+    .kindly-submit,
+    .divider,
+    .social-btn,
+    .voltar {
+        animation: subir-aparecer 0.7s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+    }
+
+    .texto                      { animation-delay: 0.05s; }
+    .form-group:nth-of-type(1)  { animation-delay: 0.15s; }
+    .form-group:nth-of-type(2)  { animation-delay: 0.23s; }
+    .form-group:nth-of-type(3)  { animation-delay: 0.31s; }
+    .form-group:nth-of-type(4)  { animation-delay: 0.39s; }
+    .kindly-submit              { animation-delay: 0.47s; }
+    .divider                    { animation-delay: 0.55s; }
+    .social-btn:nth-of-type(1)  { animation-delay: 0.60s; }
+    .social-btn:nth-of-type(2)  { animation-delay: 0.68s; }
+    .social-btn:nth-of-type(3)  { animation-delay: 0.76s; }
+    .voltar                     { animation-delay: 0.84s; }
+}
+
+@keyframes subir-aparecer {
+    from { opacity: 0; transform: translateY(26px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes desfoque-resolve {
+    from { opacity: 0; filter: blur(14px); }
+    to   { opacity: 1; filter: blur(0); }
 }

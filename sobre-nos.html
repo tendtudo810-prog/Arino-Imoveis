@@ -1,115 +1,70 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ARINO IMÓVEIS</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
-        integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <title>Sobre — Arino Imóveis</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://db.onlinewebfonts.com/c/9d4d074c9335825a23cce178ee03b498?family=P22+Mackinac+W01+Book" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/sobre.css">
-    <link rel="shortcut icon" href="pic1/Logo.png" type="image/x-icon">
+    <script>document.documentElement.classList.add('js');</script>
 </head>
 <body>
-    <header>
-        <div class="fundo">
-      <nav class="sections" aria-label="Menu principal">
-        <img src="pic1/Black & White.png" alt="Arino Imóveis" class="picture" />
-
+    <header class="nav">
+        <a class="logo" href="#top" aria-label="Arino Imóveis, início">
+          <img src="pic1/Black & White (1).png" alt="" class="svg" />
+          <span>Arino Imóveis</span>
+        </a>
+        <nav class="links" aria-label="Principal">
+          <a href="index.html">Home</a>
+          <a href="error.html">Comprar</a>
+          <a href="error.html">Como funciona</a>
+          <a href="sobre-nos.html">Sobre</a>
+          <a href="#contato">Contato</a>
+        </nav>
+        <div class="buttons">
+          <a class="btn nav-cta" href="login.html">Entrar</a>
+          <a class="btn-ghost" href="cadastro.html">Cadastrar</a>
+        </div>
         <button
+          class="menu-btn"
           type="button"
-          class="menu-toggle"
-          aria-label="Abrir menu de navegação"
+          aria-label="Abrir menu"
           aria-expanded="false"
+          aria-controls="mnav"
         >
-          <i class="fa-solid fa-bars"></i>
+          <svg viewBox="0 0 24 24" aria-hidden="true" class="i-menu">
+            <path d="M4 5h16" />
+            <path d="M4 12h16" />
+            <path d="M4 19h16" />
+          </svg>
+          <svg viewBox="0 0 24 24" aria-hidden="true" class="i-x">
+            <path d="M18 6 6 18" />
+            <path d="m6 6 12 12" />
+          </svg>
         </button>
+      </header>
 
-        <div class="nav-panel">
-          <div class="header" aria-label="Navegação principal">
-            <a href="index.html">Home</a>
-            <a href="sobre-nos.html">Sobre nós</a>
-            <a href="imoveis.html">Imóveis</a>
-            <a href="avaliacoes.html">Avaliações</a>
-          </div>
-
-          <a href="login.html" class="cadastro">Login</a>
-
+    <nav class="mnav" id="mnav" aria-label="Menu" aria-hidden="true">
+        <div class="mnav-inner">
+          <a href="imoveis.html">Comprar</a>
+          <a href="#processo">Como funciona</a>
+          <a href="#sobre">Sobre</a>
+          <a href="#contato">Contato</a>
           <a
+            class="btn"
             href="https://wa.me/5561996973773?text=Olá,%20vi%20o%20site%20da%20Arino%20Imóveis%20e%20gostaria%20de%20mais%20informações."
-            target="_blank"
-            class="telefone"
+            >Agendar visita</a
           >
-            Entrar em Contato
-          </a>
+          <div class="mnav-auth">
+            <a class="btn btn-outline" href="login.html">Entrar</a>
+            <a class="btn" href="cadastro.html">Cadastrar</a>
+          </div>
         </div>
       </nav>
-    </div>
 
-        <div class="back">
-            <img src="pic1/Real Estate Website in Beige Brown Modern Elegance Style.jpg" class="pic" alt="Fundo de tela">
-        </div>
-
-        <div class="hero-text">
-            <label for="#">SOBRE</label>
-            <h1>Sobre Nós</h1>
-            <p>A Arino Imóveis nasceu com o propósito de tornar a busca pelo imóvel ideal mais simples, segura e transparente. Trabalhamos para entender as necessidades de cada cliente e oferecer um atendimento próximo, responsável e personalizado em todas as etapas da negociação.
-            Mais do que apresentar imóveis, buscamos construir relações de confiança. Seja para comprar, vender ou encontrar um novo lugar para chamar de lar, estamos ao seu lado para encontrar oportunidades que realmente façam sentido para você.</p>
-        </div>
-    </header>
-
-        <section id="mission">
-            <label for="#">METAS</label>
-            <h2>Nossa Missão</h2>
-            <p>Na Arino Imóveis, nossa missão é tornar cada experiência imobiliária mais simples, transparente e segura. Buscamos compreender o que cada cliente realmente procura para oferecer soluções que estejam alinhadas aos seus objetivos, necessidades e momento de vida.
-
-             Trabalhamos para construir relações baseadas em confiança, ética e dedicação, oferecendo um atendimento próximo durante todas as etapas da negociação. Mais do que conectar pessoas a imóveis, queremos ajudar nossos clientes a tomar decisões seguras e encontrar oportunidades que realmente façam sentido.</p>
-            <img src="pic1/White and Brown Modern Real Estate Home Listing Presentation (1).png" alt="" class="mission-pic">
-        </section>
-
-        <div class="info">
-            <label for="#">MÉTODOS</label>
-            <h2>Como Trabalhamos</h2>
-            <p>Na Arino Imóveis, acreditamos que encontrar o imóvel ideal vai muito além de apresentar opções. Por isso, buscamos entender de perto os objetivos, necessidades e expectativas de cada cliente para oferecer um atendimento personalizado e encontrar oportunidades que realmente façam sentido.
-
-             Durante todo o processo, trabalhamos com transparência, dedicação e compromisso, desde a escolha dos imóveis até a conclusão da negociação. Nosso objetivo é tornar cada etapa mais simples, segura e tranquila, mantendo o cliente informado e oferecendo suporte sempre que necessário.</p>
-             <img src="pic1/White and Brown Modern Real Estate Home Listing Presentation.png" alt="" class="foto">
-        </div>
-
-
-        <div class="vid">
-            <video src="pic1/Sobre.mp4" class="video" autoplay muted loop playsinline></video>
-            <div class="font">
-                <h1>Garanta Seu Imóvel Hoje!</h1>
-                <p>Encontre o imóvel que combina com seus planos e dê o primeiro passo para transformar seus sonhos em um novo endereço. Conte com a Arino Imóveis para encontrar a opção certa para você, com segurança, transparência e todo o suporte necessário.</p>
-                <a href="imoveis.html">Ver Imóveis</a>
-            </div>
-        </div>
-
-
-
-    <footer class="footer">
-        <div class="footer-content">
-            <div>
-                <h3>ARINO IMÓVEIS</h3>
-                <p>Transformando sonhos em novos endereços.</p>
-            </div>
-            <div>
-                <h4>Contato</h4>
-                <a href="https://wa.me/5561996973773?text=Olá,%20vi%20o%20site%20da%20Arino%20Imóveis%20e%20gostaria%20de%20mais%20informações." target="_blank">(61) 99697-3773</a>
-                <p>souantonioarino@gmail.com</p>
-            </div>
-            <div>
-                <h4>Redes</h4>
-                <p><i class="fa-brands fa-whatsapp"></i> WhatsApp</p>
-                <p><i class="fa-brands fa-instagram"></i> antonioarino</p>
-            </div>
-        </div>
-        <div class="footer-bottom">
-            <p>© 2026 Arino Imóveis. Todos os direitos reservados.</p>
-        </div>
-
-    <script src="js/config.js"></script>
-    <script src="js/javascript.js"></script>
+    <script src="js/home.js"></script>
 </body>
 </html>

@@ -1,0 +1,543 @@
+/* =========================================================
+   cadastro.css — versão responsiva
+   Desktop: card à esquerda sobre o vídeo (como antes).
+   Tablet e celular: card ocupa a tela e o vídeo fica ao fundo.
+   ========================================================= */
+
+:root {
+    --kindly-green: #53ff86;
+    --kindly-input: #0c100e;
+    --kindly-text: #ffffff;
+    --kindly-muted: #737b76;
+    --line: rgba(53, 53, 53, 0.1);
+    --border-input: rgba(255, 255, 255, 0.151);
+    --fg: #fff;
+    --blue: #3054ff;
+
+    color-scheme: dark;
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+html,
+body {
+    max-width: 100%;
+    overflow-x: hidden;   /* fallback para navegadores antigos */
+    overflow-x: clip;     /* corta o vídeo que sai da tela sem criar área de rolagem */
+}
+
+body {
+    background-color: #0c0d0d;
+    color: #ffffff;
+    line-height: 1.6;
+    min-height: 100dvh;
+}
+
+/* ---------- fundo em vídeo ---------- */
+
+.vid {
+    position: absolute;
+    top: 50%;
+    left: 75%;
+    width: 70%;
+    transform: translate(-50%, -50%);
+    -webkit-mask-image: linear-gradient(to top, transparent, #101828 80%, #101828 20%, transparent);
+    mask-image: linear-gradient(to top, transparent, #101828 20%, #101828 80%, transparent);
+    object-fit: cover;
+}
+
+/* ---------- logotipo ---------- */
+
+.logo {
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    gap: 10px;
+    margin-top: 5vh;
+}
+
+.picture {
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+}
+
+/* ---------- card (lado direito no desktop) ---------- */
+
+.card {
+    position: absolute;
+    top: 0;
+    left: 25%;
+    transform: translateX(-50%);
+    z-index: 100;
+
+    width: 50%;
+    min-height: 100vh;
+    min-height: 100dvh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 78px clamp(24px, 6vw, 80px);
+
+    background: linear-gradient(
+        135deg,
+        rgba(5, 5, 5, 0.432) 0%,
+        rgba(5, 5, 5, 0.86) 55%,
+        rgba(10, 28, 17, 0.267) 100%
+    );
+    -webkit-backdrop-filter: blur(24px);
+    backdrop-filter: blur(24px);
+    border-left: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow: -20px 0 60px rgba(0, 0, 0, 0.22);
+}
+
+.login-box {
+    width: 100%;
+    max-width: 420px;
+}
+
+/* ---------- textos ---------- */
+
+.texto {
+    font-size: 12px;
+    margin-bottom: 30px;
+    margin-top: 4vh;
+}
+
+.texto label {
+    color: var(--blue);
+    font-weight: 500;
+}
+
+/* ---------- campos ---------- */
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 18px;
+}
+
+.form-group label {
+    color: #e8ece9;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: -0.1px;
+}
+
+.form-group input {
+    width: 100%;
+    height: 54px;
+    padding: 0 16px;
+
+    background: var(--kindly-input);
+    color: var(--kindly-text);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    outline: none;
+
+    font-size: 14px;
+
+    transition: border-color 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+}
+
+.form-group input::placeholder {
+    color: #4c4e4d;
+}
+
+.form-group input:hover {
+    border-color: rgba(255, 255, 255, 0.28);
+}
+
+.form-group input:focus {
+    background: #0e1511;
+    border-color: #ffe8638c;
+    box-shadow: 0 0 0 4px rgba(255, 223, 83, 0.1), 0 8px 30px rgba(0, 0, 0, 0.25);
+}
+
+/* evita o fundo branco/amarelo do autofill do navegador */
+.form-group input:-webkit-autofill,
+.form-group input:-webkit-autofill:hover,
+.form-group input:-webkit-autofill:focus {
+    -webkit-box-shadow: 0 0 0 100px var(--kindly-input) inset;
+    -webkit-text-fill-color: #ffffff;
+    caret-color: #ffffff;
+    border-color: var(--border-input);
+}
+
+/* ---------- botão principal ---------- */
+
+.kindly-submit {
+    position: relative;
+    margin-top: 24px;
+    width: 100%;
+    height: 54px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+
+    border: none;
+    border-radius: 12px;
+    color: var(--fg);
+    background: #e6b207d0;
+
+    font-size: 14px;
+    font-weight: 500;
+    text-decoration: none;
+    overflow: hidden;
+    cursor: pointer;
+
+    transition: transform 0.25s ease, box-shadow 0.3s ease, background 0.3s ease;
+}
+
+.kindly-submit::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+    transform: skewX(-20deg);
+    transition: left 0.6s ease;
+}
+
+.kindly-submit span {
+    position: relative;
+    z-index: 1;
+}
+
+.kindly-submit-arrow {
+    font-size: 18px;
+    transition: transform 0.3s ease;
+}
+
+.kindly-submit:hover {
+    transform: translateY(-2px);
+    background: #e6b207d0;
+    box-shadow: 0 12px 35px rgba(83, 255, 134, 0.18);
+    color: #fff;
+}
+
+.kindly-submit:hover::before {
+    left: 130%;
+}
+
+.kindly-submit:hover .kindly-submit-arrow {
+    transform: translate(3px, -3px);
+}
+
+.kindly-submit:active {
+    transform: translateY(0) scale(0.98);
+    box-shadow: 0 5px 18px rgba(83, 255, 134, 0.12);
+}
+
+.kindly-submit:focus-visible,
+.social-btn:focus-visible,
+.form-group input:focus-visible {
+    outline: 2px solid var(--kindly-green);
+    outline-offset: 3px;
+}
+
+/* ---------- divisor ---------- */
+
+.divider {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin: 28px 0 20px;
+    color: var(--kindly-muted);
+    font-size: 13px;
+}
+
+.divider::before,
+.divider::after {
+    content: "";
+    flex: 1;
+    height: 1px;
+    background: var(--border-input);
+}
+
+/* ---------- login social ---------- */
+
+.social-login {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.social-btn {
+    height: 54px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    background: var(--kindly-input);
+    color: #e8ece9;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+
+    transition: border-color 0.25s ease, background 0.25s ease, transform 0.25s ease;
+}
+
+.social-btn svg {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+}
+
+.social-btn:hover {
+    background: #0e1511;
+    border-color: rgba(255, 255, 255, 0.28);
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.45);
+}
+
+.social-btn:active {
+    transform: translateY(0) scale(0.98);
+}
+
+/* ---------- voltar ---------- */
+
+.voltar {
+    position: relative;
+    display: table;
+    margin: 24px auto 0;
+    text-decoration: none;
+    color: #e9ebea;
+    font-size: 15px;
+    transition: color 0.25s ease;
+}
+
+.voltar::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 1px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+}
+
+.voltar:hover {
+    color: #8f8f8f;
+}
+
+.voltar:hover::after {
+    transform: scaleX(1);
+}
+
+/* =========================================================
+   RESPONSIVO
+   ========================================================= */
+
+/* notebooks e tablets em paisagem: card um pouco mais largo e espaço menor */
+@media (max-width: 1280px) {
+    .card {
+        width: 50%;   /* centralizado em 25%: não pode passar de 50% sem sair da tela */
+        padding: 56px clamp(24px, 4vw, 56px);
+    }
+}
+
+/* tablets: card centralizado e maior, vídeo ao fundo */
+@media (min-width: 641px) and (max-width: 1100px) {
+    .card {
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        width: min(72%, 560px);
+        min-height: auto;
+        max-height: calc(100dvh - 48px);   /* nunca passa da tela: o topo continua alcançável */
+        overflow-y: auto;
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 24px;
+        box-shadow: 0 30px 80px rgba(0, 0, 0, 0.45);
+        padding: 48px 40px;
+    }
+
+    .vid {
+        left: 50%;
+        width: 100%;
+        height: 100%;
+        opacity: 0.6;
+    }
+}
+
+/* tablets e celulares: card ocupa a tela; vídeo vira fundo */
+@media (max-width: 900px) {
+    .card {
+        left: 0;
+        right: auto;
+        top: 0;
+        transform: none;
+        width: 100%;
+        min-height: 100dvh;
+        border-radius: 0;
+        padding: 48px 32px;
+        border-left: 0;
+        box-shadow: none;
+    }
+
+    .vid {
+        width: 100%;
+        height: 100%;
+        left: 50%;
+        top: 50%;
+        opacity: 0.55;
+    }
+
+    .foto,
+    .back {
+        display: none;
+    }
+}
+
+/* celulares */
+@media (max-width: 480px) {
+    .card {
+        padding: max(28px, env(safe-area-inset-top)) 20px max(28px, env(safe-area-inset-bottom));
+        align-items: flex-start;
+    }
+
+    .login-box {
+        margin: auto 0;
+    }
+
+    .logo {
+        margin-top: 4vh;
+    }
+
+    .texto {
+        font-size: 13px;
+        margin-bottom: 22px;
+        margin-top: 0;
+    }
+
+    .form-group {
+        margin-bottom: 14px;
+    }
+
+    .form-group input,
+    .kindly-submit,
+    .social-btn {
+        height: 52px;
+    }
+
+    /* 16px evita o zoom automático do iPhone ao focar num campo */
+    .form-group input {
+        font-size: 16px;
+    }
+
+    .kindly-submit {
+        margin-top: 20px;
+    }
+
+    .divider {
+        margin: 22px 0 16px;
+    }
+
+    .voltar {
+        margin-top: 20px;
+        padding: 8px 0;
+    }
+}
+
+/* telas baixas (celular deitado): o card rola em vez de cortar */
+@media (max-height: 700px) {
+    .card {
+        align-items: flex-start;
+        padding-top: 32px;
+        padding-bottom: 32px;
+    }
+
+    .login-box {
+        margin: auto 0;
+    }
+}
+
+/* celular deitado: campos e botões menores, sem empurrar o conteúdo para fora */
+@media (max-height: 500px) and (orientation: landscape) {
+    .card {
+        padding: 20px 32px;
+    }
+
+    .form-group input,
+    .kindly-submit,
+    .social-btn {
+        height: 44px;
+    }
+
+    .texto {
+        margin-bottom: 14px;
+    }
+
+    .form-group {
+        margin-bottom: 10px;
+    }
+}
+
+/* =========================================================
+   ANIMAÇÕES (inspiradas na vitrine do naocodei.com/free-code-css)
+   Só rodam para quem não pediu "menos movimento" no sistema.
+   Uso "backwards" para não travar os transforms de hover.
+   ========================================================= */
+
+@media (prefers-reduced-motion: no-preference) {
+    .foto,
+    .back {
+        animation: desfoque-resolve 1.2s ease-out backwards;
+    }
+
+    .texto,
+    .form-group,
+    .kindly-submit,
+    .divider,
+    .social-btn,
+    .voltar {
+        animation: subir-aparecer 0.7s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+    }
+
+    .texto                      { animation-delay: 0.05s; }
+    .form-group:nth-of-type(1)  { animation-delay: 0.15s; }
+    .form-group:nth-of-type(2)  { animation-delay: 0.23s; }
+    .form-group:nth-of-type(3)  { animation-delay: 0.31s; }
+    .form-group:nth-of-type(4)  { animation-delay: 0.39s; }
+    .kindly-submit              { animation-delay: 0.47s; }
+    .divider                    { animation-delay: 0.55s; }
+    .social-btn:nth-of-type(1)  { animation-delay: 0.60s; }
+    .social-btn:nth-of-type(2)  { animation-delay: 0.68s; }
+    .social-btn:nth-of-type(3)  { animation-delay: 0.76s; }
+    .voltar                     { animation-delay: 0.84s; }
+}
+
+@keyframes subir-aparecer {
+    from { opacity: 0; transform: translateY(26px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes desfoque-resolve {
+    from { opacity: 0; filter: blur(14px); }
+    to   { opacity: 1; filter: blur(0); }
+}

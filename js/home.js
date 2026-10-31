@@ -116,8 +116,12 @@
     /* navbar: dark bar once the hero has scrolled past the header */
     var navEl = document.querySelector('.nav');
     var heroEl = document.querySelector('.hero');
-    var past = heroEl.getBoundingClientRect().bottom <= navEl.getBoundingClientRect().bottom;
-    navEl.classList.toggle('is-scrolled', past);
+    if (navEl) {
+      var past = heroEl
+        ? heroEl.getBoundingClientRect().bottom <= navEl.getBoundingClientRect().bottom
+        : window.scrollY > 0;
+      navEl.classList.toggle('is-scrolled', past);
+    }
 
     if (stepsEl) {
       var sr = stepsEl.getBoundingClientRect();
@@ -153,10 +157,12 @@
 
   /* ---------- search: sets the matching filter and goes to the listings ---------- */
   var form = document.getElementById('search');
-  form.addEventListener('submit', function (e) {
-    e.preventDefault();
-    var f = document.getElementById('finalidade').value;
-    applyFilter(f);
-    document.getElementById('imoveis').scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
-  });
+  if (form) {
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var f = document.getElementById('finalidade').value;
+      applyFilter(f);
+      document.getElementById('imoveis').scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'start' });
+    });
+  }
 })();

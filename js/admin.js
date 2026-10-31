@@ -3,7 +3,7 @@
 
     const API_URL = String(
         window.ARINO_API_URL ||
-        "https://jogging-early-bat.abasthan.app"
+        ""
     ).replace(/\/$/, "");
 
     const TOKEN_KEY = "arino_admin_token";
@@ -157,7 +157,7 @@
             );
 
             throw new Error(
-                "Não foi possível conectar à API. Verifique o backend do Abasthan e o CORS."
+                "Não foi possível conectar à API. Confirme que o backend está em execução (npm start em backend/) e que esta origem está em FRONTEND_ORIGINS."
             );
         }
 
@@ -929,9 +929,7 @@
 
     async function loadProperties() {
         const data =
-            await publicGet(
-                "/api/Imoveis"
-            );
+            await request("/api/admin/imoveis");
 
         if (
             !Array.isArray(
@@ -963,7 +961,7 @@
     async function refreshAdminLists() {
         const [propertyData, highlightData] =
             await Promise.all([
-                publicGet("/api/Imoveis"),
+                request("/api/admin/imoveis"),
                 publicGet("/api/Imoveis/destaques")
             ]);
 

@@ -189,7 +189,7 @@ button {
    ========================================================= */
 .nav {
   position: fixed;
-  top: 5%;
+  top: max(12px, env(safe-area-inset-top));
   left: 0;
   right: 0;
   z-index: 50;
@@ -210,8 +210,8 @@ button {
 }
 
 .logo > .svg {
-  width: 90px;
-  height: 90px;
+  width: 40px;
+  height: 40px;
   fill: currentColor;
   display: block;
 }
@@ -246,6 +246,28 @@ button {
 
 .nav-cta:hover {
   background: var(--paper-2);
+}
+
+.mnav-auth {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.mnav-inner .mnav-auth .btn {
+  margin-top: 0;
+  align-self: auto;
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--paper);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.btn-outline:hover {
+  background: rgba(255, 255, 255, 0.08);
 }
 
 /* after the hero: the navbar becomes a dark bar */
@@ -342,7 +364,8 @@ button {
   flex-direction: column;
   justify-content: center;
   gap: 8px;
-  padding: 0 32px;
+  padding: 112px 32px 32px;
+  overflow-y: auto;
   transform: translateY(24px);
   opacity: 0;
   transition: transform 0.5s var(--ease-out) 0.1s, opacity 0.5s var(--ease-out) 0.1s;
@@ -387,7 +410,7 @@ button {
 .copy {
   position: relative;
   z-index: 10;
-  padding: 96px 16px 0;
+  padding: 124px 16px 0;
   text-align: center;
   display: flex;
   flex-direction: column;
@@ -951,7 +974,7 @@ button {
   }
 
   .copy {
-    padding-top: 104px;
+    padding-top: 124px;
     padding-left: 24px;
     padding-right: 24px;
   }
@@ -987,17 +1010,8 @@ button {
     padding: 10px 56px;
   }
 
-  .links {
-    display: flex;
-  }
-
-  .menu-btn,
-  .mnav {
-    display: none;
-  }
-
   .copy {
-    padding-top: 150px;
+    padding-top: 170px;
   }
 
   .sub {
@@ -1005,7 +1019,6 @@ button {
   }
 
   .search-grid {
-    grid-template-columns: 1fr 1fr 2fr auto;
     align-items: end;
   }
 
@@ -1049,10 +1062,6 @@ button {
     grid-template-columns: repeat(3, 1fr);
   }
 
-  .nav-cta {
-    display: inline-flex;
-  }
-
   .stack-card {
     min-height: 52vh;
   }
@@ -1086,4 +1095,272 @@ button {
   .manifesto .w {
     opacity: 1 !important;
   }
+}
+/* =========================================================
+   14. Estados dos cards carregados pela API
+   ========================================================= */
+.prop-media img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
+.grid-status {
+  grid-column: 1 / -1;
+  padding: 48px 0;
+  text-align: center;
+  color: var(--muted);
+}
+
+.section-cta {
+  margin-top: 48px;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .search-grid {
+    grid-template-columns: 1fr 2fr auto;
+  }
+}
+
+/* =========================================================
+   14. Navegação: menu até 1099px, links e botão a partir de 1100px
+   ========================================================= */
+@media (max-width: 1099.98px) {
+  .links,
+  .nav-cta {
+    display: none !important;
+  }
+
+  .menu-btn {
+    display: grid;
+  }
+}
+
+@media (min-width: 1100px) {
+  .links {
+    display: flex;
+  }
+
+  .nav-cta {
+    display: inline-flex;
+  }
+
+  .menu-btn,
+  .mnav {
+    display: none;
+  }
+}
+
+/* =========================================================
+   15. Responsivo: celular (até 640px)
+   ========================================================= */
+@media (max-width: 640px) {
+  .nav {
+    padding: 12px 16px;
+  }
+
+  .nav.is-scrolled {
+    padding: 8px 16px;
+  }
+
+  .logo > .svg {
+    width: 56px;
+    height: 56px;
+  }
+
+  .logo span {
+    font-size: 14px;
+  }
+
+  .copy {
+    padding: 116px 20px 0;
+  }
+
+  .copy h1 {
+    font-size: clamp(40px, 11vw, 56px);
+  }
+
+  .sub {
+    font-size: 15px;
+  }
+
+  .hero-btn {
+    margin-top: 24px;
+  }
+
+  .panel-wrap {
+    padding: 0 12px;
+  }
+
+  .panel {
+    padding: 20px 16px;
+    margin-top: 6vh;
+  }
+
+  .search-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .search-btn {
+    width: 100%;
+  }
+
+  .field select,
+  .field input {
+    font-size: 16px; /* evita zoom automático no iPhone */
+  }
+
+  .section {
+    padding: 80px 20px;
+  }
+
+  .display {
+    font-size: clamp(28px, 8vw, 40px);
+  }
+
+  .section-head {
+    margin-bottom: 32px;
+  }
+
+  .prop-media {
+    height: 180px;
+  }
+
+  .stack-card {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    padding: 24px;
+    min-height: auto;
+  }
+
+  .stack-card .card-index {
+    grid-column: 1;
+    grid-row: auto;
+  }
+
+  .stack-card p {
+    grid-column: 1;
+  }
+
+  .steps {
+    gap: 40px;
+  }
+
+  .cta-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+
+  .cta-actions .btn-lg,
+  .cta-actions .btn-ghost {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .footer-inner {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .mnav-inner a:not(.btn) {
+    font-size: 30px;
+  }
+
+  .mnav-inner .btn {
+    align-self: stretch;
+    justify-content: center;
+  }
+}
+
+/* =========================================================
+   16. Responsivo: tablet (641px a 1099px)
+   ========================================================= */
+@media (min-width: 641px) and (max-width: 1099.98px) {
+  .section {
+    padding: 100px 40px;
+  }
+
+  .copy {
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+
+  .search-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .search-btn {
+    grid-column: 1 / -1;
+  }
+
+  .prop-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .stack-card {
+    grid-template-columns: 90px 1fr;
+  }
+}
+
+/* =========================================================
+   17. Responsivo: telas baixas na horizontal (celular deitado)
+   ========================================================= */
+@media (max-height: 500px) and (orientation: landscape) {
+  .copy {
+    padding-top: 124px;
+  }
+
+  .copy h1 {
+    font-size: 40px;
+  }
+
+  .panel-wrap {
+    padding: 0 16px;
+  }
+
+  .panel {
+    margin-top: 16px;
+    padding: 14px 16px;
+  }
+
+  .panel .label {
+    margin-bottom: 8px;
+  }
+
+  .field select,
+  .field input,
+  .search-btn {
+    height: 40px;
+  }
+
+  .mnav-inner {
+    gap: 4px;
+    padding-top: 84px;
+    padding-bottom: 16px;
+  }
+
+  .mnav-inner a:not(.btn) {
+    font-size: 24px;
+    line-height: 1.2;
+  }
+
+  .mnav-inner .btn {
+    margin-top: 12px;
+  }
+
+  .mnav-auth {
+    margin-top: 8px;
+  }
+}
+
+
+/* Entrar no menu: contorno, não preenchido (vence .mnav-inner .btn) */
+.mnav-inner .mnav-auth .btn-outline {
+  background: transparent;
+  color: var(--paper);
+  border: 1px solid rgba(255, 255, 255, 0.4);
 }
