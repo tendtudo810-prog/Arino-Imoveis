@@ -19,7 +19,8 @@
 
         <nav id="nav" aria-label="Navegação principal">
             <div class="logo">
-                <a href="index.html" class="pic">kindly<span class="dot">.</span></a>
+                <img src="pic1/Black & White (1).png" alt="" class="picture" href="index.html" />
+                <a href="index.html">Arino Imóveis</a>
             </div>
             <div class="box">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 640" class="photo">
@@ -30,13 +31,12 @@
                 <input type="text" class="search-box" placeholder="Busque Aqui" />
             </div>
             <div class="mid" id="menu">
-                <a href="index.html">Meus anúncios </a>
-                <a href="sobre-nos.html" aria-current="page">Chat</a>
+                <a href="https://wa.me/5561996973773?text=Olá,%20vi%20o%20site%20da%20Arino%20Imóveis%20e%20gostaria%20de%20mais%20informações." aria-current="page">Contato</a>
                 <a href="produtos.html">Favoritos</a>
             </div>
             <div class="r">
                 <a class="demo" href="login.html">Login</a>
-                <a class="btn-w" href="cadastrar.html">Cadastrar</a>
+                <a class="btn-w" href="cadastro.html">Cadastrar</a>
             </div>
             <button class="burger" type="button" aria-label="Abrir menu" aria-expanded="false" aria-controls="menu">
                 <span></span><span></span><span></span>
@@ -48,26 +48,22 @@
         <div class="carousel">
             <div class="carousel-inner" id="carouselInner">
 
-                <div class="slide">
-                    <img src="pic1/d4707b21-9430-473e-af7c-e76c2720a402.png" alt="Banner 1">
+                <div class="slide ativo">
+                    <img src="pic1/Generated Image.png" alt="Banner 1">
                 </div>
 
                 <div class="slide">
-                    <img src="pic1/def20957-bd7e-46b3-937e-8dd83254c0b5.png" alt="Banner 2">
+                    <img src="pic1/Generated Image (1).png" alt="Banner 2">
                 </div>
 
                 <div class="slide">
-                    <img src="pic1/f7992615-1e03-4711-86e9-afaf49f6b09f.png" alt="Banner 3">
+                    <img src="pic1/Group 2.png" alt="Banner 3">
                 </div>
 
             </div>
 
             <button class="btn prev" id="prevBtn" aria-label="Banner anterior">&#10094;</button>
             <button class="btn next" id="nextBtn" aria-label="Próximo banner">&#10095;</button>
-        </div>
-
-        <div class="roupas">
-            <h1>Lorem, ipsum dolor.</h1>
         </div>
 
         <div class="hero-section">
@@ -789,8 +785,116 @@
             </div>
         </section>
     </main>
+
+    <!--
+  FOOTER ARINO IMÓVEIS
+  Colar logo DEPOIS do </main> e ANTES dos <script> em produtos.html.
+  No <head>:   <link rel="stylesheet" href="css/footer.css" />
+  No fim:      <script src="js/footer.js"></script>
+-->
+<footer class="ft" id="contato" aria-label="Rodapé e contato">
+
+  <!-- Camada 1: vídeo embaixo + imagem por cima, furada pelo spotlight (o JS cria os círculos da máscara) -->
+  <div class="ft-spot" aria-hidden="true">
+    <div class="ft-video-wrap">
+      <!-- TROCAR: vídeo que aparece sob o cursor (tour de imóvel, drone, fachada...) -->
+      <video class="ft-video" src="videos/footer-imovel.mp4" muted loop playsinline preload="metadata"
+        tabindex="-1" disablePictureInPicture></video>
+    </div>
+    <svg xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <radialGradient id="ft-hole">
+          <stop offset="0%" stop-color="black" stop-opacity="1" />
+          <stop offset="60%" stop-color="black" stop-opacity="0.8" />
+          <stop offset="100%" stop-color="black" stop-opacity="0" />
+        </radialGradient>
+        <mask id="ft-mask" maskContentUnits="userSpaceOnUse" x="0" y="0" width="100%" height="100%">
+          <rect width="100%" height="100%" fill="white" />
+        </mask>
+      </defs>
+      <!-- TROCAR: foto estática (fachada, sala, condomínio). Provisório: o fundo escuro que você já usa no hero -->
+      <image href="pic1/plain-dark-black-wall-product-background.jpg" width="100%" height="100%"
+        preserveAspectRatio="xMidYMid slice" mask="url(#ft-mask)" />
+    </svg>
+  </div>
+  <div class="ft-shade" aria-hidden="true"></div>
+
+  <!-- Zonas invisíveis de hover (desktop/tablet com mouse): tocam o vídeo -->
+  <div class="ft-zone ft-zone--r" data-ft-zone aria-hidden="true"></div>
+  <div class="ft-zone ft-zone--l" data-ft-zone aria-hidden="true"></div>
+
+  <!-- Card de vidro com destaque -->
+  <div class="ft-card">
+    <!-- PLACEHOLDER: dado de exemplo. Trocar por um número real da Arino -->
+    <div class="ft-stat-row">
+      <span class="ft-stat">98%</span>
+      <div class="ft-chart" aria-hidden="true">
+        <svg viewBox="0 0 289 138" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <g filter="url(#ft-chart-glow)">
+            <path
+              d="M22.5 48.7306C39.7833 48.7306 49.34 54.94 63.1667 69.2965C76.9933 83.653 86.55 110.5 103.833 110.5C121.117 110.5 130.673 84.2876 144.5 59.2856C158.327 34.2837 167.883 19.5573 185.167 19.5573C202.45 19.5573 208.55 57.6673 225.833 57.6673C243.117 57.6673 249.217 19.5 266.5 19.5"
+              stroke="#E7BE37" stroke-width="2" />
+          </g>
+          <defs>
+            <filter id="ft-chart-glow" x="0" y="0" width="289" height="138" filterUnits="userSpaceOnUse"
+              color-interpolation-filters="sRGB">
+              <feFlood flood-opacity="0" result="BackgroundImageFix" />
+              <feColorMatrix in="SourceAlpha" type="matrix"
+                values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+              <feOffset dy="4" />
+              <feGaussianBlur stdDeviation="11.25" />
+              <feComposite in2="hardAlpha" operator="out" />
+              <feColorMatrix type="matrix"
+                values="0 0 0 0 0.905882 0 0 0 0 0.745098 0 0 0 0 0.215686 0 0 0 1 0" />
+              <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow" />
+              <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow" result="shape" />
+            </filter>
+          </defs>
+        </svg>
+      </div>
+    </div>
+    <p class="ft-card-title">Clientes que indicam a Arino</p>
+    <p class="ft-card-sub">Atendimento do anúncio à entrega das chaves</p>
+  </div>
+
+  <!-- Headline -->
+  <h2 class="ft-h2">
+    <span class="ft-sans">Do primeiro anúncio</span>
+    <span class="ft-sans">até o dia da mudança,</span>
+    <span class="ft-serif ft-l3"><span class="ft-roman">a Arino está com você </span><span
+        class="ft-ital">em</span></span>
+    <span class="ft-serif ft-ital">cada etapa</span>
+  </h2>
+
+  <!-- CTA -->
+  <a class="ft-cta" data-ft-zone
+    href="https://wa.me/5561996973773?text=Olá,%20vi%20o%20site%20da%20Arino%20Imóveis%20e%20gostaria%20de%20mais%20informações."
+    target="_blank" rel="noopener">
+    <span class="ft-cta-label">Fale com um corretor</span>
+    <span class="ft-cta-logo"><img src="pic1/Black%20%26%20White%20(1).png" alt="Arino Imóveis" /></span>
+  </a>
+
+  <!-- Barra inferior: links e legal -->
+  <div class="ft-bar">
+    <div class="ft-legal">
+      <span>© <span id="ftYear">2026</span> Arino Imóveis</span>
+      <!-- PLACEHOLDER: CRECI é obrigatório em site de imobiliária -->
+      <span>CRECI nº 00000</span>
+    </div>
+    <nav class="ft-links" aria-label="Rodapé">
+      <a href="#imoveis">Imóveis</a>
+      <a href="produtos.html">Favoritos</a>
+      <a href="login.html">Login</a>
+      <a href="cadastro.html">Cadastrar</a>
+      <a href="#">Privacidade</a>
+    </nav>
+  </div>
+</footer>
+
     <script src="js/produtos.js"></script>
     <script src="js/hero.js"></script>
+    <script src="js/anuncios.js"></script>
+    <script src="js/footer.js"></script>
 </body>
 
 </html>
