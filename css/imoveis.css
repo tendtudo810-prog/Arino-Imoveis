@@ -53,6 +53,10 @@ svg {
    FUNDO / ATMOSFERA
 ======================================== */
 
+.mid a {
+  font-family: 'Inter', sans-serif;
+}
+
 #atmo {
   position: fixed;
   inset: 0;

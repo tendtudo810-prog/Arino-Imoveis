@@ -448,3 +448,68 @@ button {
         transition-duration: 0.01ms !important;
     }
 }
+
+.container-bg video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  -webkit-mask-image: linear-gradient(to top, transparent, #101828 60%, #101828 40%, transparent);
+    mask-image: linear-gradient(to top, transparent, #101828 40%, #101828 60%, transparent);
+    opacity: 60%;
+}
+
+.sobre-txt {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  text-align: center;
+}
+
+.sobre-txt h1 {
+  font-size: 60px;
+  font-family: "P22 Mackinac W01 Book", Georgia, serif;
+  font-weight: 400;
+}
+
+.sobre-txt p {
+  font-size: 16px;
+  font-family: "P22 Mackinac W01 Book", Georgia, serif;
+  font-weight: 500;
+  color: #e4e4e4;
+}
+
+.label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+  font-size: 12px;
+  width: 17%;
+
+  position: absolute;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  color: white;
+  font-family: "P22 Mackinac W01 Book", Georgia, serif;
+  background-color: black;
+  font-weight: 600;
+  padding: 10px;
+  border: 1px solid #3a3a3a;
+  border-radius: 50px;
+}
+
+.label svg {
+  width: 30px;
+  background-color: goldenrod;
+  padding: 5px;
+  border-radius: 50px;
+}
